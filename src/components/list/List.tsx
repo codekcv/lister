@@ -1,167 +1,169 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { ListState } from '../../store/list/types';
-import { AppState } from '../../store/store';
-import {
-  addCard,
-  editCard,
-  deleteCard,
-  editTitle
-} from '../../store/list/actions';
-import { Card } from '../card/Card';
-import styled from 'styled-components';
-import { FaPlusSquare } from 'react-icons/fa';
+export default () => null;
 
-interface Props {
-  listState: ListState;
-  editTitle: typeof editTitle;
-  addCard: typeof addCard;
-  editCard: typeof editCard;
-  deleteCard: typeof deleteCard;
-}
+// import React, { useState } from 'react';
+// import { connect } from 'react-redux';
+// import { ListState } from '../../store/list/types';
+// import { AppState } from '../../store/store';
+// import {
+//   addCard,
+//   editCard,
+//   deleteCard,
+//   editTitle
+// } from '../../store/list/actions';
+// import { Card } from '../card/Card';
+// import styled from 'styled-components';
+// import { FaPlusSquare } from 'react-icons/fa';
 
-const List: React.FC<Props> = ({
-  listState,
-  editTitle,
-  addCard,
-  editCard,
-  deleteCard
-}) => {
-  const [input, setInput] = useState('');
-  const [isChangingTitle, setIsChangingTitle] = useState(false);
-  const [currentTitle, setCurrentTitle] = useState(listState.title);
-  const { title, cards } = listState;
+// interface Props {
+//   listState: ListState;
+//   editTitle: typeof editTitle;
+//   addCard: typeof addCard;
+//   editCard: typeof editCard;
+//   deleteCard: typeof deleteCard;
+// }
 
-  const handleChangeTitle = (
-    e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
-  ) => {
-    setIsChangingTitle(true);
-  };
+// const List: React.FC<Props> = ({
+//   listState,
+//   editTitle,
+//   addCard,
+//   editCard,
+//   deleteCard
+// }) => {
+//   const [input, setInput] = useState('');
+//   const [isChangingTitle, setIsChangingTitle] = useState(false);
+//   const [currentTitle, setCurrentTitle] = useState(listState.title);
+//   const { title, cardy: cards } = listState;
 
-  const handleChangeTitleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentTitle(e.target.value);
-  };
+//   const handleChangeTitle = (
+//     e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
+//   ) => {
+//     setIsChangingTitle(true);
+//   };
 
-  const handleTitleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (currentTitle) {
-      editTitle(currentTitle);
-      setIsChangingTitle(false);
-    }
-  };
+//   const handleChangeTitleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setCurrentTitle(e.target.value);
+//   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
+//   const handleTitleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     if (currentTitle) {
+//       editTitle(currentTitle);
+//       setIsChangingTitle(false);
+//     }
+//   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (input) {
-      addCard(require('short-uuid').generate(), input);
-      setInput('');
-    }
-  };
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setInput(e.target.value);
+//   };
 
-  return (
-    <Container>
-      {/*/=== TITLE ===/*/}
-      {!isChangingTitle ? (
-        <p className="title" onClick={handleChangeTitle}>
-          {title}
-        </p>
-      ) : (
-        <form onSubmit={handleTitleSubmit}>
-          <input
-            type="text"
-            placeholder="Change title..."
-            value={currentTitle}
-            onChange={handleChangeTitleInput}
-          />
-          <button type="submit">Done</button>
-        </form>
-      )}
+//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     if (input) {
+//       addCard(require('short-uuid').generate(), input);
+//       setInput('');
+//     }
+//   };
 
-      {/*/=== SHOW CARDS ===/*/}
-      <ul>
-        {cards.map(card => (
-          <li key={card.id}>
-            <Card
-              id={card.id}
-              text={card.text}
-              editCard={editCard}
-              deleteCard={deleteCard}
-            />
-          </li>
-        ))}
-      </ul>
+//   return (
+//     <Container>
+//       {/*/=== TITLE ===/*/}
+//       {!isChangingTitle ? (
+//         <p className="title" onClick={handleChangeTitle}>
+//           {title}
+//         </p>
+//       ) : (
+//         <form onSubmit={handleTitleSubmit}>
+//           <input
+//             type="text"
+//             placeholder="Change title..."
+//             value={currentTitle}
+//             onChange={handleChangeTitleInput}
+//           />
+//           <button type="submit">Done</button>
+//         </form>
+//       )}
 
-      {/*/=== ADD CARD ===/*/}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Add card..."
-          value={input}
-          onChange={handleChange}
-        />
-        <button type="submit">
-          <FaPlusSquare size={16} />
-        </button>
-      </form>
-    </Container>
-  );
-};
+//       {/*/=== SHOW CARDS ===/*/}
+//       <ul>
+//         {cards.map(card => (
+//           <li key={card.id}>
+//             <Card
+//               id={card.id}
+//               text={card.text}
+//               editCard={editCard}
+//               deleteCard={deleteCard}
+//             />
+//           </li>
+//         ))}
+//       </ul>
 
-const Container = styled.div`
-  background: #ebecf0;
-  border-radius: 3px;
-  width: 275px;
-  box-shadow: 0px 1px lightgray;
+//       {/*/=== ADD CARD ===/*/}
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           placeholder="Add card..."
+//           value={input}
+//           onChange={handleChange}
+//         />
+//         <button type="submit">
+//           <FaPlusSquare size={16} />
+//         </button>
+//       </form>
+//     </Container>
+//   );
+// };
 
-  ul {
-    margin: 4px;
+// const Container = styled.div`
+//   background: #ebecf0;
+//   border-radius: 3px;
+//   width: 275px;
+//   box-shadow: 0px 1px lightgray;
 
-    li {
-      background: white;
-      margin: 8px 4px;
-      border-radius: 3px;
-      font-size: 14px;
-      box-shadow: 0px 1px lightgray;
-      list-style: none;
-    }
-  }
+//   ul {
+//     margin: 4px;
 
-  .title {
-    text-align: center;
-    font-size: 1.5rem;
-    padding: 0.5rem 0 0 0;
-  }
+//     li {
+//       background: white;
+//       margin: 8px 4px;
+//       border-radius: 3px;
+//       font-size: 14px;
+//       box-shadow: 0px 1px lightgray;
+//       list-style: none;
+//     }
+//   }
 
-  form {
-    padding-bottom: 8px;
-  }
+//   form {
+//     padding-bottom: 8px;
+//   }
 
-  input {
-    margin-left: 8px;
-    width: 232px;
-    border: none;
-    border-radius: 3px;
-  }
+//   input {
+//     margin-left: 8px;
+//     width: 232px;
+//     border: none;
+//     border-radius: 3px;
+//   }
 
-  button {
-    margin-left: 8px;
-    width: 16px;
-    border: none;
-    border-radius: 3px;
-    justify-content: center;
-    /* padding-top: 6px; */
-  }
-`;
+//   button {
+//     margin-left: 8px;
+//     width: 16px;
+//     border: none;
+//     border-radius: 3px;
+//     justify-content: center;
+//     /* padding-top: 6px; */
+//   }
 
-const mapStateToProps = (state: AppState) => ({
-  listState: state.list
-});
+//   .title {
+//     text-align: center;
+//     font-size: 1.5rem;
+//     padding: 0.5rem 0 0 0;
+//   }
+// `;
 
-export default connect(
-  mapStateToProps,
-  { editTitle, addCard, editCard, deleteCard }
-)(List);
+// const mapStateToProps = (state: AppState) => ({
+//   listState: state.list
+// });
+
+// export default connect(
+//   mapStateToProps,
+//   { editTitle, addCard, editCard, deleteCard }
+// )(List);

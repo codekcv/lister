@@ -1,73 +1,75 @@
-import React, { useState } from 'react';
-import { editCard, deleteCard } from '../../store/list/actions';
-import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import styled from 'styled-components';
+export default () => null;
 
-interface Props {
-  id: string;
-  text: string;
-  editCard: typeof editCard;
-  deleteCard: typeof deleteCard;
-}
+// import React, { useState } from 'react';
+// import { editCard, deleteCard } from '../../store/list/actions';
+// import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+// import styled from 'styled-components';
 
-export const Card: React.FC<Props> = ({ id, text, editCard, deleteCard }) => {
-  const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState('');
+// interface Props {
+//   id: string;
+//   text: string;
+//   editCard: typeof editCard;
+//   deleteCard: typeof deleteCard;
+// }
 
-  const handleClick = () => {
-    setEdit(true);
-    setValue(text);
-  };
+// export const Card: React.FC<Props> = ({ id, text, editCard, deleteCard }) => {
+//   const [edit, setEdit] = useState(false);
+//   const [value, setValue] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+//   const handleClick = () => {
+//     setEdit(true);
+//     setValue(text);
+//   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    editCard(id, value);
-    setEdit(false);
-  };
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setValue(e.target.value);
+//   };
 
-  const handleDelete = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    deleteCard(id);
-  };
+//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     editCard(id, value);
+//     setEdit(false);
+//   };
 
-  return (
-    <Container>
-      {!edit ? (
-        <div className="card">
-          <label>{text}</label>
-          <div className="buttons">
-            <FaPencilAlt onClick={handleClick} />{' '}
-            <FaTrashAlt onClick={handleDelete} />
-          </div>
-        </div>
-      ) : (
-        <>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Edit..."
-              value={value}
-              onChange={handleChange}
-            />
-            <button type="submit">Done</button>
-          </form>
-        </>
-      )}
-    </Container>
-  );
-};
+//   const handleDelete = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+//     deleteCard(id);
+//   };
 
-const Container = styled.div`
-  .card {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px;
-  }
+//   return (
+//     <Container>
+//       {!edit ? (
+//         <div className="card">
+//           <label>{text}</label>
+//           <div className="buttons">
+//             <FaPencilAlt onClick={handleClick} />{' '}
+//             <FaTrashAlt onClick={handleDelete} />
+//           </div>
+//         </div>
+//       ) : (
+//         <>
+//           <form onSubmit={handleSubmit}>
+//             <input
+//               type="text"
+//               placeholder="Edit..."
+//               value={value}
+//               onChange={handleChange}
+//             />
+//             <button type="submit">Done</button>
+//           </form>
+//         </>
+//       )}
+//     </Container>
+//   );
+// };
 
-  /* .buttons {
-    flex-grow: 1;
-  } */
-`;
+// const Container = styled.div`
+//   .card {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 4px;
+//   }
+
+//   /* .buttons {
+//     flex-grow: 1;
+//   } */
+// `;
