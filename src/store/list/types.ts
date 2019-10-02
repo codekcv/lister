@@ -10,7 +10,6 @@ export interface ListState {
 
 // List
 export const EDIT_TITLE = 'EDIT_TEXT';
-// export const REMOVE_LIST = 'REMOVE_LIST';
 
 // Card
 export const ADD_CARD = 'ADD_CARD';
@@ -21,11 +20,6 @@ interface EditTitleAction {
   type: typeof EDIT_TITLE;
   payload: { newTitle: string };
 }
-
-// interface RemoveListAction {
-//   type: typeof REMOVE_LIST;
-//   payload: { listID: string };
-// }
 
 interface AddCardAction {
   type: typeof ADD_CARD;
@@ -44,7 +38,6 @@ interface deleteCardAction {
 
 export type ListActionTypes =
   | EditTitleAction
-  // | RemoveListAction
   | AddCardAction
   | EditCardAction
   | deleteCardAction;

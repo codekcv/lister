@@ -7,13 +7,6 @@ export const editTitle = (newTitle: string) => {
   };
 };
 
-// export const removeList = (listID: string) => {
-//   return {
-//     type: REMOVE_LIST,
-//     payload: { listID }
-//   };
-// };
-
 export const addCard = (cardID: string, text: string) => {
   return {
     type: ADD_CARD,
