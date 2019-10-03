@@ -42,26 +42,28 @@ export const CardLi: React.FC<Props> = ({
   const handleEditText = () => {
     setEdit(true);
     setInput(text);
+    handleDone();
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     editCard(cardId, input);
     setEdit(false);
-    // crossCard(cardId);
   };
 
   return (
-    <Container onClick={handleDone}>
+    <Container>
       {!edit ? (
         <Div
           isCross={cross}
           isEditing={edit}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onClick={handleDone}
         >
           <span className="text">{text}</span>
           <i>
@@ -84,10 +86,6 @@ export const CardLi: React.FC<Props> = ({
           <button type="submit">Done</button>
         </form>
       )}
-
-      {/* <span>
-          
-        </span> */}
     </Container>
   );
 };
@@ -99,15 +97,6 @@ const Container = styled.div`
   box-shadow: 0 2px lightgray;
   margin: 4px;
   border: 1px lightgray solid;
-
-  /* input {
-    width: 250px;
-    background: white;
-    border-radius: 3px;
-    box-shadow: 0 2px lightgray;
-    margin: 4px;
-    border: 1px lightgray solid;
-  } */
 `;
 
 const Div = styled.p<{ isCross: boolean; isEditing: boolean }>`
