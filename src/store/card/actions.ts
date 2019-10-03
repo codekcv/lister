@@ -1,4 +1,4 @@
-import { ADD_CARD, EDIT_CARD, DELETE_CARD } from './types';
+import { ADD_CARD, EDIT_CARD, DELETE_CARD, CROSS_CARD } from './types';
 
 export const addCard = (listId: string, text: string) => {
   return {
@@ -16,6 +16,14 @@ export const editCard = (id: string, text: string) => {
 
 export const deleteCard = (id: string) => {
   return {
-    type: DELETE_CARD
+    type: DELETE_CARD,
+    payload: { id }
+  };
+};
+
+export const crossCard = (id: string) => {
+  return {
+    type: CROSS_CARD,
+    payload: { id }
   };
 };

@@ -1,75 +1,50 @@
-export default () => null;
+import React from 'react';
+import { crossCard, editCard, deleteCard } from '../../store/card/actions';
+import { Card } from '../../store/card/types';
+import styled from 'styled-components';
 
-// import React, { useState } from 'react';
-// import { editCard, deleteCard } from '../../store/list/actions';
-// import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-// import styled from 'styled-components';
+interface Props {
+  card: Card;
+  editCard: typeof editCard;
+  deleteCard: typeof deleteCard;
+  crossCard: typeof crossCard;
+}
 
-// interface Props {
-//   id: string;
-//   text: string;
-//   editCard: typeof editCard;
-//   deleteCard: typeof deleteCard;
-// }
+export const CardLi: React.FC<Props> = ({
+  card,
+  editCard,
+  deleteCard,
+  crossCard
+}) => {
+  const { cardId, text, cross } = card;
 
-// export const Card: React.FC<Props> = ({ id, text, editCard, deleteCard }) => {
-//   const [edit, setEdit] = useState(false);
-//   const [value, setValue] = useState('');
+  // DONE CARD
+  const handleDone = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    crossCard(cardId);
+  };
 
-//   const handleClick = () => {
-//     setEdit(true);
-//     setValue(text);
-//   };
+  const handleHover = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    // deleteCard(cardId);
+  };
 
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setValue(e.target.value);
-//   };
+  return (
+    <Container onClick={handleDone}>
+      <Span isCross={cross} onMouseEnter={handleHover}>
+        {text}
+      </Span>
+    </Container>
+  );
+};
 
-//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     editCard(id, value);
-//     setEdit(false);
-//   };
+const Container = styled.div`
+  width: 250px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 2px lightgray;
+  margin: 4px;
+  text-indent: 16px;
+`;
 
-//   const handleDelete = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-//     deleteCard(id);
-//   };
-
-//   return (
-//     <Container>
-//       {!edit ? (
-//         <div className="card">
-//           <label>{text}</label>
-//           <div className="buttons">
-//             <FaPencilAlt onClick={handleClick} />{' '}
-//             <FaTrashAlt onClick={handleDelete} />
-//           </div>
-//         </div>
-//       ) : (
-//         <>
-//           <form onSubmit={handleSubmit}>
-//             <input
-//               type="text"
-//               placeholder="Edit..."
-//               value={value}
-//               onChange={handleChange}
-//             />
-//             <button type="submit">Done</button>
-//           </form>
-//         </>
-//       )}
-//     </Container>
-//   );
-// };
-
-// const Container = styled.div`
-//   .card {
-//     display: flex;
-//     justify-content: space-between;
-//     padding: 4px;
-//   }
-
-//   /* .buttons {
-//     flex-grow: 1;
-//   } */
-// `;
+const Span = styled.span<{ isCross: boolean }>`
+  text-decoration: ${props => props.isCross && 'line-through'};
+`;

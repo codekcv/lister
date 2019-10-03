@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import List2 from '../components/list/List2';
+import Lists from '../components/list/Lists';
 
 interface Props {}
 
 export const Home: React.FC<Props> = () => {
   return (
     <Container>
-      <List2 />
+      <Lists />
     </Container>
   );
 };

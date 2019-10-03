@@ -1,7 +1,8 @@
-interface Card {
+export interface Card {
   listId: string;
   cardId: string;
   text: string;
+  cross: boolean;
 }
 
 export interface CardState {
@@ -11,6 +12,7 @@ export interface CardState {
 export const ADD_CARD = 'ADD_CARD';
 export const EDIT_CARD = 'EDIT_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
+export const CROSS_CARD = 'CROSS_CARD';
 
 interface AddCardAction {
   type: typeof ADD_CARD;
@@ -27,4 +29,13 @@ interface RemoveCardAction {
   payload: { id: string };
 }
 
-export type CardActionTypes = AddCardAction | EditCardAction | RemoveCardAction;
+interface CrossCardAction {
+  type: typeof CROSS_CARD;
+  payload: { id: string };
+}
+
+export type CardActionTypes =
+  | AddCardAction
+  | EditCardAction
+  | RemoveCardAction
+  | CrossCardAction;

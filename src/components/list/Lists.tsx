@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
 import { ListState } from '../../store/list/types';
 import { addList, editList, deleteList } from '../../store/list/actions';
-import Card2 from '../card/Card2';
 import styled from 'styled-components';
+import { ListLi } from './List';
 
 interface Props {
   listState: ListState;
@@ -13,19 +13,21 @@ interface Props {
   deleteList: typeof deleteList;
 }
 
-const List2: React.FC<Props> = ({ listState }) => {
+const Lists: React.FC<Props> = ({
+  listState,
+  addList,
+  editList,
+  deleteList
+}) => {
   const { lists } = listState;
 
   return (
     <Container>
       <ul className="lists">
         {lists.map(list => (
-          <li key={list.id}>
-            <p>{list.title}</p>
-            <div>
-              <Card2 listId={list.id} />
-            </div>
-          </li>
+          <Li key={list.id}>
+            <ListLi list={list} editList={editList} deleteList={deleteList} />
+          </Li>
         ))}
       </ul>
     </Container>
@@ -36,9 +38,15 @@ const Container = styled.div`
   .lists {
     display: flex;
   }
+`;
 
-  li {
-    list-style: none;
+const Li = styled.li`
+  list-style: none;
+  width: 300px;
+
+  p {
+    color: red;
+    text-indent: 40px;
   }
 `;
 
@@ -49,4 +57,4 @@ const mapStateToProps = (state: AppState) => ({
 export default connect(
   mapStateToProps,
   { addList, editList, deleteList }
-)(List2);
+)(Lists);

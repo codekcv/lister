@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { CardState } from '../../store/card/types';
-import { addCard, editCard, deleteCard } from '../../store/card/actions';
+import {
+  addCard,
+  crossCard,
+  deleteCard,
+  editCard
+} from '../../store/card/actions';
 import { AppState } from '../../store/store';
 import styled from 'styled-components';
+import { CardLi } from './Card';
 
 interface Props {
   listId: string;
@@ -11,17 +17,19 @@ interface Props {
   addCard: typeof addCard;
   editCard: typeof editCard;
   deleteCard: typeof deleteCard;
+  crossCard: typeof crossCard;
 }
 
-const Card2: React.FC<Props> = ({
+const Cards: React.FC<Props> = ({
   listId,
   cardState,
   addCard,
   editCard,
-  deleteCard
+  deleteCard,
+  crossCard
 }) => {
-  const [input, setInput] = useState('');
   const listCards = cardState.cards.filter(card => card.listId === listId);
+  const [input, setInput] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -40,7 +48,14 @@ const Card2: React.FC<Props> = ({
     <Container>
       <ul>
         {listCards.map(card => (
-          <li key={card.cardId}>{card.text}</li>
+          <li key={card.cardId}>
+            <CardLi
+              card={card}
+              editCard={editCard}
+              deleteCard={deleteCard}
+              crossCard={crossCard}
+            />
+          </li>
         ))}
       </ul>
       <form onSubmit={handleSubmit}>
@@ -56,7 +71,11 @@ const Card2: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  li {
+    list-style: none;
+  }
+`;
 
 const mapStateToProps = (state: AppState) => ({
   cardState: state.card
@@ -64,5 +83,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addCard, editCard, deleteCard }
-)(Card2);
+  { addCard, editCard, deleteCard, crossCard }
+)(Cards);
