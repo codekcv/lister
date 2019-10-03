@@ -40,7 +40,7 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
   return (
     <Container>
       {!isChanging ? (
-        <p onClick={handleChangeTitle}>{title}</p>
+        <h2 onClick={handleChangeTitle}>{title}</h2>
       ) : (
         <form onSubmit={handleTitleOnSubmit}>
           <input

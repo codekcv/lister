@@ -44,7 +44,7 @@ const Li = styled.li`
   list-style: none;
   width: 300px;
 
-  p {
+  h2 {
     color: red;
     text-indent: 40px;
   }
