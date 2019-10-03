@@ -65,15 +65,19 @@ const Cards: React.FC<Props> = ({
           value={input}
           onChange={handleInput}
         />
-        <button type="submit">Add</button>
+        {/* <button type="submit">Add</button> */}
       </form>
     </Container>
   );
 };
 
 const Container = styled.div`
-  li {
-    list-style: none;
+  input {
+    height: 34px;
+    border: none;
+    border-radius: 3px;
+    width: 280px;
+    padding: var(--g-padding);
   }
 `;
 

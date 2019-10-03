@@ -13,14 +13,5 @@ export const Home: React.FC<Props> = () => {
 };
 
 const Container = styled.div`
-  margin: 8px;
-
-  /* ul {
-    display: flex;
-  }
-
-  li {
-    margin: 0 4px;
-    list-style: none;
-  } */
+  margin: 4px;
 `;

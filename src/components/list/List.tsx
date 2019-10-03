@@ -44,6 +44,7 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
       ) : (
         <form onSubmit={handleTitleOnSubmit}>
           <input
+            className="edit-title"
             value={editTitle}
             placeholder="Enter new title..."
             onChange={handleChange}
@@ -58,9 +59,16 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
 };
 
 const Container = styled.div`
-  list-style: none;
-  border: 3px pink solid;
   background: #ebecf0;
+  width: 300px;
+  margin: var(--g-margin);
+  padding: var(--g-padding);
+  border: 2px lightgray solid;
   border-radius: 3px;
-  margin: 12px;
+  box-shadow: 0 4px lightgray;
+
+  h2 {
+    text-align: center;
+    padding: 0.35rem 0;
+  }
 `;

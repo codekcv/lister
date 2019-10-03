@@ -21,32 +21,47 @@ const Lists: React.FC<Props> = ({
 }) => {
   const { lists } = listState;
 
+  const handleNewList = () => {
+    addList('New List');
+  };
+
   return (
     <Container>
       <ul className="lists">
         {lists.map(list => (
-          <Li key={list.id}>
+          <li key={list.id}>
             <ListLi list={list} editList={editList} deleteList={deleteList} />
-          </Li>
+          </li>
         ))}
       </ul>
+      <div className="newList">
+        <h1 onClick={handleNewList}>New List</h1>
+      </div>
     </Container>
   );
 };
 
 const Container = styled.div`
+  display: flex;
+
   .lists {
     display: flex;
+
+    li {
+      list-style: none;
+    }
   }
-`;
 
-const Li = styled.li`
-  list-style: none;
-  width: 300px;
-
-  h2 {
-    color: red;
-    text-indent: 40px;
+  .newList {
+    width: 300px;
+    background: #ebecf0;
+    height: 60px;
+    margin: var(--g-margin);
+    padding: var(--g-padding);
+    border: 2px lightgray solid;
+    border-radius: 3px;
+    box-shadow: 0 4px lightgray;
+    text-align: center;
   }
 `;
 

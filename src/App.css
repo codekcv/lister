@@ -11,3 +11,12 @@
 html {
   background-color: cornflowerblue;
 }
+
+:root {
+  /* g = global */
+  --g-color-primary: #eee;
+  --g-color-secondary: #fff;
+  --g-padding: 8px;
+  --g-margin: 4px;
+  --g-border-radius-sm: 3px;
+}

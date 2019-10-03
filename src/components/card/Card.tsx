@@ -83,7 +83,7 @@ export const CardLi: React.FC<Props> = ({
             value={input}
             onChange={handleInput}
           />
-          <button type="submit">Done</button>
+          {/* <button type="submit">Done</button> */}
         </form>
       )}
     </Container>
@@ -91,12 +91,20 @@ export const CardLi: React.FC<Props> = ({
 };
 
 const Container = styled.div`
-  width: 250px;
+  width: 280px;
   background: white;
+  margin: calc(var(--g-margin) * 2) 0;
+  border: 1px lightgray solid;
   border-radius: 3px;
   box-shadow: 0 2px lightgray;
-  margin: 4px;
-  border: 1px lightgray solid;
+
+  input {
+    height: 34px;
+    border: 1px royalblue solid;
+    border-radius: 3px;
+    padding: var(--g-padding);
+    background: #ebecf0;
+  }
 `;
 
 const Div = styled.p<{ isCross: boolean; isEditing: boolean }>`
