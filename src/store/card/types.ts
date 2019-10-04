@@ -9,10 +9,16 @@ export interface CardState {
   cards: Card[];
 }
 
+export const SET_CARDS = 'SET_CARD';
 export const ADD_CARD = 'ADD_CARD';
 export const EDIT_CARD = 'EDIT_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
 export const CROSS_CARD = 'CROSS_CARD';
+
+interface SetCardAction {
+  type: typeof SET_CARDS;
+  payload: { cards: Card[] };
+}
 
 interface AddCardAction {
   type: typeof ADD_CARD;
@@ -35,6 +41,7 @@ interface CrossCardAction {
 }
 
 export type CardActionTypes =
+  | SetCardAction
   | AddCardAction
   | EditCardAction
   | RemoveCardAction

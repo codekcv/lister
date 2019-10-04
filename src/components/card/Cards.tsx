@@ -28,7 +28,12 @@ const Cards: React.FC<Props> = ({
   deleteCard,
   crossCard
 }) => {
-  const listCards = cardState.cards.filter(card => card.listId === listId);
+  console.log(2, cardState.cards);
+  const listCards = cardState.cards.filter(card => {
+    // card.listId === listId
+    // console.log(card);
+    return card.listId === listId;
+  });
   const [input, setInput] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

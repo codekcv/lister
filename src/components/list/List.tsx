@@ -49,7 +49,7 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
             placeholder="Enter new title..."
             onChange={handleChange}
           ></input>
-          <button type="submit">Done</button>
+          {/* <button type="submit">Done</button> */}
         </form>
       )}
 
@@ -70,5 +70,14 @@ const Container = styled.div`
   h2 {
     text-align: center;
     padding: 0.35rem 0;
+    width: 280px;
+    height: 45px;
+  }
+
+  input {
+    font-size: 1.5em;
+    width: 280px;
+    height: 45px;
+    padding: var(--g-padding);
   }
 `;

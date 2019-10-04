@@ -1,4 +1,18 @@
-import { ADD_CARD, EDIT_CARD, DELETE_CARD, CROSS_CARD } from './types';
+import {
+  SET_CARDS,
+  ADD_CARD,
+  EDIT_CARD,
+  DELETE_CARD,
+  CROSS_CARD,
+  Card
+} from './types';
+
+export const setCards = (card: Card[]) => {
+  return {
+    type: SET_CARDS,
+    payload: { card }
+  };
+};
 
 export const addCard = (listId: string, text: string) => {
   return {

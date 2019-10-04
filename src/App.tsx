@@ -1,22 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
-import { configureStore } from './store/store';
+import { connect } from 'react-redux';
+import { AppState } from './store/store';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Home } from './pages/Home';
+import Home from './pages/Home';
 import { About } from './pages/About';
+import { ListState } from './store/list/types';
+import { CardState } from './store/card/types';
+import { setCards } from './store/card/actions';
 
-const App: React.FC = () => {
+interface Props {
+  list: ListState;
+  card: CardState;
+  setCards: typeof setCards;
+}
+
+const App: React.FC<Props> = ({ list, card, setCards }) => {
   return (
-    <Provider store={configureStore()}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-        </Switch>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
-export default App;
+const mapStateToProps = (state: AppState) => ({
+  list: state.list,
+  card: state.card
+});
+
+export default connect(
+  mapStateToProps,
+  { setCards }
+)(App);

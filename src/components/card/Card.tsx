@@ -22,22 +22,10 @@ export const CardLi: React.FC<Props> = ({
   const [edit, setEdit] = useState(false);
   const [input, setInput] = useState('');
 
-  // DONE CARD
-  const handleDone = () => {
-    crossCard(cardId);
-  };
-
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
-
-  const handleDeleteCard = () => {
-    deleteCard(cardId);
-  };
+  const handleDone = () => crossCard(cardId);
+  const handleMouseEnter = () => setHover(true);
+  const handleMouseLeave = () => setHover(false);
+  const handleDeleteCard = () => deleteCard(cardId);
 
   const handleEditText = () => {
     setEdit(true);

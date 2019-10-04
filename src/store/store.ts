@@ -1,6 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import { listReducer } from './list/reducers';
 import { cardReducer } from './card/reducers';
+import { loadState, saveState } from './loadState';
 
 const rootReducer = combineReducers({
   list: listReducer,
@@ -8,8 +9,12 @@ const rootReducer = combineReducers({
 });
 
 export const configureStore = () => {
-  const store = createStore(rootReducer);
+  const persistedStore = loadState();
+  const store = createStore(rootReducer, persistedStore);
 
+  store.subscribe(() => {
+    saveState(store.getState());
+  });
   return store;
 };
 

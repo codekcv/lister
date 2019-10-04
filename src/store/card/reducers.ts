@@ -4,20 +4,29 @@ import {
   ADD_CARD,
   EDIT_CARD,
   DELETE_CARD,
-  CROSS_CARD
+  CROSS_CARD,
+  SET_CARDS
 } from './types';
 
 const initialState: CardState = {
-  cards: [
-    { listId: 'do', cardId: 'c1', text: 's1', cross: false },
-    { listId: 'doing', cardId: 'c2', text: 'Programming client', cross: false },
-    { listId: 'done', cardId: 'c3', text: 'Redux, I think.', cross: false },
-    { listId: 'done', cardId: 'c4', text: 'Remade redux', cross: false }
-  ]
+  cards: []
+
+  // cards: [
+  //   { listId: 'do', cardId: 'c1', text: 's1', cross: false },
+  //   { listId: 'doing', cardId: 'c2', text: 'Programming client', cross: false },
+  //   { listId: 'done', cardId: 'c3', text: 'Redux, I think.', cross: false },
+  //   { listId: 'done', cardId: 'c4', text: 'Remade redux', cross: false }
+  // ]
 };
 
 export const cardReducer = (state = initialState, action: CardActionTypes) => {
   switch (action.type) {
+    case SET_CARDS:
+      // console.log('Payload: ', action.payload.cards);
+      return {
+        ...state,
+        cards: action.payload.cards
+      };
     case ADD_CARD:
       return {
         cards: [
