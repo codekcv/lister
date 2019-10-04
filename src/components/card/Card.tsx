@@ -44,33 +44,34 @@ export const CardLi: React.FC<Props> = ({
   };
 
   return (
-    <Container>
+    <Container
+      isHover={hover}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {!edit ? (
-        <Div
-          isCross={cross}
-          isEditing={edit}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleDone}
-        >
+        <Div isCross={cross} onClick={handleDone}>
           <span className="text">{text}</span>
           <i>
             {hover && (
-              <>
+              <span className="butones">
                 <FaPencilAlt onClick={handleEditText} />{' '}
                 <FaTrashAlt onClick={handleDeleteCard} />
-              </>
+              </span>
             )}
           </i>
         </Div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <input
+          {/* <textarea
             type="text"
             placeholder="Add card..."
             value={input}
             onChange={handleInput}
-          />
+          /> */}
+          <textarea rows={5} cols={50} name="description">
+            Enter your name
+          </textarea>
           {/* <button type="submit">Done</button> */}
         </form>
       )}
@@ -78,13 +79,15 @@ export const CardLi: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ isHover: boolean }>`
+  position: relative;
   width: 280px;
-  background: white;
+  background: ${props => (!props.isHover ? 'white' : '#ebecf0')};
   margin: calc(var(--g-margin) * 2) 0;
   border: 1px lightgray solid;
   border-radius: 3px;
   box-shadow: 0 2px lightgray;
+  cursor: pointer;
 
   input {
     height: 34px;
@@ -93,13 +96,18 @@ const Container = styled.div`
     padding: var(--g-padding);
     background: #ebecf0;
   }
+
+  .butones {
+    position: absolute;
+    right: 8px;
+  }
 `;
 
-const Div = styled.p<{ isCross: boolean; isEditing: boolean }>`
+const Div = styled.p<{ isCross: boolean }>`
   display: flex;
   justify-content: space-between;
   padding: 8px;
-  height: 34px;
+  /* height: 34px; */
 
   .text {
     text-decoration: ${props => props.isCross && 'line-through'};

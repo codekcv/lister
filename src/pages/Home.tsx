@@ -4,23 +4,7 @@ import Lists from '../components/list/Lists';
 import { setCards } from '../store/card/actions';
 import { connect } from 'react-redux';
 
-interface Props {
-  setCards: typeof setCards;
-}
-
-const Home: React.FC<Props> = ({ setCards }) => {
-  const json = localStorage.getItem('data');
-
-  if (json) {
-    const data = JSON.parse(json);
-    const {
-      card: { cards }
-    } = data;
-
-    console.log(1, cards);
-    setCards(cards);
-  }
-
+export const Home: React.FC = () => {
   return (
     <>
       <Navbar>
@@ -59,8 +43,3 @@ const Navbar = styled.div`
     }
   }
 `;
-
-export default connect(
-  null,
-  { setCards }
-)(Home);

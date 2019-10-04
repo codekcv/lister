@@ -31,6 +31,7 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
     editList(id, editTitle);
   };
 
+  // eslint-disable-next-line
   const handleListDelete = (
     e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
   ) => {

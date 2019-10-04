@@ -28,28 +28,32 @@ const Cards: React.FC<Props> = ({
   deleteCard,
   crossCard
 }) => {
-  console.log(2, cardState.cards);
-  const listCards = cardState.cards.filter(card => {
-    // card.listId === listId
-    // console.log(card);
-    return card.listId === listId;
-  });
-  const [input, setInput] = useState('');
+  const listCards = cardState.cards.filter(card => card.listId === listId);
+  const [input, setInput] = useState<string>('');
+  const [height, setHeight] = useState<number>(35);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // e.preventDefault();
+    // setInput('');
+    // if () return;
+    // addCard(listId, input);
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setHeight(e.target.scrollHeight);
     setInput(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const val = input.trim();
+    if (e.key !== 'Enter' || val) return;
     setInput('');
-    if (!input.trim()) return;
-    addCard(listId, input);
+    setHeight(35);
+    addCard(listId, val);
   };
 
   return (
-    <Container>
+    <Container textHeight={height}>
       <ul>
         {listCards.map(card => (
           <li key={card.cardId}>
@@ -62,26 +66,44 @@ const Cards: React.FC<Props> = ({
           </li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Add card..."
-          value={input}
-          onChange={handleInput}
-        />
-        {/* <button type="submit">Add</button> */}
-      </form>
+      <textarea
+        className="textArea"
+        onKeyDown={handleEnter}
+        name="description"
+        placeholder="Add card..."
+        onChange={handleInput}
+        value={input}
+      />
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ textHeight: number }>`
   input {
-    height: 34px;
+    /* height: 34px;
     border: none;
     border-radius: 3px;
     width: 280px;
-    padding: var(--g-padding);
+    padding: var(--g-padding); */
+    /* overflow-wrap: break-word; */
+
+    display: block;
+    font-size: 11px;
+    padding: 4px 2px;
+    border: solid 1px #aacfe4;
+    width: 70px;
+    margin: 2px 0 20px 10px;
+  }
+
+  textarea {
+    resize: none;
+    overflow: hidden;
+    width: 280px;
+    height: ${props => props.textHeight + 'px'};
+    /* padding: var(--g-padding); */
+    padding: 8px;
+    border: 1px pink solid;
+    font-size: 16px;
   }
 `;
 

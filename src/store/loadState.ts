@@ -1,20 +1,21 @@
 import { AppState } from './store';
 
+const DATA_NAME = 'state';
+
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem('state');
-    if (serializedState === null) return undefined;
-    return JSON.parse(serializedState);
+    const serializedState = localStorage.getItem(DATA_NAME);
+    return serializedState ? JSON.parse(serializedState) : {};
   } catch (err) {
-    return console.error(err);
+    return undefined;
   }
 };
 
 export const saveState = (state: AppState) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
+    localStorage.setItem(DATA_NAME, serializedState);
   } catch (err) {
-    return console.error(err);
+    return undefined;
   }
 };
