@@ -38,10 +38,9 @@ const Cards: React.FC<Props> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (input) {
-      addCard(listId, input);
-      setInput('');
-    }
+    setInput('');
+    if (!input.trim()) return;
+    addCard(listId, input);
   };
 
   return (
