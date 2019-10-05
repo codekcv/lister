@@ -51,7 +51,7 @@ export const CardLi: React.FC<Props> = ({
     >
       {!edit ? (
         <Div isCross={cross} onClick={handleDone}>
-          <span className="text">{text}</span>
+          <p className="text">{text}</p>
           <i>
             {hover && (
               <span className="butones">
@@ -100,16 +100,17 @@ const Container = styled.div<{ isHover: boolean }>`
   .butones {
     position: absolute;
     right: 8px;
+    top: 8px;
   }
 `;
 
 const Div = styled.p<{ isCross: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  /* height: 34px; */
+  padding: var(--g-padding);
+  width: 260px;
 
   .text {
     text-decoration: ${props => props.isCross && 'line-through'};
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 `;

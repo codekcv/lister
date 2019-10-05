@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { CardState } from '../../store/card/types';
 import {
@@ -10,6 +10,7 @@ import {
 import { AppState } from '../../store/store';
 import styled from 'styled-components';
 import { CardLi } from './Card';
+import Textarea from 'react-textarea-autosize';
 
 interface Props {
   listId: string;
@@ -30,7 +31,8 @@ const Cards: React.FC<Props> = ({
 }) => {
   const listCards = cardState.cards.filter(card => card.listId === listId);
   const [input, setInput] = useState<string>('');
-  const [height, setHeight] = useState<number>(35);
+  const [height, setHeight] = useState<number>(64);
+  const inputRef: any = useRef(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // e.preventDefault();
@@ -40,16 +42,27 @@ const Cards: React.FC<Props> = ({
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setHeight(e.target.scrollHeight);
+    setHeight(e.target.scrollHeight + 64);
     setInput(e.target.value);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const val = input.trim();
-    if (e.key !== 'Enter' || val) return;
-    setInput('');
-    setHeight(35);
-    addCard(listId, val);
+    // // console.log('kewl');
+    // if (e.key !== 'Enter' || !val) return;
+    // // if (e.key !== 'Enter') return;
+    // setInput('');
+    // setHeight(35);
+    // addCard(listId, val);
+    // console.log(2);
+
+    if (e.key === 'Enter') {
+      setInput('');
+      if (val) {
+        setHeight(35);
+        addCard(listId, val);
+      }
+    }
   };
 
   return (
@@ -66,14 +79,22 @@ const Cards: React.FC<Props> = ({
           </li>
         ))}
       </ul>
-      <textarea
+      <Textarea
         className="textArea"
+        ref={inputRef}
         onKeyDown={handleEnter}
         name="description"
         placeholder="Add card..."
         onChange={handleInput}
         value={input}
       />
+      <button
+        onClick={() => {
+          inputRef.current.focus();
+        }}
+      >
+        Focis
+      </button>
     </Container>
   );
 };
@@ -99,11 +120,12 @@ const Container = styled.div<{ textHeight: number }>`
     resize: none;
     overflow: hidden;
     width: 280px;
-    height: ${props => props.textHeight + 'px'};
-    /* padding: var(--g-padding); */
+    /* height: ${props => props.textHeight + 'px'}; */
+    padding: var(--g-padding);
     padding: 8px;
     border: 1px pink solid;
     font-size: 16px;
+    flex: 1;
   }
 `;
 
