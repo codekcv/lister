@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { crossCard, editCard, deleteCard } from '../../store/card/actions';
 import { Card } from '../../store/card/types';
 import styled from 'styled-components';
@@ -22,7 +22,6 @@ export const CardLi: React.FC<Props> = ({
   const [hover, setHover] = useState(false);
   const [edit, setEdit] = useState(false);
   const [input, setInput] = useState('');
-  const inputRef: any = useRef();
 
   const handleDone = () => crossCard(cardId);
   const handleMouseEnter = () => setHover(true);
@@ -50,10 +49,6 @@ export const CardLi: React.FC<Props> = ({
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (inputRef.current !== null) inputRef.current.focus();
-  // });
 
   const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const val = input.trim();
@@ -91,7 +86,6 @@ export const CardLi: React.FC<Props> = ({
         </div>
       ) : (
         <Textarea
-          ref={inputRef}
           onKeyDown={handleEnter}
           placeholder="Edit card..."
           onChange={handleInput}
