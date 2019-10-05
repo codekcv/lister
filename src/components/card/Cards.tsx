@@ -40,10 +40,11 @@ const Cards: React.FC<Props> = ({
     const val = input.trim();
 
     if (e.key === 'Enter') {
+      e.preventDefault();
       if (val) {
         addCard(listId, val);
       }
-      setInput('s');
+      setInput('');
     }
   };
 
@@ -78,7 +79,6 @@ const Container = styled.div`
     width: 280px;
     padding: var(--g-padding);
     font-size: 16px;
-    border: 1px red solid;
   }
 `;
 
