@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { crossCard, editCard, deleteCard } from '../../store/card/actions';
 import { Card } from '../../store/card/types';
 import styled from 'styled-components';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import Textarea from 'react-textarea-autosize';
 
 interface Props {
   card: Card;
@@ -21,6 +22,7 @@ export const CardLi: React.FC<Props> = ({
   const [hover, setHover] = useState(false);
   const [edit, setEdit] = useState(false);
   const [input, setInput] = useState('');
+  const inputRef: any = useRef();
 
   const handleDone = () => crossCard(cardId);
   const handleMouseEnter = () => setHover(true);
@@ -33,53 +35,81 @@ export const CardLi: React.FC<Props> = ({
     handleDone();
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    editCard(cardId, input);
-    setEdit(false);
+  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const val = input.trim();
+
+    if (e.key === 'Enter') {
+      setInput('');
+      if (val) {
+        editCard(cardId, val);
+        setEdit(false);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (inputRef.current !== null) inputRef.current.focus();
+  // });
+
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    const val = input.trim();
+    if (val) {
+      editCard(cardId, val);
+      setEdit(false);
+    }
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    const temp_value = e.target.value;
+    e.target.value = '';
+    e.target.value = temp_value;
   };
 
   return (
     <Container
       isHover={hover}
+      isCross={cross}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      isEdit={edit}
     >
       {!edit ? (
-        <Div isCross={cross} onClick={handleDone}>
+        <div className="textDiv" onClick={handleDone}>
           <p className="text">{text}</p>
           <i>
             {hover && (
-              <span className="butones">
+              <span className="button">
                 <FaPencilAlt onClick={handleEditText} />{' '}
                 <FaTrashAlt onClick={handleDeleteCard} />
               </span>
             )}
           </i>
-        </Div>
+        </div>
       ) : (
-        <form onSubmit={handleSubmit}>
-          {/* <textarea
-            type="text"
-            placeholder="Add card..."
-            value={input}
-            onChange={handleInput}
-          /> */}
-          <textarea rows={5} cols={50} name="description">
-            Enter your name
-          </textarea>
-          {/* <button type="submit">Done</button> */}
-        </form>
+        <Textarea
+          ref={inputRef}
+          onKeyDown={handleEnter}
+          placeholder="Edit card..."
+          onChange={handleInput}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          value={input}
+          autoFocus
+        />
       )}
     </Container>
   );
 };
 
-const Container = styled.div<{ isHover: boolean }>`
+const Container = styled.div<{
+  isHover: boolean;
+  isEdit: boolean;
+  isCross: boolean;
+}>`
   position: relative;
   width: 280px;
   background: ${props => (!props.isHover ? 'white' : '#ebecf0')};
@@ -89,28 +119,19 @@ const Container = styled.div<{ isHover: boolean }>`
   box-shadow: 0 2px lightgray;
   cursor: pointer;
 
-  input {
-    height: 34px;
-    border: 1px royalblue solid;
-    border-radius: 3px;
+  .textDiv {
     padding: var(--g-padding);
-    background: #ebecf0;
   }
-
-  .butones {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-  }
-`;
-
-const Div = styled.p<{ isCross: boolean }>`
-  padding: var(--g-padding);
-  width: 260px;
 
   .text {
     text-decoration: ${props => props.isCross && 'line-through'};
     overflow-wrap: break-word;
     word-wrap: break-word;
+  }
+
+  .button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
   }
 `;
