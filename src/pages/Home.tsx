@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Lists from '../components/list/Lists';
-import { setCards } from '../store/card/actions';
-import { connect } from 'react-redux';
 
 export const Home: React.FC = () => {
+  const handleReset = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    localStorage.clear();
+  };
+
   return (
     <>
       <Navbar>
@@ -12,7 +14,7 @@ export const Home: React.FC = () => {
           <li>Home</li>
           <li>Boards</li>
           <li>Save</li>
-          <li>Options</li>
+          <li onClick={handleReset}>Options</li>
         </ul>
       </Navbar>
       <Container>
@@ -27,10 +29,9 @@ const Container = styled.div`
 `;
 
 const Navbar = styled.div`
-  width: 100vwnopm;
+  width: 100vw;
   height: 64px;
   background: #ebecf0;
-  /* margin: var(--g-margin); */
 
   ul {
     display: flex;

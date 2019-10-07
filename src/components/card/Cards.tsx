@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { CardState } from '../../store/card/types';
 import {
@@ -8,9 +8,9 @@ import {
   editCard
 } from '../../store/card/actions';
 import { AppState } from '../../store/store';
-import styled from 'styled-components';
 import { CardLi } from './Card';
 import Textarea from 'react-textarea-autosize';
+import styled from 'styled-components';
 
 interface Props {
   listId: string;
@@ -63,10 +63,10 @@ const Cards: React.FC<Props> = ({
         ))}
       </ul>
       <Textarea
-        onKeyDown={handleEnter}
+        value={input}
         placeholder="Add card..."
         onChange={handleInput}
-        value={input}
+        onKeyDown={handleEnter}
       />
     </Container>
   );
@@ -74,11 +74,7 @@ const Cards: React.FC<Props> = ({
 
 const Container = styled.div`
   textarea {
-    resize: none;
-    overflow: hidden;
-    width: 280px;
-    padding: var(--g-padding);
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 

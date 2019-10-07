@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+:root {
+  /* g = global */
+  --g-color-primary: #eee;
+  --g-color-secondary: #fff;
+  --g-padding: 8px;
+  --g-margin: 4px;
+  --g-border-radius-sm: 3px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,11 +22,10 @@ html {
   background-color: cornflowerblue;
 }
 
-:root {
-  /* g = global */
-  --g-color-primary: #eee;
-  --g-color-secondary: #fff;
-  --g-padding: 8px;
-  --g-margin: 4px;
-  --g-border-radius-sm: 3px;
+textarea {
+  padding: var(--g-padding);
+  /* margin: var(--g-margin) 0; */
+  overflow: hidden;
+  resize: none;
+  outline: none;
 }

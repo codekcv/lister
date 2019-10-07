@@ -86,12 +86,13 @@ export const CardLi: React.FC<Props> = ({
         </div>
       ) : (
         <Textarea
-          onKeyDown={handleEnter}
+          className="card-textarea"
+          value={input}
           placeholder="Edit card..."
           onChange={handleInput}
-          onBlur={handleBlur}
+          onKeyDown={handleEnter}
           onFocus={handleFocus}
-          value={input}
+          onBlur={handleBlur}
           autoFocus
         />
       )}
@@ -99,6 +100,7 @@ export const CardLi: React.FC<Props> = ({
   );
 };
 
+// eslint-disable-next-line
 const Container = styled.div<{
   isHover: boolean;
   isEdit: boolean;
@@ -107,14 +109,16 @@ const Container = styled.div<{
   position: relative;
   width: 280px;
   background: ${props => (!props.isHover ? 'white' : '#ebecf0')};
-  margin: calc(var(--g-margin) * 2) 0;
-  border: 1px lightgray solid;
-  border-radius: 3px;
-  box-shadow: 0 2px lightgray;
+
   cursor: pointer;
 
   .textDiv {
     padding: var(--g-padding);
+    margin: calc(var(--g-margin) * 2) 0;
+
+    border-radius: 3px;
+    box-shadow: 0 2px lightgray;
+    border: 1px lightgray solid;
   }
 
   .text {
@@ -127,5 +131,9 @@ const Container = styled.div<{
     position: absolute;
     right: 8px;
     top: 8px;
+  }
+
+  .card-textarea {
+    height: 300px;
   }
 `;

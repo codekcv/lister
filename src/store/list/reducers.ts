@@ -4,9 +4,8 @@ import {
   ADD_LIST,
   EDIT_LIST,
   DELETE_LIST,
-  AUTOFOCUS_LIST
+  FOCUS_LIST
 } from './types';
-import Lists from '../../components/list/Lists';
 
 const initialState: ListState = {
   lists: [
@@ -53,7 +52,7 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
       return {
         lists: state.lists.filter(list => list.id !== action.payload.id)
       };
-    case AUTOFOCUS_LIST:
+    case FOCUS_LIST:
       return {
         lists: state.lists.map(list => {
           list.id === action.payload.id && (list.autofocus = !list.autofocus);

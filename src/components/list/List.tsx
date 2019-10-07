@@ -1,78 +1,114 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { List } from '../../store/list/types';
-import { editList, deleteList, autofocusList } from '../../store/list/actions';
+import { editList, deleteList, focusList } from '../../store/list/actions';
 import Cards from '../card/Cards';
 import styled from 'styled-components';
+import Textarea from 'react-textarea-autosize';
+import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 
 interface Props {
   list: List;
   editList: typeof editList;
   deleteList: typeof deleteList;
-  autofocusList: typeof autofocusList;
+  focusList: typeof focusList;
 }
 
 export const ListLi: React.FC<Props> = ({
   list,
   editList,
   deleteList,
-  autofocusList
+  focusList: autofocusList
 }) => {
   const { id, title, autofocus } = list;
-  const [editTitle, setEditTitle] = useState('');
-  const [isChanging, setIsChanging] = useState(false);
-  const [newFocus, setNewFocus] = useState(false);
+  const [input, setInput] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [hover, setHover] = useState(false);
 
-  const handleChangeTitle = (
-    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-  ) => {
-    setEditTitle(title);
-    setIsChanging(true);
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditTitle(e.target.value);
+  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setInput('');
+      handleSubmit(input);
+    }
   };
 
-  const handleTitleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setIsChanging(false);
-    editList(id, editTitle);
+  const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    const temp_value = e.target.value;
+    e.target.value = '';
+    e.target.value = temp_value;
   };
 
-  const handleNewlyAdded = () => {};
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    handleSubmit(e.target.value);
+  };
 
-  useEffect(() => {
-    console.log(1, autofocus);
-    if (!autofocus) {
-      autofocusList(id, true);
-      setEditTitle('');
-      setIsChanging(true);
+  const handleSubmit = (title: string) => {
+    const val = title.trim();
+
+    if (val) {
+      editList(id, title);
+    } else {
+      editList(id, 'Untitled List');
     }
 
-    // eslint-disable-next-line]
-  }, []);
+    setEditing(false);
+  };
 
-  // eslint-disable-next-line
-  const handleListDelete = (
-    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-  ) => {
+  //=== HOVER ===\\
+  const handleMouseEnter = () => setHover(true);
+  const handleMouseLeave = () => setHover(false);
+
+  const handleListEdit = () => {
+    setInput(title);
+    setEditing(true);
+  };
+
+  const handleListDelete = () => {
     deleteList(id);
   };
 
+  useEffect(() => {
+    if (!autofocus) {
+      autofocusList(id, true);
+      setInput('');
+      setEditing(true);
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <Container>
-      {!isChanging ? (
-        <h2 onClick={handleChangeTitle}>{title}</h2>
+    <Container
+      isHover={hover}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {!editing ? (
+        <div className="title-area">
+          <p className="list-title">{title}</p>
+          <i>
+            {hover && (
+              <span className="button">
+                <FaPencilAlt onClick={handleListEdit} />{' '}
+                <FaTrashAlt onClick={handleListDelete} />
+              </span>
+            )}
+          </i>
+        </div>
       ) : (
-        <form onSubmit={handleTitleOnSubmit}>
-          <input
-            className="edit-title"
-            value={editTitle}
-            placeholder="Enter new title..."
-            onChange={handleChange}
-            autoFocus
-          ></input>
-          {/* <button type="submit">Done</button> */}
-        </form>
+        <Textarea
+          className="list-textarea"
+          value={input}
+          placeholder="Enter new title..."
+          onChange={handleChange}
+          onKeyDown={handleEnter}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          autoFocus
+        />
       )}
 
       <Cards listId={id} />
@@ -80,7 +116,7 @@ export const ListLi: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ isHover: boolean }>`
   background: #ebecf0;
   width: 300px;
   margin: var(--g-margin);
@@ -96,11 +132,25 @@ const Container = styled.div`
     height: 45px;
   }
 
-  input {
-    font-size: 1.5em;
-    width: 280px;
+  .list-textarea {
+    font-size: 1.5rem;
     height: 45px;
+  }
+
+  .title-area {
+    position: relative;
+  }
+
+  .button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+
+  .list-title {
     padding: var(--g-padding);
-    margin: var(--g-margin) 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-size: 1.5rem;
   }
 `;

@@ -6,7 +6,7 @@ import {
   addList,
   editList,
   deleteList,
-  autofocusList
+  focusList
 } from '../../store/list/actions';
 import styled from 'styled-components';
 import { ListLi } from './List';
@@ -16,7 +16,7 @@ interface Props {
   addList: typeof addList;
   editList: typeof editList;
   deleteList: typeof deleteList;
-  autofocusList: typeof autofocusList;
+  focusList: typeof focusList;
 }
 
 const Lists: React.FC<Props> = ({
@@ -24,12 +24,12 @@ const Lists: React.FC<Props> = ({
   addList,
   editList,
   deleteList,
-  autofocusList
+  focusList
 }) => {
   const { lists } = listState;
 
   const handleNewList = () => {
-    addList('New List');
+    addList('Untitled List');
   };
 
   return (
@@ -41,12 +41,12 @@ const Lists: React.FC<Props> = ({
               list={list}
               editList={editList}
               deleteList={deleteList}
-              autofocusList={autofocusList}
+              focusList={focusList}
             />
           </li>
         ))}
       </ul>
-      <div className="newList">
+      <div className="new-list">
         <h1 onClick={handleNewList}>New List</h1>
       </div>
     </Container>
@@ -64,7 +64,7 @@ const Container = styled.div`
     }
   }
 
-  .newList {
+  .new-list {
     width: 300px;
     background: #ebecf0;
     height: 60px;
@@ -75,6 +75,11 @@ const Container = styled.div`
     box-shadow: 0 4px lightgray;
     text-align: center;
   }
+
+  textarea {
+    width: 280px;
+    padding: var(--g-padding);
+  }
 `;
 
 const mapStateToProps = (state: AppState) => ({
@@ -83,5 +88,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addList, editList, deleteList, autofocusList }
+  { addList, editList, deleteList, focusList: focusList }
 )(Lists);

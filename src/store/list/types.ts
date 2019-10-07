@@ -11,7 +11,7 @@ export interface ListState {
 export const ADD_LIST = 'ADD_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
 export const DELETE_LIST = 'DELETE_LIST';
-export const AUTOFOCUS_LIST = 'AUTOFOCUS_LIST';
+export const FOCUS_LIST = 'AUTOFOCUS_LIST';
 
 interface AddListAction {
   type: typeof ADD_LIST;
@@ -28,8 +28,8 @@ interface DeleteListAction {
   payload: { id: string };
 }
 
-interface AutofocusListAction {
-  type: typeof AUTOFOCUS_LIST;
+interface FocusListAction {
+  type: typeof FOCUS_LIST;
   payload: { id: string; autofocus: boolean };
 }
 
@@ -37,4 +37,4 @@ export type ListActionTypes =
   | AddListAction
   | EditListAction
   | DeleteListAction
-  | AutofocusListAction;
+  | FocusListAction;
