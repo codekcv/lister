@@ -99,16 +99,18 @@ export const ListLi: React.FC<Props> = ({
           </i>
         </div>
       ) : (
-        <Textarea
-          className="list-textarea"
-          value={input}
-          placeholder="Enter new title..."
-          onChange={handleChange}
-          onKeyDown={handleEnter}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          autoFocus
-        />
+        <div className="list-textarea-container">
+          <Textarea
+            className="list-textarea"
+            value={input}
+            placeholder="Enter new title..."
+            onChange={handleChange}
+            onKeyDown={handleEnter}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            autoFocus
+          />
+        </div>
       )}
 
       <Cards listId={id} />
@@ -121,19 +123,9 @@ const Container = styled.div<{ isHover: boolean }>`
   width: 300px;
   margin: var(--g-margin);
   padding: calc(var(--g-padding) * 2);
-  border: 2px lightgray solid;
+  /* border: 2px lightgray solid; */
   border-radius: 3px;
   box-shadow: 0 4px lightgray;
-
-  .list-textarea {
-    font-size: 1.5rem;
-    height: 45px;
-    border: 1px pink solid;
-
-    margin: var(--g-margin);
-    padding: var(--g-padding);
-    padding-left: 4px;
-  }
 
   .title-area {
     position: relative;
@@ -145,12 +137,26 @@ const Container = styled.div<{ isHover: boolean }>`
     padding: var(--g-padding);
     overflow-wrap: break-word;
     word-wrap: break-word;
-    font-size: 1.5rem;
+    font-weight: bold;
   }
 
   .button {
     position: absolute;
     right: 8px;
     top: 8px;
+  }
+
+  .list-textarea-container {
+    width: auto;
+    border: 2px pink solid;
+  }
+
+  .list-textarea {
+    width: 100%;
+    font-weight: bold;
+    font-size: 1rem;
+    margin: var(--g-margin);
+    padding: var(--g-padding);
+    margin-bottom: -4px;
   }
 `;

@@ -87,7 +87,7 @@ export const CardLi: React.FC<Props> = ({
           </i>
         </div>
       ) : (
-        <div className="textarea-container">
+        <div className="card-textarea-container">
           <Textarea
             className="card-textarea"
             value={input}
@@ -113,7 +113,8 @@ const Container = styled.div<{
   position: relative;
   width: auto;
 
-  border: 1px lightgray solid;
+  // border: 1px lightgray solid;
+  border-radius: 3px;
   box-shadow: 0 2px lightgray;
   background: ${props =>
     !props.isHover || props.isEdit ? 'white' : '#ebecf0'};
@@ -140,17 +141,16 @@ const Container = styled.div<{
     top: 8px;
   }
 
-  .textarea-container {
+  .card-textarea-container {
     width: auto;
   }
 
   .card-textarea {
-    // margin-bottom: calc(var(--g-margin));
-    color: blue;
-    // margin-left: -4px;
-    // padding-left: 8px;
-    padding: 4px 8px;
     width: 100%;
+    color: blue;
     margin-bottom: -4px;
+    padding: 3px 7px;
+    border: 1px blue solid;
+    border-radius: 3px;
   }
 `;
