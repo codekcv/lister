@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { List } from '../../store/list/types';
-import { editList, deleteList } from '../../store/list/actions';
+import { editList, deleteList, autofocusList } from '../../store/list/actions';
 import Cards from '../card/Cards';
 import styled from 'styled-components';
 
@@ -8,12 +8,19 @@ interface Props {
   list: List;
   editList: typeof editList;
   deleteList: typeof deleteList;
+  autofocusList: typeof autofocusList;
 }
 
-export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
-  const { id, title } = list;
+export const ListLi: React.FC<Props> = ({
+  list,
+  editList,
+  deleteList,
+  autofocusList
+}) => {
+  const { id, title, autofocus } = list;
   const [editTitle, setEditTitle] = useState('');
   const [isChanging, setIsChanging] = useState(false);
+  const [newFocus, setNewFocus] = useState(false);
 
   const handleChangeTitle = (
     e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
@@ -30,6 +37,19 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
     setIsChanging(false);
     editList(id, editTitle);
   };
+
+  const handleNewlyAdded = () => {};
+
+  useEffect(() => {
+    console.log(1, autofocus);
+    if (!autofocus) {
+      autofocusList(id, true);
+      setEditTitle('');
+      setIsChanging(true);
+    }
+
+    // eslint-disable-next-line]
+  }, []);
 
   // eslint-disable-next-line
   const handleListDelete = (
@@ -49,6 +69,7 @@ export const ListLi: React.FC<Props> = ({ list, editList, deleteList }) => {
             value={editTitle}
             placeholder="Enter new title..."
             onChange={handleChange}
+            autoFocus
           ></input>
           {/* <button type="submit">Done</button> */}
         </form>
@@ -80,5 +101,6 @@ const Container = styled.div`
     width: 280px;
     height: 45px;
     padding: var(--g-padding);
+    margin: var(--g-margin) 0;
   }
 `;

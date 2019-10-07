@@ -2,7 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
 import { ListState } from '../../store/list/types';
-import { addList, editList, deleteList } from '../../store/list/actions';
+import {
+  addList,
+  editList,
+  deleteList,
+  autofocusList
+} from '../../store/list/actions';
 import styled from 'styled-components';
 import { ListLi } from './List';
 
@@ -11,13 +16,15 @@ interface Props {
   addList: typeof addList;
   editList: typeof editList;
   deleteList: typeof deleteList;
+  autofocusList: typeof autofocusList;
 }
 
 const Lists: React.FC<Props> = ({
   listState,
   addList,
   editList,
-  deleteList
+  deleteList,
+  autofocusList
 }) => {
   const { lists } = listState;
 
@@ -30,7 +37,12 @@ const Lists: React.FC<Props> = ({
       <ul className="lists">
         {lists.map(list => (
           <li key={list.id}>
-            <ListLi list={list} editList={editList} deleteList={deleteList} />
+            <ListLi
+              list={list}
+              editList={editList}
+              deleteList={deleteList}
+              autofocusList={autofocusList}
+            />
           </li>
         ))}
       </ul>
@@ -71,5 +83,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addList, editList, deleteList }
+  { addList, editList, deleteList, autofocusList }
 )(Lists);

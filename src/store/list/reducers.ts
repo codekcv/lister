@@ -3,22 +3,27 @@ import {
   ListActionTypes,
   ADD_LIST,
   EDIT_LIST,
-  DELETE_LIST
+  DELETE_LIST,
+  AUTOFOCUS_LIST
 } from './types';
+import Lists from '../../components/list/Lists';
 
 const initialState: ListState = {
   lists: [
     {
       id: 'do',
-      title: 'Do'
+      title: 'Do',
+      autofocus: true
     },
     {
       id: 'doing',
-      title: 'Doing'
+      title: 'Doing',
+      autofocus: true
     },
     {
       id: 'done',
-      title: 'Done'
+      title: 'Done',
+      autofocus: true
     }
   ]
 };
@@ -32,7 +37,8 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
           {
             id: require('short-uuid').generate(),
             title: action.payload.title,
-            cardsID: []
+            cardsID: [],
+            autofocus: false
           }
         ]
       };
@@ -46,6 +52,13 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
     case DELETE_LIST:
       return {
         lists: state.lists.filter(list => list.id !== action.payload.id)
+      };
+    case AUTOFOCUS_LIST:
+      return {
+        lists: state.lists.map(list => {
+          list.id === action.payload.id && (list.autofocus = !list.autofocus);
+          return list;
+        })
       };
     default:
       return state;

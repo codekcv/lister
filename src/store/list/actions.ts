@@ -1,4 +1,4 @@
-import { ADD_LIST, EDIT_LIST, DELETE_LIST } from './types';
+import { ADD_LIST, EDIT_LIST, DELETE_LIST, AUTOFOCUS_LIST } from './types';
 
 export const addList = (title: string) => {
   return {
@@ -18,5 +18,12 @@ export const deleteList = (id: string) => {
   return {
     type: DELETE_LIST,
     payload: { id }
+  };
+};
+
+export const autofocusList = (id: string, autofocus: boolean) => {
+  return {
+    type: AUTOFOCUS_LIST,
+    payload: { id, autofocus }
   };
 };
