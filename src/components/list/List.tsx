@@ -36,16 +36,6 @@ export const ListLi: React.FC<Props> = ({
     }
   };
 
-  const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    const temp_value = e.target.value;
-    e.target.value = '';
-    e.target.value = temp_value;
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    handleSubmit(e.target.value);
-  };
-
   const handleSubmit = (title: string) => {
     const val = title.trim();
 
@@ -56,6 +46,16 @@ export const ListLi: React.FC<Props> = ({
     }
 
     setEditing(false);
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    const temp_value = e.target.value;
+    e.target.value = '';
+    e.target.value = temp_value;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    handleSubmit(e.target.value);
   };
 
   //=== HOVER ===\\
@@ -81,13 +81,13 @@ export const ListLi: React.FC<Props> = ({
   }, []);
 
   return (
-    <Container
-      isHover={hover}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Container isHover={hover}>
       {!editing ? (
-        <div className="title-area">
+        <div
+          className="title-area"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <p className="list-title">{title}</p>
           <i>
             {hover && (
@@ -120,31 +120,25 @@ const Container = styled.div<{ isHover: boolean }>`
   background: #ebecf0;
   width: 300px;
   margin: var(--g-margin);
-  padding: var(--g-padding);
+  padding: calc(var(--g-padding) * 2);
   border: 2px lightgray solid;
   border-radius: 3px;
   box-shadow: 0 4px lightgray;
 
-  h2 {
-    text-align: center;
-    padding: 0.35rem 0;
-    width: 280px;
-    height: 45px;
-  }
-
   .list-textarea {
     font-size: 1.5rem;
     height: 45px;
+    border: 1px pink solid;
+
+    margin: var(--g-margin);
+    padding: var(--g-padding);
+    padding-left: 4px;
   }
 
   .title-area {
     position: relative;
-  }
-
-  .button {
-    position: absolute;
-    right: 8px;
-    top: 8px;
+    margin: var(--g-margin);
+    padding: var(--g-padding);
   }
 
   .list-title {
@@ -152,5 +146,11 @@ const Container = styled.div<{ isHover: boolean }>`
     overflow-wrap: break-word;
     word-wrap: break-word;
     font-size: 1.5rem;
+  }
+
+  .button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
   }
 `;

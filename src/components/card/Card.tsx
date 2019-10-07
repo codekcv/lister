@@ -19,13 +19,16 @@ export const CardLi: React.FC<Props> = ({
   crossCard
 }) => {
   const { cardId, text, cross } = card;
+
+  //=== Container === \\
   const [hover, setHover] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [input, setInput] = useState('');
 
-  const handleDone = () => crossCard(cardId);
   const handleMouseEnter = () => setHover(true);
   const handleMouseLeave = () => setHover(false);
+
+  //=== Button ===\\
+  const handleDone = () => crossCard(cardId);
   const handleDeleteCard = () => deleteCard(cardId);
 
   const handleEditText = () => {
@@ -34,28 +37,23 @@ export const CardLi: React.FC<Props> = ({
     handleDone();
   };
 
+  //=== Text Area ===\\
+  const [input, setInput] = useState('');
+
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const val = input.trim();
-
     if (e.key === 'Enter') {
-      setInput('');
-      if (val) {
-        editCard(cardId, val);
-        setEdit(false);
-      }
+      e.preventDefault();
+      handleSubmit(input);
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    const val = input.trim();
-    if (val) {
-      editCard(cardId, val);
-      setEdit(false);
-    }
+  const handleSubmit = (title: string) => {
+    title.trim() ? editCard(cardId, title) : deleteCard(cardId);
+    setEdit(false);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -64,13 +62,17 @@ export const CardLi: React.FC<Props> = ({
     e.target.value = temp_value;
   };
 
+  const handleBlur = () => {
+    handleSubmit(input);
+  };
+
   return (
     <Container
       isHover={hover}
       isCross={cross}
+      isEdit={edit}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      isEdit={edit}
     >
       {!edit ? (
         <div className="textDiv" onClick={handleDone}>
@@ -85,16 +87,18 @@ export const CardLi: React.FC<Props> = ({
           </i>
         </div>
       ) : (
-        <Textarea
-          className="card-textarea"
-          value={input}
-          placeholder="Edit card..."
-          onChange={handleInput}
-          onKeyDown={handleEnter}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          autoFocus
-        />
+        <div className="textarea-container">
+          <Textarea
+            className="card-textarea"
+            value={input}
+            placeholder="Edit card..."
+            onChange={handleInput}
+            onKeyDown={handleEnter}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            autoFocus
+          />
+        </div>
       )}
     </Container>
   );
@@ -107,18 +111,21 @@ const Container = styled.div<{
   isCross: boolean;
 }>`
   position: relative;
-  width: 280px;
-  background: ${props => (!props.isHover ? 'white' : '#ebecf0')};
+  width: auto;
+
+  border: 1px lightgray solid;
+  box-shadow: 0 2px lightgray;
+  background: ${props =>
+    !props.isHover || props.isEdit ? 'white' : '#ebecf0'};
 
   cursor: pointer;
+  margin: calc(var(--g-margin) * 2) 0;
 
   .textDiv {
+    // position: relative;
+    margin: calc(var(--g-margin)); //calc(var(--g-margin) * 2);
     padding: var(--g-padding);
-    margin: calc(var(--g-margin) * 2) 0;
-
-    border-radius: 3px;
-    box-shadow: 0 2px lightgray;
-    border: 1px lightgray solid;
+    width: auto;
   }
 
   .text {
@@ -129,11 +136,21 @@ const Container = styled.div<{
 
   .button {
     position: absolute;
-    right: 8px;
+    right: 80px;
     top: 8px;
   }
 
+  .textarea-container {
+    width: auto;
+  }
+
   .card-textarea {
-    height: 300px;
+    // margin-bottom: calc(var(--g-margin));
+    color: blue;
+    // margin-left: -4px;
+    // padding-left: 8px;
+    padding: 4px 8px;
+    width: 100%;
+    margin-bottom: -4px;
   }
 `;

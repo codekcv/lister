@@ -34,6 +34,7 @@ const Lists: React.FC<Props> = ({
 
   return (
     <Container>
+      {/* <div className="modal" /> */}
       <ul className="lists">
         {lists.map(list => (
           <li key={list.id}>
@@ -47,7 +48,7 @@ const Lists: React.FC<Props> = ({
         ))}
       </ul>
       <div className="new-list">
-        <h1 onClick={handleNewList}>New List</h1>
+        <p onClick={handleNewList}>New List</p>
       </div>
     </Container>
   );

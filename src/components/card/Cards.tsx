@@ -62,12 +62,15 @@ const Cards: React.FC<Props> = ({
           </li>
         ))}
       </ul>
-      <Textarea
-        value={input}
-        placeholder="Add card..."
-        onChange={handleInput}
-        onKeyDown={handleEnter}
-      />
+      <div className="textarea-container">
+        <Textarea
+          className="add-card-textarea"
+          value={input}
+          placeholder="Add card..."
+          onChange={handleInput}
+          onKeyDown={handleEnter}
+        />
+      </div>
     </Container>
   );
 };
@@ -75,6 +78,18 @@ const Cards: React.FC<Props> = ({
 const Container = styled.div`
   textarea {
     font-size: 1rem;
+  }
+
+  .textarea-container {
+    margin: var(--g-margin) 0;
+    /* padding: var(--g-padding); */
+    width: auto;
+  }
+
+  .add-card-textarea {
+    width: 100%;
+    padding: calc(var(--g-padding) * 2);
+    border: 1px rgba(255, 255, 255, 0.5) solid;
   }
 `;
 

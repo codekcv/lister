@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Lists from '../components/list/Lists';
 
 export const Home: React.FC = () => {
-  const handleReset = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  const handleReset = () => {
     localStorage.clear();
   };
 
