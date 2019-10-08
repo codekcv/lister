@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '../../store/list/types';
-import { editList, deleteList, focusList } from '../../store/list/actions';
+import {
+  editList,
+  deleteList,
+  focusList,
+  currentlyAdding
+} from '../../store/list/actions';
 import Cards from '../card/Cards';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
@@ -11,15 +16,17 @@ interface Props {
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
+  currentlyAdding: typeof currentlyAdding;
 }
 
 export const ListLi: React.FC<Props> = ({
   list,
   editList,
   deleteList,
-  focusList: autofocusList
+  focusList,
+  currentlyAdding
 }) => {
-  const { id, title, autofocus } = list;
+  const { id, title, autofocus, adding } = list;
   const [input, setInput] = useState('');
   const [editing, setEditing] = useState(false);
   const [hover, setHover] = useState(false);
@@ -39,6 +46,7 @@ export const ListLi: React.FC<Props> = ({
   const handleSubmit = (title: string) => {
     title.trim() ? editList(id, title) : editList(id, 'Untitled List');
     setEditing(false);
+    setHover(false);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -66,7 +74,7 @@ export const ListLi: React.FC<Props> = ({
 
   useEffect(() => {
     if (!autofocus) {
-      autofocusList(id, true);
+      focusList(id, true);
       setInput('');
       setEditing(true);
     }
@@ -106,7 +114,7 @@ export const ListLi: React.FC<Props> = ({
         </div>
       )}
 
-      <Cards listId={id} />
+      <Cards listId={id} currentlyAdding={currentlyAdding} adding={adding} />
     </Container>
   );
 };

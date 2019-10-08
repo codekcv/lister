@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
-import { crossCard, editCard, deleteCard } from '../../store/card/actions';
+import React, { useState, useEffect } from 'react';
+import {
+  crossCard,
+  editCard,
+  deleteCard,
+  initCard
+} from '../../store/card/actions';
 import { Card } from '../../store/card/types';
 import styled from 'styled-components';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import Textarea from 'react-textarea-autosize';
+import { currentlyAdding } from '../../store/list/actions';
 
 interface Props {
   card: Card;
   editCard: typeof editCard;
   deleteCard: typeof deleteCard;
   crossCard: typeof crossCard;
+  initCard: typeof initCard;
+  currentlyAdding: typeof currentlyAdding;
 }
 
 export const CardLi: React.FC<Props> = ({
   card,
   editCard,
   deleteCard,
-  crossCard
+  crossCard,
+  initCard,
+  currentlyAdding
 }) => {
-  const { cardId, text, cross } = card;
+  const { listId, cardId, text, cross, init } = card;
 
   //=== Container === \\
   const [hover, setHover] = useState(false);
@@ -54,6 +64,7 @@ export const CardLi: React.FC<Props> = ({
   const handleSubmit = (title: string) => {
     title.trim() ? editCard(cardId, title) : deleteCard(cardId);
     setEditing(false);
+    currentlyAdding(listId, false);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -65,6 +76,14 @@ export const CardLi: React.FC<Props> = ({
   const handleBlur = () => {
     handleSubmit(input);
   };
+
+  useEffect(() => {
+    if (!init) {
+      initCard(cardId, true);
+      setInput('');
+      setEditing(true);
+    }
+  }, []);
 
   return (
     <Container

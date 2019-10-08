@@ -5,12 +5,14 @@ import {
   addCard,
   crossCard,
   deleteCard,
-  editCard
+  editCard,
+  initCard
 } from '../../store/card/actions';
 import { AppState } from '../../store/store';
 import { CardLi } from './Card';
 import Textarea from 'react-textarea-autosize';
 import styled from 'styled-components';
+import { currentlyAdding } from '../../store/list/actions';
 
 interface Props {
   listId: string;
@@ -19,6 +21,9 @@ interface Props {
   editCard: typeof editCard;
   deleteCard: typeof deleteCard;
   crossCard: typeof crossCard;
+  initCard: typeof initCard;
+  currentlyAdding: typeof currentlyAdding;
+  adding: boolean;
 }
 
 const Cards: React.FC<Props> = ({
@@ -27,7 +32,10 @@ const Cards: React.FC<Props> = ({
   addCard,
   editCard,
   deleteCard,
-  crossCard
+  crossCard,
+  initCard,
+  currentlyAdding,
+  adding
 }) => {
   const listCards = cardState.cards.filter(card => card.listId === listId);
   const [input, setInput] = useState<string>('');
@@ -46,6 +54,12 @@ const Cards: React.FC<Props> = ({
     }
   };
 
+  const handleClick = () => {
+    addCard(listId, 'hi');
+    currentlyAdding(listId, true);
+    // adding(listId, true);
+  };
+
   return (
     <Container>
       <ul>
@@ -56,24 +70,47 @@ const Cards: React.FC<Props> = ({
               editCard={editCard}
               deleteCard={deleteCard}
               crossCard={crossCard}
+              initCard={initCard}
+              currentlyAdding={currentlyAdding}
             />
           </li>
         ))}
       </ul>
       <div className="textarea-container">
-        <Textarea
+        {/* <Textarea
           className="add-card-textarea"
           value={input}
           placeholder="Add card..."
           onChange={handleInput}
           onKeyDown={handleEnter}
-        />
+        /> */}
+        {!adding && <button onClick={handleClick}>+ Add a card</button>}
       </div>
     </Container>
   );
 };
 
 const Container = styled.div`
+  button {
+    width: 100%;
+    background: none;
+    /* background: lightgray; */
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+    /* padding-bottom: -1px; */
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1px;
+    color: gray;
+  }
+  button:hover {
+    background: lightgray;
+    /* background: white; */
+    /* border: 1px blue solid; */
+    text-decoration: underline;
+  }
+
   textarea {
     font-size: 1rem;
   }
@@ -97,5 +134,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addCard, editCard, deleteCard, crossCard }
+  { addCard, editCard, deleteCard, crossCard, initCard }
 )(Cards);

@@ -6,7 +6,8 @@ import {
   addList,
   editList,
   deleteList,
-  focusList
+  focusList,
+  currentlyAdding
 } from '../../store/list/actions';
 import styled from 'styled-components';
 import { ListLi } from './List';
@@ -17,6 +18,7 @@ interface Props {
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
+  currentlyAdding: typeof currentlyAdding;
 }
 
 const Lists: React.FC<Props> = ({
@@ -24,7 +26,8 @@ const Lists: React.FC<Props> = ({
   addList,
   editList,
   deleteList,
-  focusList
+  focusList,
+  currentlyAdding
 }) => {
   const { lists } = listState;
 
@@ -43,6 +46,7 @@ const Lists: React.FC<Props> = ({
               editList={editList}
               deleteList={deleteList}
               focusList={focusList}
+              currentlyAdding={currentlyAdding}
             />
           </li>
         ))}
@@ -89,5 +93,11 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addList, editList, deleteList, focusList: focusList }
+  {
+    addList,
+    editList,
+    deleteList,
+    focusList,
+    currentlyAdding
+  }
 )(Lists);

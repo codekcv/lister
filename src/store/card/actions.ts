@@ -4,7 +4,8 @@ import {
   EDIT_CARD,
   DELETE_CARD,
   CROSS_CARD,
-  Card
+  Card,
+  INIT_CARD
 } from './types';
 
 export const setCards = (card: Card[]) => {
@@ -39,5 +40,12 @@ export const crossCard = (id: string) => {
   return {
     type: CROSS_CARD,
     payload: { id }
+  };
+};
+
+export const initCard = (id: string, init: boolean) => {
+  return {
+    type: INIT_CARD,
+    payload: { id, init }
   };
 };

@@ -4,7 +4,8 @@ import {
   ADD_LIST,
   EDIT_LIST,
   DELETE_LIST,
-  FOCUS_LIST
+  FOCUS_LIST,
+  ADDING
 } from './types';
 
 const initialState: ListState = {
@@ -12,17 +13,20 @@ const initialState: ListState = {
     {
       id: 'do',
       title: 'Do',
-      autofocus: true
+      autofocus: true,
+      adding: false
     },
     {
       id: 'doing',
       title: 'Doing',
-      autofocus: true
+      autofocus: true,
+      adding: false
     },
     {
       id: 'done',
       title: 'Done',
-      autofocus: true
+      autofocus: true,
+      adding: false
     }
   ]
 };
@@ -37,7 +41,8 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
             id: require('short-uuid').generate(),
             title: action.payload.title,
             cardsID: [],
-            autofocus: false
+            autofocus: false,
+            adding: false
           }
         ]
       };
@@ -56,6 +61,14 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
       return {
         lists: state.lists.map(list => {
           list.id === action.payload.id && (list.autofocus = !list.autofocus);
+          return list;
+        })
+      };
+    case ADDING:
+      return {
+        lists: state.lists.map(list => {
+          list.id === action.payload.id &&
+            (list.adding = action.payload.adding);
           return list;
         })
       };
