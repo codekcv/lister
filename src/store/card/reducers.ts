@@ -49,7 +49,7 @@ export const cardReducer = (state = initialState, action: CardActionTypes) => {
           {
             listId: action.payload.listId,
             cardId: require('short-uuid').generate(),
-            text: action.payload.text,
+            text: '',
             cross: false,
             init: false
           }

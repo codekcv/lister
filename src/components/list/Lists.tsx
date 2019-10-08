@@ -37,7 +37,6 @@ const Lists: React.FC<Props> = ({
 
   return (
     <Container>
-      {/* <div className="modal" /> */}
       <ul className="lists">
         {lists.map(list => (
           <li key={list.id}>
@@ -51,9 +50,9 @@ const Lists: React.FC<Props> = ({
           </li>
         ))}
       </ul>
-      <div className="new-list">
-        <p onClick={handleNewList}>New List</p>
-      </div>
+      <button className="new-list" onClick={handleNewList}>
+        + Add a list
+      </button>
     </Container>
   );
 };
@@ -70,15 +69,18 @@ const Container = styled.div`
   }
 
   .new-list {
-    width: 300px;
-    background: #ebecf0;
-    height: 60px;
-    margin: var(--g-margin);
-    padding: var(--g-padding);
-    border: 2px lightgray solid;
-    border-radius: 3px;
-    box-shadow: 0 4px lightgray;
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
     text-align: center;
+    width: 300px;
+    height: 30px;
+    margin: var(--g-margin);
+    border: none;
+    border-radius: 3px;
+  }
+
+  .new-list:hover {
+    background: rgba(255, 255, 255, 0.45);
   }
 
   textarea {

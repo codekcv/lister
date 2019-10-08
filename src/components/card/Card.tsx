@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   crossCard,
   editCard,
@@ -39,12 +39,16 @@ export const CardLi: React.FC<Props> = ({
 
   //=== Button ===\\
   const handleDone = () => crossCard(cardId);
-  const handleDeleteCard = () => deleteCard(cardId);
+  const handleDeleteCard = () => {
+    deleteCard(cardId);
+    console.log('dilit');
+  };
 
   const handleEditText = () => {
     setEditing(true);
     setInput(text);
     handleDone();
+    console.log('wtf');
   };
 
   //=== Text Area ===\\
@@ -77,13 +81,11 @@ export const CardLi: React.FC<Props> = ({
     handleSubmit(input);
   };
 
-  useEffect(() => {
-    if (!init) {
-      initCard(cardId, true);
-      setInput('');
-      setEditing(true);
-    }
-  }, []);
+  if (!init) {
+    initCard(cardId, true);
+    setInput('');
+    setEditing(true);
+  }
 
   return (
     <Container
@@ -97,12 +99,10 @@ export const CardLi: React.FC<Props> = ({
         <div className="textDiv" onClick={handleDone}>
           <p className="text">{text}</p>
           <i>
-            {hover && (
-              <span className="card-button">
-                <FaPencilAlt onClick={handleEditText} />{' '}
-                <FaTrashAlt onClick={handleDeleteCard} />
-              </span>
-            )}
+            <span className="card-button">
+              <FaPencilAlt onClick={handleEditText} />{' '}
+              <FaTrashAlt onClick={handleDeleteCard} />
+            </span>
           </i>
         </div>
       ) : (
@@ -130,22 +130,25 @@ const Container = styled.div<{
   isCross: boolean;
 }>`
   position: relative;
-  width: auto;
-
-  // border: 1px lightgray solid;
-  border-radius: 3px;
-  box-shadow: 0 2px lightgray;
   background: ${props =>
     !props.isHover || props.isEdit ? 'white' : '#ebecf0'};
-
+  width: auto;
   cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0 2px lightgray;
   margin: calc(var(--g-margin) * 2) 0;
 
   .textDiv {
-    // position: relative;
+    position: relative;
     margin: calc(var(--g-margin)); //calc(var(--g-margin) * 2);
     padding: var(--g-padding);
     width: auto;
+  }
+
+  .textDiv:hover {
+    .card-button {
+      display: block;
+    }
   }
 
   .text {
@@ -155,9 +158,9 @@ const Container = styled.div<{
   }
 
   .card-button {
+    display: none;
     position: absolute;
     right: 4px;
-    //right: 80px;
     top: 4px;
   }
 

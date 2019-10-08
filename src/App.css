@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap');
 
 :root {
-  /* g = global */
   --g-color-primary: #eee;
   --g-color-secondary: #fff;
   --g-padding: 4px;
@@ -16,7 +15,6 @@
   font-family: 'Roboto', sans-serif;
   color: darkslategray;
   list-style: none;
-  /* filter: sepia(100%); //hue-rotate(90deg) saturate(400%); */
 }
 
 html {
@@ -33,6 +31,7 @@ textarea {
   outline: none;
 }
 
+/* Test */
 .modal {
   /* display: none;  */
   position: fixed; /* Stay in place */

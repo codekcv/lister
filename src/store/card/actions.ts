@@ -15,10 +15,10 @@ export const setCards = (card: Card[]) => {
   };
 };
 
-export const addCard = (listId: string, text: string) => {
+export const addCard = (listId: string) => {
   return {
     type: ADD_CARD,
-    payload: { listId, text }
+    payload: { listId }
   };
 };
 

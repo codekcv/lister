@@ -24,7 +24,7 @@ interface SetCardAction {
 
 interface AddCardAction {
   type: typeof ADD_CARD;
-  payload: { listId: string; text: string };
+  payload: { listId: string };
 }
 
 interface EditCardAction {

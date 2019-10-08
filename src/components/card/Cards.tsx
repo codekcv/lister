@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { CardState } from '../../store/card/types';
 import {
@@ -10,7 +10,6 @@ import {
 } from '../../store/card/actions';
 import { AppState } from '../../store/store';
 import { CardLi } from './Card';
-import Textarea from 'react-textarea-autosize';
 import styled from 'styled-components';
 import { currentlyAdding } from '../../store/list/actions';
 
@@ -38,26 +37,10 @@ const Cards: React.FC<Props> = ({
   adding
 }) => {
   const listCards = cardState.cards.filter(card => card.listId === listId);
-  const [input, setInput] = useState<string>('');
-
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value);
-  };
-
-  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const val = input.trim();
-
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      setInput('');
-      val && addCard(listId, val);
-    }
-  };
 
   const handleClick = () => {
-    addCard(listId, 'hi');
+    addCard(listId);
     currentlyAdding(listId, true);
-    // adding(listId, true);
   };
 
   return (
@@ -77,13 +60,6 @@ const Cards: React.FC<Props> = ({
         ))}
       </ul>
       <div className="textarea-container">
-        {/* <Textarea
-          className="add-card-textarea"
-          value={input}
-          placeholder="Add card..."
-          onChange={handleInput}
-          onKeyDown={handleEnter}
-        /> */}
         {!adding && <button onClick={handleClick}>+ Add a card</button>}
       </div>
     </Container>
@@ -92,22 +68,18 @@ const Cards: React.FC<Props> = ({
 
 const Container = styled.div`
   button {
-    width: 100%;
     background: none;
-    /* background: lightgray; */
+    color: gray;
+    width: 100%;
+    height: 30px;
     border: none;
     border-radius: 3px;
-    height: 30px;
-    /* padding-bottom: -1px; */
     margin: 0;
-    padding: 0;
     margin-bottom: 1px;
-    color: gray;
+    padding: 0;
   }
   button:hover {
     background: lightgray;
-    /* background: white; */
-    /* border: 1px blue solid; */
     text-decoration: underline;
   }
 
@@ -116,9 +88,8 @@ const Container = styled.div`
   }
 
   .textarea-container {
-    margin: var(--g-margin) 0;
-    /* padding: var(--g-padding); */
     width: auto;
+    margin: var(--g-margin) 0;
   }
 
   .add-card-textarea {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { List } from '../../store/list/types';
 import {
   editList,
@@ -27,9 +27,9 @@ export const ListLi: React.FC<Props> = ({
   currentlyAdding
 }) => {
   const { id, title, autofocus, adding } = list;
+
+  //=== Text Area ===\\
   const [input, setInput] = useState('');
-  const [editing, setEditing] = useState(false);
-  const [hover, setHover] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -60,8 +60,13 @@ export const ListLi: React.FC<Props> = ({
   };
 
   //=== HOVER ===\\
+  const [hover, setHover] = useState(false);
+
   const handleMouseEnter = () => setHover(true);
   const handleMouseLeave = () => setHover(false);
+
+  //=== BUTTON ===\\
+  const [editing, setEditing] = useState(false);
 
   const handleListEdit = () => {
     setInput(title);
@@ -72,14 +77,11 @@ export const ListLi: React.FC<Props> = ({
     deleteList(id);
   };
 
-  useEffect(() => {
-    if (!autofocus) {
-      focusList(id, true);
-      setInput('');
-      setEditing(true);
-    }
-    // eslint-disable-next-line
-  }, []);
+  if (!autofocus) {
+    focusList(id, true);
+    setInput('');
+    setEditing(true);
+  }
 
   return (
     <Container isHover={hover}>
@@ -131,10 +133,11 @@ const Container = styled.div<{ isHover: boolean }>`
   }
 
   .list-title {
-    padding-left: var(--g-padding);
+    font-weight: bold;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    font-weight: bold;
+    padding-left: var(--g-padding);
+    padding-right: 1px;
   }
 
   .list-button {
@@ -145,18 +148,15 @@ const Container = styled.div<{ isHover: boolean }>`
 
   .list-textarea-container {
     width: auto;
-    margin: 0;
-    padding: 0;
   }
 
   .list-textarea {
     width: 100%;
     font-weight: bold;
     font-size: 1rem;
-    padding: 0 3px;
     margin-top: -1px;
     margin-bottom: -5px;
-    padding-right: 1px;
+    padding: 0 3px;
     border: 1px blue solid;
     border-radius: 3px;
   }
