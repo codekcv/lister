@@ -22,7 +22,7 @@ export const CardLi: React.FC<Props> = ({
 
   //=== Container === \\
   const [hover, setHover] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const handleMouseEnter = () => setHover(true);
   const handleMouseLeave = () => setHover(false);
@@ -32,7 +32,7 @@ export const CardLi: React.FC<Props> = ({
   const handleDeleteCard = () => deleteCard(cardId);
 
   const handleEditText = () => {
-    setEdit(true);
+    setEditing(true);
     setInput(text);
     handleDone();
   };
@@ -53,7 +53,7 @@ export const CardLi: React.FC<Props> = ({
 
   const handleSubmit = (title: string) => {
     title.trim() ? editCard(cardId, title) : deleteCard(cardId);
-    setEdit(false);
+    setEditing(false);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -70,16 +70,16 @@ export const CardLi: React.FC<Props> = ({
     <Container
       isHover={hover}
       isCross={cross}
-      isEdit={edit}
+      isEdit={editing}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {!edit ? (
+      {!editing ? (
         <div className="textDiv" onClick={handleDone}>
           <p className="text">{text}</p>
           <i>
             {hover && (
-              <span className="button">
+              <span className="card-button">
                 <FaPencilAlt onClick={handleEditText} />{' '}
                 <FaTrashAlt onClick={handleDeleteCard} />
               </span>
@@ -135,10 +135,11 @@ const Container = styled.div<{
     word-wrap: break-word;
   }
 
-  .button {
+  .card-button {
     position: absolute;
-    right: 80px;
-    top: 8px;
+    right: 4px;
+    //right: 80px;
+    top: 4px;
   }
 
   .card-textarea-container {

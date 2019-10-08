@@ -41,10 +41,8 @@ const Cards: React.FC<Props> = ({
 
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (val) {
-        addCard(listId, val);
-      }
       setInput('');
+      val && addCard(listId, val);
     }
   };
 

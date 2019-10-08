@@ -37,14 +37,7 @@ export const ListLi: React.FC<Props> = ({
   };
 
   const handleSubmit = (title: string) => {
-    const val = title.trim();
-
-    if (val) {
-      editList(id, title);
-    } else {
-      editList(id, 'Untitled List');
-    }
-
+    title.trim() ? editList(id, title) : editList(id, 'Untitled List');
     setEditing(false);
   };
 
@@ -91,7 +84,7 @@ export const ListLi: React.FC<Props> = ({
           <p className="list-title">{title}</p>
           <i>
             {hover && (
-              <span className="button">
+              <span className="list-button">
                 <FaPencilAlt onClick={handleListEdit} />{' '}
                 <FaTrashAlt onClick={handleListDelete} />
               </span>
@@ -123,40 +116,40 @@ const Container = styled.div<{ isHover: boolean }>`
   width: 300px;
   margin: var(--g-margin);
   padding: calc(var(--g-padding) * 2);
-  /* border: 2px lightgray solid; */
   border-radius: 3px;
-  box-shadow: 0 4px lightgray;
 
   .title-area {
     position: relative;
-    margin: var(--g-margin);
-    padding: var(--g-padding);
   }
 
   .list-title {
-    padding: var(--g-padding);
+    padding-left: var(--g-padding);
     overflow-wrap: break-word;
     word-wrap: break-word;
     font-weight: bold;
   }
 
-  .button {
+  .list-button {
     position: absolute;
-    right: 8px;
-    top: 8px;
+    right: 4px;
+    top: 0px;
   }
 
   .list-textarea-container {
     width: auto;
-    border: 2px pink solid;
+    margin: 0;
+    padding: 0;
   }
 
   .list-textarea {
     width: 100%;
     font-weight: bold;
     font-size: 1rem;
-    margin: var(--g-margin);
-    padding: var(--g-padding);
-    margin-bottom: -4px;
+    padding: 0 3px;
+    margin-top: -1px;
+    margin-bottom: -5px;
+    padding-right: 1px;
+    border: 1px blue solid;
+    border-radius: 3px;
   }
 `;
