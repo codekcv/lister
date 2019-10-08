@@ -10,6 +10,7 @@ import Cards from '../card/Cards';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 interface Props {
   list: List;
@@ -77,6 +78,18 @@ export const ListLi: React.FC<Props> = ({
     deleteList(id);
   };
 
+  const onDragEnd = (result: any) => {
+    const { destination, source, draggableId } = result;
+
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+  };
+
   if (!autofocus) {
     focusList(id, true);
     setInput('');
@@ -116,7 +129,9 @@ export const ListLi: React.FC<Props> = ({
         </div>
       )}
 
-      <Cards listId={id} currentlyAdding={currentlyAdding} adding={adding} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Cards listId={id} currentlyAdding={currentlyAdding} adding={adding} />
+      </DragDropContext>
     </Container>
   );
 };

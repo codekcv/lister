@@ -12,6 +12,7 @@ import { AppState } from '../../store/store';
 import { CardLi } from './Card';
 import styled from 'styled-components';
 import { currentlyAdding } from '../../store/list/actions';
+import { Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   listId: string;
@@ -46,18 +47,26 @@ const Cards: React.FC<Props> = ({
   return (
     <Container>
       <ul>
-        {listCards.map(card => (
-          <li key={card.cardId}>
-            <CardLi
-              card={card}
-              editCard={editCard}
-              deleteCard={deleteCard}
-              crossCard={crossCard}
-              initCard={initCard}
-              currentlyAdding={currentlyAdding}
-            />
-          </li>
-        ))}
+        <Droppable droppableId={listId}>
+          {provided => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {listCards.map((card, index) => (
+                <li key={card.cardId}>
+                  <CardLi
+                    card={card}
+                    editCard={editCard}
+                    deleteCard={deleteCard}
+                    crossCard={crossCard}
+                    initCard={initCard}
+                    currentlyAdding={currentlyAdding}
+                    index={index}
+                  />
+                </li>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </ul>
       <div className="textarea-container">
         {!adding && <button onClick={handleClick}>+ Add a card</button>}

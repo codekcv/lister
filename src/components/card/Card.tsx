@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import Textarea from 'react-textarea-autosize';
 import { currentlyAdding } from '../../store/list/actions';
+import { Draggable } from 'react-beautiful-dnd';
 
 interface Props {
   card: Card;
@@ -18,6 +19,7 @@ interface Props {
   crossCard: typeof crossCard;
   initCard: typeof initCard;
   currentlyAdding: typeof currentlyAdding;
+  index: number;
 }
 
 export const CardLi: React.FC<Props> = ({
@@ -26,7 +28,8 @@ export const CardLi: React.FC<Props> = ({
   deleteCard,
   crossCard,
   initCard,
-  currentlyAdding
+  currentlyAdding,
+  index
 }) => {
   const { listId, cardId, text, cross, init } = card;
 
@@ -41,14 +44,12 @@ export const CardLi: React.FC<Props> = ({
   const handleDone = () => crossCard(cardId);
   const handleDeleteCard = () => {
     deleteCard(cardId);
-    console.log('dilit');
   };
 
   const handleEditText = () => {
     setEditing(true);
     setInput(text);
     handleDone();
-    console.log('wtf');
   };
 
   //=== Text Area ===\\
@@ -88,38 +89,45 @@ export const CardLi: React.FC<Props> = ({
   }
 
   return (
-    <Container
-      isHover={hover}
-      isCross={cross}
-      isEdit={editing}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {!editing ? (
-        <div className="textDiv" onClick={handleDone}>
-          <p className="text">{text}</p>
-          <i>
-            <span className="card-button">
-              <FaPencilAlt onClick={handleEditText} />{' '}
-              <FaTrashAlt onClick={handleDeleteCard} />
-            </span>
-          </i>
-        </div>
-      ) : (
-        <div className="card-textarea-container">
-          <Textarea
-            className="card-textarea"
-            value={input}
-            placeholder="Edit card..."
-            onChange={handleInput}
-            onKeyDown={handleEnter}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            autoFocus
-          />
-        </div>
+    <Draggable draggableId={cardId} index={index}>
+      {provided => (
+        <Container
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          isHover={hover}
+          isCross={cross}
+          isEdit={editing}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {!editing ? (
+            <div className="textDiv" onClick={handleDone}>
+              <p className="text">{text}</p>
+              <i>
+                <span className="card-button">
+                  <FaPencilAlt onClick={handleEditText} />{' '}
+                  <FaTrashAlt onClick={handleDeleteCard} />
+                </span>
+              </i>
+            </div>
+          ) : (
+            <div className="card-textarea-container">
+              <Textarea
+                className="card-textarea"
+                value={input}
+                placeholder="Edit card..."
+                onChange={handleInput}
+                onKeyDown={handleEnter}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                autoFocus
+              />
+            </div>
+          )}
+        </Container>
       )}
-    </Container>
+    </Draggable>
   );
 };
 
@@ -153,6 +161,7 @@ const Container = styled.div<{
 
   .text {
     text-decoration: ${props => props.isCross && 'line-through'};
+    font-style: ${props => props.isCross && 'italic'};
     overflow-wrap: break-word;
     word-wrap: break-word;
   }
