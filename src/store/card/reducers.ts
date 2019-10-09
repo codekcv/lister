@@ -59,6 +59,14 @@ const initialState: CardState = {
       init: true
     },
     {
+      listId: 'do',
+      cardId: 'c4',
+      text:
+        'State is automatically saved locally. If you refresh, changes will persist. You can use the clear button to delete the save.',
+      cross: false,
+      init: true
+    },
+    {
       listId: 'doing',
       cardId: 'c5',
       text: 'Clean up room and take out trash.',

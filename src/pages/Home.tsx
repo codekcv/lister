@@ -7,10 +7,11 @@ export const Home: React.FC = () => {
   const handleReset = () => {
     localStorage.clear();
     window.alert('State has been reset.');
+    window.location.reload();
   };
 
   const handleClick = () => {
-    window.alert('Under construction');
+    // window.alert('Under construction');
   };
 
   return (
@@ -18,12 +19,12 @@ export const Home: React.FC = () => {
       <div className="navbar-container">
         <nav>
           <ul>
-            <li onClick={handleClick}>
+            {/* <li onClick={handleClick}>
               <Link to="#">Home</Link>
             </li>
             <li onClick={handleClick}>
               <Link to="#">Boards</Link>
-            </li>
+            </li> */}
             <li onClick={handleReset}>
               <Link to="#">Clear State</Link>
             </li>

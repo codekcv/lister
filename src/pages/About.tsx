@@ -9,19 +9,33 @@ export const About: React.FC<Props> = () => {
     <Container>
       <h1>Lister Note</h1>
       <p>This is a React app for organizing notes. It is based on Trello.</p>
+      <p>I am building this for practice. Will add back-end soon.</p>
       <p>Version: 1.0.0</p>
       <div>
         <ul>
           <li>
-            <a href="https://twitter.com/villamin_c">@villamin_c</a>
+            <Link to="/">Go Back</Link>
           </li>
           <li>
-            <Link to="/">Go Back</Link>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://twitter.com/villamin_c"
+            >
+              @villamin_c
+            </a>
+          </li>
+          <li>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/ChristianVillamin/lister"
+            >
+              GitHub Source Code
+            </a>
           </li>
         </ul>
       </div>
-
-      <div></div>
     </Container>
   );
 };
