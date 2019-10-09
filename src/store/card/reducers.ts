@@ -66,6 +66,15 @@ const initialState: CardState = {
       cross: false,
       init: true
     },
+
+    {
+      listId: 'do',
+      cardId: 'c49',
+      text:
+        "You can also click a card to cross it off. I don't know why I added that but hey, it's there if you need it ;)",
+      cross: false,
+      init: true
+    },
     {
       listId: 'doing',
       cardId: 'c5',

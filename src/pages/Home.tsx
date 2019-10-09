@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
   };
 
   const handleClick = () => {
-    // window.alert('Under construction');
+    window.alert('Under construction');
   };
 
   return (
