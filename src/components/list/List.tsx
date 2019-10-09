@@ -5,7 +5,6 @@ import Cards from '../card/Cards';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { DragDropContext } from 'react-beautiful-dnd';
 import { AppState } from '../../store/store';
 import { connect } from 'react-redux';
 import { setCards } from '../../store/card/actions';
@@ -14,7 +13,6 @@ import { CardState, Card } from '../../store/card/types';
 interface Props {
   list: List;
   cardState: CardState;
-  listState: ListState;
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
@@ -24,7 +22,6 @@ interface Props {
 const ListLi: React.FC<Props> = ({
   list,
   cardState,
-  listState,
   editList,
   deleteList,
   focusList,
@@ -121,24 +118,20 @@ const ListLi: React.FC<Props> = ({
             </i>
           </>
         ) : (
-          <>
-            <Textarea
-              className="list-textarea"
-              value={input}
-              placeholder="Enter new title..."
-              onChange={handleChange}
-              onKeyDown={handleEnter}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              autoFocus
-            />
-          </>
+          <Textarea
+            className="list-textarea"
+            value={input}
+            placeholder="Enter new title..."
+            onChange={handleChange}
+            onKeyDown={handleEnter}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            autoFocus
+          />
         )}
       </div>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Cards listId={id} adding={adding} />
-      </DragDropContext>
+      <Cards listId={id} adding={adding} />
     </Container>
   );
 };
@@ -191,7 +184,6 @@ const Container = styled.div`
 `;
 
 const mapStateToProps = (state: AppState) => ({
-  listState: state.list,
   cardState: state.card
 });
 

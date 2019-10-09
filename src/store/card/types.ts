@@ -16,6 +16,7 @@ export const EDIT_CARD = 'EDIT_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
 export const CROSS_CARD = 'CROSS_CARD';
 export const INIT_CARD = 'INIT_CARD';
+export const CHANGE_LIST = 'CHANGE_LIST';
 
 interface SetCardAction {
   type: typeof SET_CARDS;
@@ -47,10 +48,16 @@ interface InitCardAction {
   payload: { id: string; init: boolean };
 }
 
+interface ChangeListAction {
+  type: typeof CHANGE_LIST;
+  payload: { id: string; listId: string };
+}
+
 export type CardActionTypes =
   | SetCardAction
   | AddCardAction
   | EditCardAction
   | RemoveCardAction
   | CrossCardAction
-  | InitCardAction;
+  | InitCardAction
+  | ChangeListAction;

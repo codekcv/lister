@@ -39,14 +39,14 @@ const Cards: React.FC<Props> = ({
               <CardLi key={card.cardId} card={card} index={index} />
             ))}
             {provided.placeholder}
+            {!adding && (
+              <div className="add-card-div">
+                <button onClick={handleClick}>+ Add a new card</button>
+              </div>
+            )}
           </div>
         )}
       </Droppable>
-      {!adding && (
-        <div className="add-card-div">
-          <button onClick={handleClick}>+ Add a new card</button>
-        </div>
-      )}
     </Container>
   );
 };

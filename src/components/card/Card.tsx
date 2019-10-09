@@ -138,7 +138,6 @@ interface Styled {
   isCross: boolean;
 }
 
-// eslint-disable-next-line
 const Container = styled.div<Styled>`
   background: white;
   width: auto;
@@ -154,7 +153,7 @@ const Container = styled.div<Styled>`
   .textDiv {
     position: relative;
     margin-bottom: calc(var(--g-margin));
-    padding: 8px; //var(--g-padding);
+    padding: 8px;
     width: auto;
 
     :hover {
@@ -174,8 +173,8 @@ const Container = styled.div<Styled>`
   .card-button {
     display: none;
     position: absolute;
-    right: 4px;
-    top: 4px;
+    right: 8px;
+    top: 8px;
   }
 
   .card-textarea-container {

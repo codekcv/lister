@@ -5,7 +5,8 @@ import {
   DELETE_CARD,
   CROSS_CARD,
   Card,
-  INIT_CARD
+  INIT_CARD,
+  CHANGE_LIST
 } from './types';
 
 export const setCards = (cards: Card[]) => {
@@ -47,5 +48,12 @@ export const initCard = (id: string, init: boolean) => {
   return {
     type: INIT_CARD,
     payload: { id, init }
+  };
+};
+
+export const changeList = (id: string, listId: string) => {
+  return {
+    type: CHANGE_LIST,
+    payload: { id, listId }
   };
 };

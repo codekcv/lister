@@ -12,10 +12,10 @@ export const Home: React.FC = () => {
       <div className="navbar-container">
         <nav>
           <ul>
-            <li>Home</li>
+            {/* <li>Home</li>
             <li>Boards</li>
-            <li>Save</li>
-            <li onClick={handleReset}>Options</li>
+            <li>Save</li> */}
+            <li onClick={handleReset}>Clear</li>
           </ul>
         </nav>
       </div>
@@ -40,12 +40,20 @@ const Container = styled.div`
 
       ul {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-top: 20px;
+        justify-content: flex-end;
+        margin-right: 20px;
+        padding-top: 14px;
 
         li {
+          background: lightgray;
           margin-left: 30px;
+          padding: 4px;
+          border: 2px solid darkgray;
+          border-radius: 3px;
+
+          :hover {
+            cursor: pointer;
+          }
         }
       }
     }
