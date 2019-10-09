@@ -8,39 +8,50 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <>
-      <Navbar>
-        <ul>
-          <li>Home</li>
-          <li>Boards</li>
-          <li>Save</li>
-          <li onClick={handleReset}>Options</li>
-        </ul>
-      </Navbar>
-      <Container>
+    <Container>
+      <div className="navbar-container">
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Boards</li>
+            <li>Save</li>
+            <li onClick={handleReset}>Options</li>
+          </ul>
+        </nav>
+      </div>
+
+      <div className="lists-container">
         <Lists />
-      </Container>
-    </>
+      </div>
+    </Container>
   );
 };
 
 const Container = styled.div`
-  margin: var(--g-margin);
-`;
+  .navbar-container {
+    width: 100vw;
+    height: 64px;
 
-const Navbar = styled.div`
-  width: 100vw;
-  height: 64px;
-  background: #ebecf0;
+    nav {
+      position: fixed;
+      background: #ebecf0;
+      width: 100vw;
+      height: 64px;
 
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
+      ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
 
-    li {
-      margin-left: 30px;
+        li {
+          margin-left: 30px;
+        }
+      }
     }
+  }
+
+  .lists-container {
+    margin: var(--g-margin);
   }
 `;

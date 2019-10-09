@@ -50,7 +50,6 @@ const ListLi: React.FC<Props> = ({
   const handleSubmit = (title: string) => {
     title.trim() ? editList(id, title) : editList(id, 'Untitled List');
     setEditing(false);
-    setHover(false);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -62,12 +61,6 @@ const ListLi: React.FC<Props> = ({
   const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     handleSubmit(e.target.value);
   };
-
-  //=== HOVER ===\\
-  const [hover, setHover] = useState(false);
-
-  const handleMouseEnter = () => setHover(true);
-  const handleMouseLeave = () => setHover(false);
 
   //=== BUTTON ===\\
   const [editing, setEditing] = useState(false);
@@ -115,12 +108,8 @@ const ListLi: React.FC<Props> = ({
   }
 
   return (
-    <Container isHover={hover}>
-      <div
-        className="title-area"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+    <Container>
+      <div className="title-area">
         {!editing ? (
           <>
             <p className="list-title">{title}</p>
@@ -154,29 +143,22 @@ const ListLi: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div<{ isHover: boolean }>`
+const Container = styled.div`
   background: #ebecf0;
   width: 300px;
   margin: var(--g-margin);
   padding: calc(var(--g-padding) * 2);
   border-radius: 3px;
 
-  .title-area:hover {
-    .list-button {
-      display: block;
-    }
-  }
-
-  .list-button {
-    display: none;
-    position: absolute;
-    right: 4px;
-    top: 4px;
-  }
-
   .title-area {
     position: relative;
     margin-bottom: 8px;
+
+    :hover {
+      .list-button {
+        display: block;
+      }
+    }
   }
 
   .list-title {
@@ -190,9 +172,10 @@ const Container = styled.div<{ isHover: boolean }>`
   }
 
   .list-button {
+    display: none;
     position: absolute;
     right: 4px;
-    top: 0px;
+    top: 0;
   }
 
   .list-textarea {

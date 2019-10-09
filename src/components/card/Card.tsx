@@ -40,11 +40,7 @@ const CardLi: React.FC<Props> = ({
   ];
 
   //=== Container === \\
-  const [hover, setHover] = useState(false);
   const [editing, setEditing] = useState(false);
-
-  const handleMouseEnter = () => setHover(true);
-  const handleMouseLeave = () => setHover(false);
 
   //=== Button ===\\
   const handleDone = () => {
@@ -106,8 +102,6 @@ const CardLi: React.FC<Props> = ({
           {...provided.dragHandleProps}
           isCross={cross}
           isEdit={editing}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           {!editing ? (
             <div className="textDiv" onClick={handleDone}>
@@ -146,7 +140,6 @@ interface Styled {
 
 // eslint-disable-next-line
 const Container = styled.div<Styled>`
-  position: relative;
   background: white;
   width: auto;
   border-radius: 3px;
@@ -163,17 +156,16 @@ const Container = styled.div<Styled>`
     margin-bottom: calc(var(--g-margin));
     padding: 8px; //var(--g-padding);
     width: auto;
-  }
 
-  .textDiv:hover {
-    .card-button {
-      display: block;
+    :hover {
+      .card-button {
+        display: block;
+      }
     }
   }
 
   .text {
     text-decoration: ${props => props.isCross && 'line-through'};
-    font-style: ${props => props.isCross && 'italic'};
     overflow-wrap: break-word;
     word-wrap: break-word;
     font-size: var(--g-text-card-size);
@@ -195,7 +187,7 @@ const Container = styled.div<Styled>`
     width: 100%;
     color: blue;
     margin-bottom: -4px;
-    padding: 3px 7px;
+    padding: 7px;
     border: 1px blue solid;
     border-radius: 3px;
   }

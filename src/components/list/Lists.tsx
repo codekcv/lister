@@ -25,9 +25,9 @@ const Lists: React.FC<Props> = ({ listState, addList }) => {
           <ListLi list={list} />
         </div>
       ))}
-      <button className="new-list" onClick={handleNewList}>
-        + Add a list
-      </button>
+      <div className="button-div" onClick={handleNewList}>
+        <button>+ Add a new list</button>
+      </div>
     </Container>
   );
 };
@@ -35,22 +35,27 @@ const Lists: React.FC<Props> = ({ listState, addList }) => {
 const Container = styled.div`
   display: flex;
 
-  .new-list {
+  .button-div {
     background: rgba(255, 255, 255, 0.25);
-    color: white;
-    text-align: center;
-    width: 300px;
     height: 30px;
+    text-align: center;
     margin: var(--g-margin);
-    border: none;
     border-radius: 3px;
+
+    button {
+      background: none;
+      color: white;
+      width: 300px;
+      margin-top: 6px;
+      border: none;
+    }
+
+    :hover {
+      background: rgba(255, 255, 255, 0.45);
+    }
   }
 
-  .new-list:hover {
-    background: rgba(255, 255, 255, 0.45);
-  }
-
-  textarea {
+  .button-div textarea {
     width: 280px;
     padding: var(--g-padding);
   }

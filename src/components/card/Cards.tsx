@@ -42,9 +42,11 @@ const Cards: React.FC<Props> = ({
           </div>
         )}
       </Droppable>
-      <div className="textarea-container">
-        {!adding && <button onClick={handleClick}>+ Add a card</button>}
-      </div>
+      {!adding && (
+        <div className="add-card-div">
+          <button onClick={handleClick}>+ Add a new card</button>
+        </div>
+      )}
     </Container>
   );
 };
@@ -60,25 +62,24 @@ const Container = styled.div`
     margin: 0;
     margin-bottom: 1px;
     padding: 0;
+
+    :hover {
+      background: lightgray;
+      text-decoration: underline;
+    }
   }
 
-  button:hover {
-    background: lightgray;
-    text-decoration: underline;
-  }
-
-  textarea {
-    font-size: 1rem;
+  .add-card-div {
+    padding: 4.5px;
   }
 
   .textarea-container {
     width: auto;
-    margin: var(--g-margin) 0;
   }
 
   .add-card-textarea {
     width: 100%;
-    padding: calc(var(--g-padding) * 2);
+
     border: 1px rgba(255, 255, 255, 0.5) solid;
   }
 `;
