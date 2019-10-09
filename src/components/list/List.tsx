@@ -8,21 +8,27 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AppState } from '../../store/store';
 import { connect } from 'react-redux';
+import { setCards } from '../../store/card/actions';
+import { CardState, Card } from '../../store/card/types';
 
 interface Props {
   list: List;
+  cardState: CardState;
   listState: ListState;
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
+  setCards: typeof setCards;
 }
 
 const ListLi: React.FC<Props> = ({
   list,
+  cardState,
   listState,
   editList,
   deleteList,
-  focusList
+  focusList,
+  setCards
 }) => {
   const { id, title, autofocus, adding } = list;
 
@@ -85,6 +91,21 @@ const ListLi: React.FC<Props> = ({
     ) {
       return;
     }
+
+    let cards: Card[] = cardState.cards.filter(card => card.listId === id);
+
+    cards.splice(source.index, 1);
+    cards.splice(
+      destination.index,
+      0,
+      cardState.cards.filter(card => card.cardId === draggableId)[0]
+    );
+
+    const newCards: Card[] = [...cards, ...cardState.cards].filter(
+      (card, index, self) => self.indexOf(card) === index
+    );
+
+    setCards(newCards);
   };
 
   if (!autofocus) {
@@ -95,36 +116,36 @@ const ListLi: React.FC<Props> = ({
 
   return (
     <Container isHover={hover}>
-      {!editing ? (
-        <div
-          className="title-area"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <p className="list-title">{title}</p>
-          <i>
-            {hover && (
+      <div
+        className="title-area"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {!editing ? (
+          <>
+            <p className="list-title">{title}</p>
+            <i>
               <span className="list-button">
                 <FaPencilAlt onClick={handleListEdit} />{' '}
                 <FaTrashAlt onClick={handleListDelete} />
               </span>
-            )}
-          </i>
-        </div>
-      ) : (
-        <div className="list-textarea-container">
-          <Textarea
-            className="list-textarea"
-            value={input}
-            placeholder="Enter new title..."
-            onChange={handleChange}
-            onKeyDown={handleEnter}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            autoFocus
-          />
-        </div>
-      )}
+            </i>
+          </>
+        ) : (
+          <>
+            <Textarea
+              className="list-textarea"
+              value={input}
+              placeholder="Enter new title..."
+              onChange={handleChange}
+              onKeyDown={handleEnter}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              autoFocus
+            />
+          </>
+        )}
+      </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Cards listId={id} adding={adding} />
@@ -140,14 +161,30 @@ const Container = styled.div<{ isHover: boolean }>`
   padding: calc(var(--g-padding) * 2);
   border-radius: 3px;
 
+  .title-area:hover {
+    .list-button {
+      display: block;
+    }
+  }
+
+  .list-button {
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+  }
+
   .title-area {
     position: relative;
+    margin-bottom: 8px;
   }
 
   .list-title {
+    font-size: var(--g-text-title-size);
     font-weight: bold;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    margin-bottom: 8px;
     padding-left: var(--g-padding);
     padding-right: 1px;
   }
@@ -158,14 +195,10 @@ const Container = styled.div<{ isHover: boolean }>`
     top: 0px;
   }
 
-  .list-textarea-container {
-    width: auto;
-  }
-
   .list-textarea {
     width: 100%;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: var(--g-text-title-size);
     margin-top: -1px;
     margin-bottom: -5px;
     padding: 0 3px;
@@ -175,10 +208,11 @@ const Container = styled.div<{ isHover: boolean }>`
 `;
 
 const mapStateToProps = (state: AppState) => ({
-  listState: state.list
+  listState: state.list,
+  cardState: state.card
 });
 
 export default connect(
   mapStateToProps,
-  { editList, deleteList, focusList }
+  { editList, deleteList, focusList, setCards }
 )(ListLi);

@@ -5,16 +5,18 @@ import {
   deleteCard,
   initCard
 } from '../../store/card/actions';
-import { Card } from '../../store/card/types';
+import { Card, CardState } from '../../store/card/types';
 import styled from 'styled-components';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import Textarea from 'react-textarea-autosize';
 import { currentlyAdding } from '../../store/list/actions';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
+import { AppState } from '../../store/store';
 
 interface Props {
   card: Card;
+  cardState: CardState;
   editCard: typeof editCard;
   deleteCard: typeof deleteCard;
   crossCard: typeof crossCard;
@@ -25,6 +27,7 @@ interface Props {
 
 const CardLi: React.FC<Props> = ({
   card,
+  cardState,
   editCard,
   deleteCard,
   crossCard,
@@ -32,7 +35,9 @@ const CardLi: React.FC<Props> = ({
   currentlyAdding,
   index
 }) => {
-  const { listId, cardId, text, cross, init } = card;
+  const { listId, cardId, text, cross, init } = cardState.cards[
+    cardState.cards.indexOf(card)
+  ];
 
   //=== Container === \\
   const [hover, setHover] = useState(false);
@@ -42,7 +47,10 @@ const CardLi: React.FC<Props> = ({
   const handleMouseLeave = () => setHover(false);
 
   //=== Button ===\\
-  const handleDone = () => crossCard(cardId);
+  const handleDone = () => {
+    crossCard(cardId);
+    console.log();
+  };
   const handleDeleteCard = () => {
     deleteCard(cardId);
   };
@@ -96,7 +104,6 @@ const CardLi: React.FC<Props> = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          isHover={hover}
           isCross={cross}
           isEdit={editing}
           onMouseEnter={handleMouseEnter}
@@ -132,25 +139,29 @@ const CardLi: React.FC<Props> = ({
   );
 };
 
-// eslint-disable-next-line
-const Container = styled.div<{
-  isHover: boolean;
+interface Styled {
   isEdit: boolean;
   isCross: boolean;
-}>`
+}
+
+// eslint-disable-next-line
+const Container = styled.div<Styled>`
   position: relative;
-  background: ${props =>
-    !props.isHover || props.isEdit ? 'white' : '#ebecf0'};
+  background: white;
   width: auto;
-  cursor: pointer;
   border-radius: 3px;
   box-shadow: 0 2px lightgray;
-  margin: calc(var(--g-margin) * 2) 0;
+  margin-bottom: calc(var(--g-margin) * 2);
+  cursor: pointer;
+
+  :hover {
+    background: #ebecf0;
+  }
 
   .textDiv {
     position: relative;
-    margin: calc(var(--g-margin)); //calc(var(--g-margin) * 2);
-    padding: var(--g-padding);
+    margin-bottom: calc(var(--g-margin));
+    padding: 8px; //var(--g-padding);
     width: auto;
   }
 
@@ -165,6 +176,7 @@ const Container = styled.div<{
     font-style: ${props => props.isCross && 'italic'};
     overflow-wrap: break-word;
     word-wrap: break-word;
+    font-size: var(--g-text-card-size);
   }
 
   .card-button {
@@ -179,6 +191,7 @@ const Container = styled.div<{
   }
 
   .card-textarea {
+    font-size: var(--g-text-card-size);
     width: 100%;
     color: blue;
     margin-bottom: -4px;
@@ -188,7 +201,11 @@ const Container = styled.div<{
   }
 `;
 
+const mapStateToProps = (state: AppState) => ({
+  cardState: state.card
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { crossCard, editCard, deleteCard, initCard, currentlyAdding }
 )(CardLi);

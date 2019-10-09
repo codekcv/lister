@@ -20,13 +20,11 @@ const Lists: React.FC<Props> = ({ listState, addList }) => {
 
   return (
     <Container>
-      <ul className="lists">
-        {lists.map(list => (
-          <li key={list.id}>
-            <ListLi list={list} />
-          </li>
-        ))}
-      </ul>
+      {lists.map(list => (
+        <div key={list.id}>
+          <ListLi list={list} />
+        </div>
+      ))}
       <button className="new-list" onClick={handleNewList}>
         + Add a list
       </button>
@@ -36,14 +34,6 @@ const Lists: React.FC<Props> = ({ listState, addList }) => {
 
 const Container = styled.div`
   display: flex;
-
-  .lists {
-    display: flex;
-
-    li {
-      list-style: none;
-    }
-  }
 
   .new-list {
     background: rgba(255, 255, 255, 0.25);

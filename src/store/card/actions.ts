@@ -8,10 +8,10 @@ import {
   INIT_CARD
 } from './types';
 
-export const setCards = (card: Card[]) => {
+export const setCards = (cards: Card[]) => {
   return {
     type: SET_CARDS,
-    payload: { card }
+    payload: { cards }
   };
 };
 

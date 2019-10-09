@@ -6,6 +6,8 @@
   --g-padding: 4px;
   --g-margin: 4px;
   --g-border-radius-sm: 3px;
+  --g-text-card-size: 0.85rem;
+  --g-text-list-size: 1rem;
 }
 
 * {

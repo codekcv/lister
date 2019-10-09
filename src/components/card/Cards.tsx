@@ -32,20 +32,16 @@ const Cards: React.FC<Props> = ({
 
   return (
     <Container>
-      <ul>
-        <Droppable droppableId={listId}>
-          {provided => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {listCards.map((card, index) => (
-                <li key={card.cardId}>
-                  <CardLi card={card} index={index} />
-                </li>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </ul>
+      <Droppable droppableId={listId}>
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {listCards.map((card, index) => (
+              <CardLi key={card.cardId} card={card} index={index} />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
       <div className="textarea-container">
         {!adding && <button onClick={handleClick}>+ Add a card</button>}
       </div>
@@ -65,6 +61,7 @@ const Container = styled.div`
     margin-bottom: 1px;
     padding: 0;
   }
+
   button:hover {
     background: lightgray;
     text-decoration: underline;
