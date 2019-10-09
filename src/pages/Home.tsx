@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Lists from '../components/list/Lists';
+import { Link } from 'react-router-dom';
 
 export const Home: React.FC = () => {
   const handleReset = () => {
     localStorage.clear();
+    window.alert('State has been reset.');
+  };
+
+  const handleClick = () => {
+    window.alert('Under construction');
   };
 
   return (
@@ -12,10 +18,18 @@ export const Home: React.FC = () => {
       <div className="navbar-container">
         <nav>
           <ul>
-            {/* <li>Home</li>
-            <li>Boards</li>
-            <li>Save</li> */}
-            <li onClick={handleReset}>Clear</li>
+            <li onClick={handleClick}>
+              <Link to="#">Home</Link>
+            </li>
+            <li onClick={handleClick}>
+              <Link to="#">Boards</Link>
+            </li>
+            <li onClick={handleReset}>
+              <Link to="#">Clear State</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
           </ul>
         </nav>
       </div>
@@ -40,22 +54,26 @@ const Container = styled.div`
 
       ul {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         margin-right: 20px;
-        padding-top: 14px;
-
-        li {
-          background: lightgray;
-          margin-left: 30px;
-          padding: 4px;
-          border: 2px solid darkgray;
-          border-radius: 3px;
-
-          :hover {
-            cursor: pointer;
-          }
-        }
+        padding-top: 20px;
       }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    margin-left: 30px;
+    padding: 4px 12px;
+    border: 1px solid darkgray;
+    border-radius: 3px;
+    box-shadow: 0 1px gray;
+
+    :hover {
+      cursor: pointer;
+      box-shadow: none;
+      offset-position: 12px;
+      background: lightgray;
     }
   }
 

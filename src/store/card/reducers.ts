@@ -36,49 +36,39 @@ const initialState: CardState = {
   //   }
   // ]
   cards: [
-    { listId: 'do', cardId: 'c1', text: 's1', cross: false, init: true },
-    { listId: 'do', cardId: 'c2', text: 's2', cross: false, init: true },
-    { listId: 'do', cardId: 'c3', text: 's3', cross: false, init: true },
-    { listId: 'do', cardId: 'c4', text: 's4', cross: false, init: true },
+    {
+      listId: 'do',
+      cardId: 'c1',
+      text: 'Sample card...',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'do',
+      cardId: 'c2',
+      text: 'You can edit or delete me',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'do',
+      cardId: 'c3',
+      text:
+        'You can also drag cards; move it around even across different lists.',
+      cross: false,
+      init: true
+    },
     {
       listId: 'doing',
       cardId: 'c5',
-      text: 's5',
+      text: 'Clean up room and take out trash.',
       cross: false,
       init: true
     },
     {
       listId: 'doing',
       cardId: 'c6',
-      text: 's6',
-      cross: false,
-      init: true
-    },
-    {
-      listId: 'doing',
-      cardId: 'c7',
-      text: 's7',
-      cross: false,
-      init: true
-    },
-    {
-      listId: 'doing',
-      cardId: 'c8',
-      text: 's8',
-      cross: false,
-      init: true
-    },
-    {
-      listId: 'done',
-      cardId: 'c9',
-      text: 'Redux, I think.',
-      cross: false,
-      init: true
-    },
-    {
-      listId: 'done',
-      cardId: 'c10',
-      text: 'Remade redux',
+      text: 'Go to the appointment today.',
       cross: false,
       init: true
     }

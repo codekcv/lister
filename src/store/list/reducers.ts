@@ -12,19 +12,13 @@ const initialState: ListState = {
   lists: [
     {
       id: 'do',
-      title: 'Do',
+      title: 'Sample List',
       autofocus: true,
       adding: false
     },
     {
       id: 'doing',
-      title: 'Doing',
-      autofocus: true,
-      adding: false
-    },
-    {
-      id: 'done',
-      title: 'Done',
+      title: 'Things To Do',
       autofocus: true,
       adding: false
     }
