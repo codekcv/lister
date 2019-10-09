@@ -11,6 +11,7 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import Textarea from 'react-textarea-autosize';
 import { currentlyAdding } from '../../store/list/actions';
 import { Draggable } from 'react-beautiful-dnd';
+import { connect } from 'react-redux';
 
 interface Props {
   card: Card;
@@ -22,7 +23,7 @@ interface Props {
   index: number;
 }
 
-export const CardLi: React.FC<Props> = ({
+const CardLi: React.FC<Props> = ({
   card,
   editCard,
   deleteCard,
@@ -186,3 +187,8 @@ const Container = styled.div<{
     border-radius: 3px;
   }
 `;
+
+export default connect(
+  null,
+  { crossCard, editCard, deleteCard, initCard, currentlyAdding }
+)(CardLi);

@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
-import { List } from '../../store/list/types';
-import {
-  editList,
-  deleteList,
-  focusList,
-  currentlyAdding
-} from '../../store/list/actions';
+import { List, ListState } from '../../store/list/types';
+import { editList, deleteList, focusList } from '../../store/list/actions';
 import Cards from '../card/Cards';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { AppState } from '../../store/store';
+import { connect } from 'react-redux';
 
 interface Props {
   list: List;
+  listState: ListState;
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
-  currentlyAdding: typeof currentlyAdding;
 }
 
-export const ListLi: React.FC<Props> = ({
+const ListLi: React.FC<Props> = ({
   list,
+  listState,
   editList,
   deleteList,
-  focusList,
-  currentlyAdding
+  focusList
 }) => {
   const { id, title, autofocus, adding } = list;
 
@@ -130,7 +127,7 @@ export const ListLi: React.FC<Props> = ({
       )}
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Cards listId={id} currentlyAdding={currentlyAdding} adding={adding} />
+        <Cards listId={id} adding={adding} />
       </DragDropContext>
     </Container>
   );
@@ -176,3 +173,12 @@ const Container = styled.div<{ isHover: boolean }>`
     border-radius: 3px;
   }
 `;
+
+const mapStateToProps = (state: AppState) => ({
+  listState: state.list
+});
+
+export default connect(
+  mapStateToProps,
+  { editList, deleteList, focusList }
+)(ListLi);
