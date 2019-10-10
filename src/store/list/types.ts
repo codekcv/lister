@@ -14,6 +14,7 @@ export const EDIT_LIST = 'EDIT_LIST';
 export const DELETE_LIST = 'DELETE_LIST';
 export const FOCUS_LIST = 'AUTOFOCUS_LIST';
 export const ADDING = 'ADDING';
+export const CHANGE_ORDER = 'CHANGE_ORDER';
 
 interface AddListAction {
   type: typeof ADD_LIST;
@@ -40,9 +41,15 @@ interface CurrentlyAddingAction {
   payload: { id: string; adding: boolean };
 }
 
+interface ChangeOrderAction {
+  type: typeof CHANGE_ORDER;
+  payload: { lists: List[] };
+}
+
 export type ListActionTypes =
   | AddListAction
   | EditListAction
   | DeleteListAction
   | FocusListAction
-  | CurrentlyAddingAction;
+  | CurrentlyAddingAction
+  | ChangeOrderAction;

@@ -1,4 +1,12 @@
-import { ADD_LIST, EDIT_LIST, DELETE_LIST, FOCUS_LIST, ADDING } from './types';
+import {
+  ADD_LIST,
+  EDIT_LIST,
+  DELETE_LIST,
+  FOCUS_LIST,
+  ADDING,
+  CHANGE_ORDER,
+  List
+} from './types';
 
 export const addList = (title: string) => {
   return {
@@ -32,5 +40,12 @@ export const currentlyAdding = (id: string, adding: boolean) => {
   return {
     type: ADDING,
     payload: { id, adding }
+  };
+};
+
+export const changeOrder = (lists: List[]) => {
+  return {
+    type: CHANGE_ORDER,
+    payload: { lists }
   };
 };

@@ -32,7 +32,7 @@ const Cards: React.FC<Props> = ({
 
   return (
     <Container>
-      <Droppable droppableId={listId}>
+      <Droppable droppableId={listId} type="card">
         {provided => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {listCards.map((card, index) => (

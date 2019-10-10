@@ -106,11 +106,9 @@ const CardLi: React.FC<Props> = ({
           {!editing ? (
             <div className="textDiv" onClick={handleDone}>
               <p className="text">{text}</p>
-              <i>
-                <span className="card-button">
-                  <FaPencilAlt onClick={handleEditText} />{' '}
-                  <FaTrashAlt onClick={handleDeleteCard} />
-                </span>
+              <i className="card-button">
+                <FaPencilAlt onClick={handleEditText} />{' '}
+                <FaTrashAlt onClick={handleDeleteCard} />
               </i>
             </div>
           ) : (

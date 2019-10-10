@@ -11,30 +11,6 @@ import {
 } from './types';
 
 const initialState: CardState = {
-  // cards: [
-  //   { listId: 'do', cardId: 'c1', text: 's1', cross: false, init: true },
-  //   {
-  //     listId: 'doing',
-  //     cardId: 'c2',
-  //     text: 'Programming client',
-  //     cross: false,
-  //     init: true
-  //   },
-  //   {
-  //     listId: 'done',
-  //     cardId: 'c3',
-  //     text: 'Redux, I think.',
-  //     cross: false,
-  //     init: true
-  //   },
-  //   {
-  //     listId: 'done',
-  //     cardId: 'c4',
-  //     text: 'Remade redux',
-  //     cross: false,
-  //     init: true
-  //   }
-  // ]
   cards: [
     {
       listId: 'do',
@@ -86,6 +62,21 @@ const initialState: CardState = {
       listId: 'doing',
       cardId: 'c6',
       text: 'Go to the appointment today.',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'doing',
+      cardId: 'c7',
+      text: 'Fly away on my zepher...',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'done',
+      cardId: 'c8',
+      text:
+        'You can also re-arrange the LISTS itself. Just drag the title and move it where you want.',
       cross: false,
       init: true
     }

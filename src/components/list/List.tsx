@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, ListState } from '../../store/list/types';
+import { List } from '../../store/list/types';
 import { editList, deleteList, focusList } from '../../store/list/actions';
 import Cards from '../card/Cards';
 import styled from 'styled-components';
@@ -8,7 +8,8 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { AppState } from '../../store/store';
 import { connect } from 'react-redux';
 import { setCards } from '../../store/card/actions';
-import { CardState, Card } from '../../store/card/types';
+import { CardState } from '../../store/card/types';
+import { Draggable } from 'react-beautiful-dnd';
 
 interface Props {
   list: List;
@@ -17,6 +18,7 @@ interface Props {
   deleteList: typeof deleteList;
   focusList: typeof focusList;
   setCards: typeof setCards;
+  index: number;
 }
 
 const ListLi: React.FC<Props> = ({
@@ -25,7 +27,8 @@ const ListLi: React.FC<Props> = ({
   editList,
   deleteList,
   focusList,
-  setCards
+  setCards,
+  index
 }) => {
   const { id, title, autofocus, adding } = list;
 
@@ -71,33 +74,6 @@ const ListLi: React.FC<Props> = ({
     deleteList(id);
   };
 
-  const onDragEnd = (result: any) => {
-    const { destination, source, draggableId } = result;
-
-    if (
-      !destination ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    ) {
-      return;
-    }
-
-    let cards: Card[] = cardState.cards.filter(card => card.listId === id);
-
-    cards.splice(source.index, 1);
-    cards.splice(
-      destination.index,
-      0,
-      cardState.cards.filter(card => card.cardId === draggableId)[0]
-    );
-
-    const newCards: Card[] = [...cards, ...cardState.cards].filter(
-      (card, index, self) => self.indexOf(card) === index
-    );
-
-    setCards(newCards);
-  };
-
   if (!autofocus) {
     focusList(id, true);
     setInput('');
@@ -105,34 +81,40 @@ const ListLi: React.FC<Props> = ({
   }
 
   return (
-    <Container>
-      <div className="title-area">
-        {!editing ? (
-          <>
-            <p className="list-title">{title}</p>
-            <i>
-              <span className="list-button">
-                <FaPencilAlt onClick={handleListEdit} />{' '}
-                <FaTrashAlt onClick={handleListDelete} />
-              </span>
-            </i>
-          </>
-        ) : (
-          <Textarea
-            className="list-textarea"
-            value={input}
-            placeholder="Enter new title..."
-            onChange={handleChange}
-            onKeyDown={handleEnter}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            autoFocus
-          />
-        )}
-      </div>
+    <Draggable draggableId={id} index={index} type="list">
+      {provided => (
+        <Container
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <div className="title-area" {...provided.dragHandleProps}>
+            {!editing ? (
+              <>
+                <p className="list-title">{title}</p>
+                <i className="list-button">
+                  <FaPencilAlt onClick={handleListEdit} />{' '}
+                  <FaTrashAlt onClick={handleListDelete} />
+                </i>
+              </>
+            ) : (
+              <Textarea
+                className="list-textarea"
+                value={input}
+                placeholder="Enter new title..."
+                onChange={handleChange}
+                onKeyDown={handleEnter}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                autoFocus
+              />
+            )}
+          </div>
 
-      <Cards listId={id} adding={adding} />
-    </Container>
+          <Cards listId={id} adding={adding} />
+        </Container>
+      )}
+    </Draggable>
   );
 };
 

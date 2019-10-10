@@ -5,7 +5,8 @@ import {
   EDIT_LIST,
   DELETE_LIST,
   FOCUS_LIST,
-  ADDING
+  ADDING,
+  CHANGE_ORDER
 } from './types';
 
 const initialState: ListState = {
@@ -19,6 +20,12 @@ const initialState: ListState = {
     {
       id: 'doing',
       title: 'Things To Do',
+      autofocus: true,
+      adding: false
+    },
+    {
+      id: 'done',
+      title: 'Random Facts',
       autofocus: true,
       adding: false
     }
@@ -65,6 +72,10 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
             (list.adding = action.payload.adding);
           return list;
         })
+      };
+    case CHANGE_ORDER:
+      return {
+        lists: action.payload.lists
       };
     default:
       return state;
