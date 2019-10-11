@@ -1,38 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
-import { ListState } from '../../store/list/types';
-import { addList, changeOrder } from '../../store/list/actions';
-import styled from 'styled-components';
-import ListLi from './List';
+import { BoardState } from '../../store/board/types';
+import Board from './Board';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Card, CardState } from '../../store/card/types';
+import { ListState } from '../../store/list/types';
+import { CardState, Card } from '../../store/card/types';
 import { setCards, changeList } from '../../store/card/actions';
+import { changeOrder } from '../../store/list/actions';
 
 interface Props {
-  boardId: string;
+  boardState: BoardState;
   listState: ListState;
   cardState: CardState;
-  addList: typeof addList;
+
   setCards: typeof setCards;
   changeList: typeof changeList;
   changeOrder: typeof changeOrder;
 }
 
-const Lists: React.FC<Props> = ({
-  boardId,
-  listState,
-  cardState,
-  addList,
-  setCards,
-  changeList,
-  changeOrder
-}) => {
-  const boardLists = listState.lists.filter(list => list.boardId === boardId);
-
-  const handleNewList = () => {
-    addList(boardId, 'Untitled List');
-  };
+const Boards: React.FC<Props> = ({ boardState, listState, cardState }) => {
+  const { boards } = boardState;
 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId, type } = result;
@@ -83,7 +71,7 @@ const Lists: React.FC<Props> = ({
 
         setCards(orderedCards);
       }
-    } else {
+    } else if (type === 'list') {
       const draggedList = listState.lists.find(list => list.id === draggableId);
 
       if (draggedList) {
@@ -93,75 +81,34 @@ const Lists: React.FC<Props> = ({
 
         changeOrder(newListOrder);
       }
+    } else if (type === 'board') {
     }
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Container>
-        <Droppable droppableId={boardId} direction="horizontal" type="list">
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId={'lister'} type="board">
           {provided => (
-            <div
-              className="lists"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {boardLists.map((list, index) => (
-                <div key={list.id}>
-                  <ListLi list={list} index={index} />
-                </div>
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {boards.map((board, index) => (
+                <Board board={board} index={index} />
               ))}
-              {provided.placeholder}
             </div>
           )}
         </Droppable>
-        <div className="button-div" onClick={handleNewList}>
-          <button>+ Add a new list</button>
-        </div>
-      </Container>
-    </DragDropContext>
+      </DragDropContext>
+    </>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-
-  .lists {
-    display: flex;
-  }
-
-  .button-div {
-    background: rgba(255, 255, 255, 0.25);
-    height: 30px;
-    text-align: center;
-    margin: var(--g-margin);
-    border-radius: 3px;
-
-    button {
-      background: none;
-      color: white;
-      width: 300px;
-      margin-top: 6px;
-      border: none;
-    }
-
-    :hover {
-      background: rgba(255, 255, 255, 0.45);
-    }
-  }
-
-  .button-div textarea {
-    width: 280px;
-    padding: var(--g-padding);
-  }
-`;
-
 const mapStateToProps = (state: AppState) => ({
+  boardState: state.board,
   listState: state.list,
   cardState: state.card
 });
 
 export default connect(
   mapStateToProps,
-  { addList, setCards, changeList, changeOrder }
-)(Lists);
+  { changeList, changeOrder, setCards }
+)(Boards);

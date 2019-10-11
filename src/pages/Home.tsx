@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Lists from '../components/list/Lists';
 import { Link } from 'react-router-dom';
+import Boards from '../components/board/Boards';
 
 export const Home: React.FC = () => {
   const handleReset = () => {
@@ -36,7 +36,7 @@ export const Home: React.FC = () => {
       </div>
 
       <div className="lists-container">
-        <Lists />
+        <Boards />
       </div>
     </Container>
   );
