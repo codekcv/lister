@@ -10,6 +10,7 @@ import { Card, CardState } from '../../store/card/types';
 import { setCards, changeList } from '../../store/card/actions';
 
 interface Props {
+  boardId: string;
   listState: ListState;
   cardState: CardState;
   addList: typeof addList;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const Lists: React.FC<Props> = ({
+  boardId,
   listState,
   cardState,
   addList,
@@ -26,10 +28,10 @@ const Lists: React.FC<Props> = ({
   changeList,
   changeOrder
 }) => {
-  const { lists } = listState;
+  const boardLists = listState.lists.filter(list => list.boardId === boardId);
 
   const handleNewList = () => {
-    addList('Untitled List');
+    addList(boardId, 'Untitled List');
   };
 
   const onDragEnd = (result: any) => {
@@ -97,14 +99,14 @@ const Lists: React.FC<Props> = ({
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>
-        <Droppable droppableId={'board1'} direction="horizontal" type="list">
+        <Droppable droppableId={boardId} direction="horizontal" type="list">
           {provided => (
             <div
               className="lists"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {lists.map((list, index) => (
+              {boardLists.map((list, index) => (
                 <div key={list.id}>
                   <ListLi list={list} index={index} />
                 </div>

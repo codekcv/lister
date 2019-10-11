@@ -4,7 +4,7 @@ export interface Board {
 }
 
 export interface BoardState {
-  Boards: Board[];
+  boards: Board[];
 }
 
 export const ADD_BOARD = 'ADD_BOARD';

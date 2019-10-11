@@ -8,10 +8,10 @@ import {
   List
 } from './types';
 
-export const addList = (title: string) => {
+export const addList = (boardId: string, title: string) => {
   return {
     type: ADD_LIST,
-    payload: { title }
+    payload: { boardId, title }
   };
 };
 

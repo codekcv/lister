@@ -1,5 +1,6 @@
 export interface List {
   id: string;
+  boardId: string;
   title: string;
   autofocus: boolean;
   adding: boolean;
@@ -18,7 +19,7 @@ export const CHANGE_ORDER = 'CHANGE_ORDER';
 
 interface AddListAction {
   type: typeof ADD_LIST;
-  payload: { title: string };
+  payload: { boardId: string; title: string };
 }
 
 interface EditListAction {
