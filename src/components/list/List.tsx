@@ -5,29 +5,22 @@ import Cards from '../card/Cards';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { AppState } from '../../store/store';
 import { connect } from 'react-redux';
-import { setCards } from '../../store/card/actions';
-import { CardState } from '../../store/card/types';
 import { Draggable } from 'react-beautiful-dnd';
 
 interface Props {
   list: List;
-  cardState: CardState;
   editList: typeof editList;
   deleteList: typeof deleteList;
   focusList: typeof focusList;
-  setCards: typeof setCards;
   index: number;
 }
 
 const ListLi: React.FC<Props> = ({
   list,
-  cardState,
   editList,
   deleteList,
   focusList,
-  setCards,
   index
 }) => {
   const { id, title, autofocus, adding } = list;
@@ -124,6 +117,8 @@ const Container = styled.div`
   margin: var(--g-margin);
   padding: calc(var(--g-padding) * 2);
   border-radius: 3px;
+  max-height: calc(45vh - 32px);
+  overflow-y: scroll;
 
   .title-area {
     position: relative;
@@ -165,11 +160,7 @@ const Container = styled.div`
   }
 `;
 
-const mapStateToProps = (state: AppState) => ({
-  cardState: state.card
-});
-
 export default connect(
-  mapStateToProps,
-  { editList, deleteList, focusList, setCards }
+  null,
+  { editList, deleteList, focusList }
 )(ListLi);

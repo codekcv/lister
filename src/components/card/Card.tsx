@@ -94,7 +94,7 @@ const CardLi: React.FC<Props> = ({
   }
 
   return (
-    <Draggable draggableId={cardId} index={index}>
+    <Draggable draggableId={cardId} index={index} type="card">
       {provided => (
         <Container
           ref={provided.innerRef}
