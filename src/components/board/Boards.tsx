@@ -8,7 +8,11 @@ import { ListState, List } from '../../store/list/types';
 import { CardState, Card } from '../../store/card/types';
 import { setCards, changeList } from '../../store/card/actions';
 import { changeOrder, changeBoard } from '../../store/list/actions';
-import { reorderBoard } from '../../store/board/actions';
+import {
+  reorderBoard,
+  addBoard,
+  draggingBoard
+} from '../../store/board/actions';
 import styled from 'styled-components';
 
 interface Props {
@@ -21,6 +25,8 @@ interface Props {
   changeOrder: typeof changeOrder;
   reorderBoard: typeof reorderBoard;
   changeBoard: typeof changeBoard;
+  addBoard: typeof addBoard;
+  draggingBoard: typeof draggingBoard;
 }
 
 const Boards: React.FC<Props> = ({
@@ -31,11 +37,15 @@ const Boards: React.FC<Props> = ({
   changeList,
   changeOrder,
   reorderBoard,
-  changeBoard
+  changeBoard,
+  addBoard,
+  draggingBoard
 }) => {
   const { boards } = boardState;
 
   const onDragEnd = (result: any) => {
+    draggingBoard(false);
+
     const { destination, source, draggableId, type } = result;
 
     if (
@@ -154,11 +164,17 @@ const Boards: React.FC<Props> = ({
     }
   };
 
-  const handleNewBoard = () => {};
+  const handleNewBoard = () => {
+    addBoard('New Board');
+  };
+
+  const onDragStart = () => {
+    draggingBoard(true);
+  };
 
   return (
     <Container>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <Droppable droppableId={'lister'} type="board">
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -166,9 +182,12 @@ const Boards: React.FC<Props> = ({
                 <Board key={board.id} board={board} index={index} />
               ))}
               {provided.placeholder}
-              <div className="button-div" onClick={handleNewList}>
-                <button>+ Add a new list</button>
+              <div className="touch-me">
+                <div className="button-div" onClick={handleNewBoard}>
+                  <button>+ Add a new board</button>
+                </div>
               </div>
+              {/* <div style={{ height: '300px' }}></div> */}
             </div>
           )}
         </Droppable>
@@ -178,23 +197,36 @@ const Boards: React.FC<Props> = ({
 };
 
 const Container = styled.div`
-  .button-div {
-    background: rgba(255, 255, 255, 0.25);
-    height: 30px;
-    text-align: center;
-    margin: var(--g-margin);
-    border-radius: 3px;
+  .touch-me {
+    /* border: 1px pink solid; */
 
-    button {
-      background: none;
-      color: white;
-      width: 300px;
-      margin-top: 6px;
-      border: none;
+    height: 60px;
+
+    .button-div {
+      display: none;
+      background: rgba(255, 255, 255, 0.25);
+      height: 30px;
+      text-align: center;
+      margin: var(--g-margin);
+      border-radius: 3px;
+
+      button {
+        background: none;
+        color: white;
+        width: 300px;
+        margin-top: 6px;
+        border: none;
+      }
+
+      :hover {
+        background: rgba(255, 255, 255, 0.45);
+      }
     }
 
     :hover {
-      background: rgba(255, 255, 255, 0.45);
+      .button-div {
+        display: block;
+      }
     }
   }
 `;
@@ -207,5 +239,13 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { changeList, changeOrder, setCards, reorderBoard, changeBoard }
+  {
+    changeList,
+    changeOrder,
+    setCards,
+    reorderBoard,
+    changeBoard,
+    addBoard,
+    draggingBoard
+  }
 )(Boards);

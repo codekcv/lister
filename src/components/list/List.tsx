@@ -117,6 +117,8 @@ const Container = styled.div`
   margin: var(--g-margin);
   padding: calc(var(--g-padding) * 2);
   border-radius: 3px;
+  max-height: calc(45vh - 32px);
+  overflow-y: scroll;
 
   .title-area {
     position: relative;
