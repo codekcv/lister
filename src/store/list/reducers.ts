@@ -6,7 +6,8 @@ import {
   DELETE_LIST,
   FOCUS_LIST,
   ADDING,
-  CHANGE_ORDER
+  CHANGE_ORDER,
+  CHANGE_BOARD
 } from './types';
 
 const initialState: ListState = {
@@ -80,6 +81,14 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
     case CHANGE_ORDER:
       return {
         lists: action.payload.lists
+      };
+    case CHANGE_BOARD:
+      return {
+        lists: state.lists.map(list => {
+          list.id === action.payload.id &&
+            (list.boardId = action.payload.boardId);
+          return list;
+        })
       };
     default:
       return state;

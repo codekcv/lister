@@ -1,4 +1,10 @@
-import { BoardState, BoardActionTypes, ADD_BOARD, DELETE_BOARD } from './types';
+import {
+  BoardState,
+  BoardActionTypes,
+  ADD_BOARD,
+  DELETE_BOARD,
+  REORDER_BOARD
+} from './types';
 
 const initialState: BoardState = {
   boards: [
@@ -13,8 +19,12 @@ export const boardReducer = (
   action: BoardActionTypes
 ) => {
   switch (action.type) {
-    case ADD_BOARD:
     case DELETE_BOARD:
+      return state;
+    case REORDER_BOARD:
+      return {
+        boards: action.payload.boards
+      };
     default:
       return state;
   }

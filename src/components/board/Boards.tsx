@@ -4,10 +4,12 @@ import { AppState } from '../../store/store';
 import { BoardState } from '../../store/board/types';
 import Board from './Board';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { ListState } from '../../store/list/types';
+import { ListState, List } from '../../store/list/types';
 import { CardState, Card } from '../../store/card/types';
 import { setCards, changeList } from '../../store/card/actions';
-import { changeOrder } from '../../store/list/actions';
+import { changeOrder, changeBoard } from '../../store/list/actions';
+import { reorderBoard } from '../../store/board/actions';
+import styled from 'styled-components';
 
 interface Props {
   boardState: BoardState;
@@ -17,9 +19,20 @@ interface Props {
   setCards: typeof setCards;
   changeList: typeof changeList;
   changeOrder: typeof changeOrder;
+  reorderBoard: typeof reorderBoard;
+  changeBoard: typeof changeBoard;
 }
 
-const Boards: React.FC<Props> = ({ boardState, listState, cardState }) => {
+const Boards: React.FC<Props> = ({
+  boardState,
+  listState,
+  cardState,
+  setCards,
+  changeList,
+  changeOrder,
+  reorderBoard,
+  changeBoard
+}) => {
   const { boards } = boardState;
 
   const onDragEnd = (result: any) => {
@@ -33,74 +46,158 @@ const Boards: React.FC<Props> = ({ boardState, listState, cardState }) => {
       return;
     }
 
-    if (type === 'card') {
-      const { cards } = cardState;
-      const draggedCard = cards.find(card => card.cardId === draggableId);
-      const destinationListId = destination.droppableId;
-
-      if (draggedCard) {
-        let orderedCards: Card[];
-
-        if (destinationListId === draggedCard.listId) {
-          orderedCards = cards.filter(
-            card => card.listId === destinationListId
-          );
-          orderedCards.splice(source.index, 1);
-          orderedCards.splice(destination.index, 0, draggedCard);
-          orderedCards = [...orderedCards, ...cards].filter(
-            (card, index, self) => self.indexOf(card) === index
-          );
-        } else {
-          const fromCards: Card[] = cards.filter(
-            card => card.listId === draggedCard.listId
-          );
-
-          const toCards: Card[] = cards.filter(
-            card => card.listId === destinationListId
-          );
-
-          fromCards.splice(source.index, 1);
-          toCards.splice(destination.index, 0, draggedCard);
-
-          orderedCards = [...fromCards, ...toCards, ...cards].filter(
-            (card, index, self) => self.indexOf(card) === index
-          );
-
-          changeList(draggedCard.cardId, destinationListId);
-        }
-
-        setCards(orderedCards);
-      }
-    } else if (type === 'list') {
-      const draggedList = listState.lists.find(list => list.id === draggableId);
-
-      if (draggedList) {
-        const newListOrder = [...listState.lists];
-        newListOrder.splice(source.index, 1);
-        newListOrder.splice(destination.index, 0, draggedList);
-
-        changeOrder(newListOrder);
-      }
-    } else if (type === 'board') {
+    switch (type) {
+      case 'card':
+        onDragCard(destination, source, draggableId);
+        break;
+      case 'list':
+        onDragList(destination, source, draggableId);
+        break;
+      case 'board':
+        onDragBoard(destination, source, draggableId);
     }
   };
 
+  const onDragCard = (destination: any, source: any, draggableId: any) => {
+    const { cards } = cardState;
+    const draggedCard = cards.find(card => card.cardId === draggableId);
+    const destinationId = destination.droppableId;
+
+    if (draggedCard) {
+      let orderedCards: Card[];
+
+      if (destinationId === draggedCard.listId) {
+        orderedCards = cards.filter(card => card.listId === destinationId);
+
+        orderedCards.splice(source.index, 1);
+        orderedCards.splice(destination.index, 0, draggedCard);
+
+        orderedCards = [...orderedCards, ...cards].filter(
+          (card, index, self) => self.indexOf(card) === index
+        );
+      } else {
+        const fromCards: Card[] = cards.filter(
+          card => card.listId === draggedCard.listId
+        );
+
+        const toCards: Card[] = cards.filter(
+          card => card.listId === destinationId
+        );
+
+        fromCards.splice(source.index, 1);
+        toCards.splice(destination.index, 0, draggedCard);
+
+        orderedCards = [...fromCards, ...toCards, ...cards].filter(
+          (card, index, self) => self.indexOf(card) === index
+        );
+
+        changeList(draggedCard.cardId, destinationId);
+      }
+
+      setCards(orderedCards);
+    }
+  };
+
+  const onDragList = (destination: any, source: any, draggableId: any) => {
+    const { lists } = listState;
+    const draggedList = listState.lists.find(list => list.id === draggableId);
+
+    if (draggedList) {
+      if (destination.droppableId === draggedList.boardId) {
+        const newListOrder = [
+          ...listState.lists.filter(
+            list => list.boardId === draggedList.boardId
+          )
+        ];
+
+        newListOrder.splice(source.index, 1);
+        newListOrder.splice(destination.index, 0, draggedList);
+
+        const theListOrder = [...newListOrder, ...listState.lists].filter(
+          (list, index, self) => self.indexOf(list) === index
+        );
+
+        changeOrder(theListOrder);
+      } else {
+        const fromLists: List[] = lists.filter(
+          list => list.boardId === draggedList.boardId
+        );
+
+        const toLists: List[] = lists.filter(
+          list => list.boardId === destination.droppableId
+        );
+
+        fromLists.splice(source.index, 1);
+        toLists.splice(destination.index, 0, draggedList);
+
+        const newOrderedLists = [...fromLists, ...toLists, ...lists].filter(
+          (list, index, self) => self.indexOf(list) === index
+        );
+
+        changeBoard(draggedList.id, destination.droppableId);
+        changeOrder(newOrderedLists);
+      }
+    }
+  };
+
+  const onDragBoard = (destination: any, source: any, draggableId: any) => {
+    const draggedBoard = boardState.boards.find(
+      board => board.id === draggableId
+    );
+
+    if (draggedBoard) {
+      const newBoardOrder = [...boardState.boards];
+      newBoardOrder.splice(source.index, 1);
+      newBoardOrder.splice(destination.index, 0, draggedBoard);
+
+      reorderBoard(newBoardOrder);
+    }
+  };
+
+  const handleNewBoard = () => {};
+
   return (
-    <>
+    <Container>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId={'lister'} type="board">
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {boards.map((board, index) => (
-                <Board board={board} index={index} />
+                <Board key={board.id} board={board} index={index} />
               ))}
+              {provided.placeholder}
+              <div className="button-div" onClick={handleNewList}>
+                <button>+ Add a new list</button>
+              </div>
             </div>
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  .button-div {
+    background: rgba(255, 255, 255, 0.25);
+    height: 30px;
+    text-align: center;
+    margin: var(--g-margin);
+    border-radius: 3px;
+
+    button {
+      background: none;
+      color: white;
+      width: 300px;
+      margin-top: 6px;
+      border: none;
+    }
+
+    :hover {
+      background: rgba(255, 255, 255, 0.45);
+    }
+  }
+`;
 
 const mapStateToProps = (state: AppState) => ({
   boardState: state.board,
@@ -110,5 +207,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { changeList, changeOrder, setCards }
+  { changeList, changeOrder, setCards, reorderBoard, changeBoard }
 )(Boards);

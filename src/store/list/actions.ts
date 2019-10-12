@@ -5,7 +5,8 @@ import {
   FOCUS_LIST,
   ADDING,
   CHANGE_ORDER,
-  List
+  List,
+  CHANGE_BOARD
 } from './types';
 
 export const addList = (boardId: string, title: string) => {
@@ -47,5 +48,12 @@ export const changeOrder = (lists: List[]) => {
   return {
     type: CHANGE_ORDER,
     payload: { lists }
+  };
+};
+
+export const changeBoard = (id: string, boardId: string) => {
+  return {
+    type: CHANGE_BOARD,
+    payload: { id, boardId }
   };
 };
