@@ -71,7 +71,6 @@ const Container = styled.div<{ dragging: boolean }>`
     padding: 4px 12px;
     border-radius: 3px;
     box-shadow: 0 2px lightgray;
-    border: 1px pink solid;
   }
 
   .board-title-area {
@@ -85,7 +84,6 @@ const Container = styled.div<{ dragging: boolean }>`
     .board-button {
       position: absolute;
       display: none;
-      /* margin-top: 60px; */
       top: 2px;
       right: -56px;
     }
