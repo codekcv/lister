@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Boards from '../../components/board/Boards';
-import BoardButon, { BoardButtonInt } from './components/board-button';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
 import { BoardState, Board } from '../../store/board/types';
-import { FaCogs, FaCog } from 'react-icons/fa';
+import { FaCog } from 'react-icons/fa';
+import BoardButon from './components/board-button';
 
 interface Props {
   boardState: BoardState;
@@ -18,29 +18,7 @@ const Home: React.FC<Props> = ({ boardState }) => {
     window.location.reload();
   };
 
-  const handleClick = () => {
-    window.alert('Under construction');
-  };
-
-  // const boards: BoardButtonInt[] = [
-  //   {
-  //     title: 'nice'
-  //   },
-  //   {
-  //     title: 'nice'
-  //   },
-  //   {
-  //     title: 'nice'
-  //   }
-  // ];
-
-  const [boards, setBoards] = useState<BoardButtonInt[]>([{ title: '' }]);
-
   const boardMap = boardState.boards.map(board => ({ title: board.title }));
-
-  // setBoards(boardMap);
-
-  useEffect(() => {}, []);
 
   return (
     <Container>
@@ -55,16 +33,12 @@ const Home: React.FC<Props> = ({ boardState }) => {
           <ul>
             <li>
               <div className="nav-button show-all-boards">
-                <Link to="#" onClick={handleReset}>
-                  Show All Boards
-                </Link>
+                <Link to="#">Show All Boards</Link>
               </div>
             </li>
             <li>
               <div className="nav-button sign-in">
-                <Link to="#" onClick={handleReset}>
-                  Sign In
-                </Link>
+                <Link to="#">Sign In</Link>
               </div>
             </li>
             <li>
@@ -164,21 +138,3 @@ export default connect(
   mapStateToProps,
   {}
 )(Home);
-
-/* <BoardButon boardButton={but} />
-        <nav>
-          <ul>
-            <li onClick={handleClick}>
-              <Link to="#">Home</Link>
-            </li>
-            <li onClick={handleClick}>
-              <Link to="#">Boards</Link>
-            </li>
-            <li onClick={handleReset}>
-              <Link to="#">Clear State</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </nav> */
