@@ -29,7 +29,7 @@ const Container = styled.div`
 
   h4 {
     text-align: center;
-    margin-top: 10px;
+    line-height: 40px;
   }
 
   :hover {

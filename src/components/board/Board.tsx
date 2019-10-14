@@ -40,19 +40,21 @@ const BoardLi: React.FC<Props> = ({
       <Draggable draggableId={id} index={index} type="board">
         {provided => (
           <div ref={provided.innerRef} {...provided.draggableProps}>
-            <div
-              className="board-title-background"
-              {...provided.dragHandleProps}
-            >
-              <div className="board-title-area">
-                <h2>{title} </h2>
-                {'  '}
-                <span className="board-button">
-                  <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
-                  <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
-                </span>
+            {boardState.showAll && (
+              <div
+                className="board-title-background"
+                {...provided.dragHandleProps}
+              >
+                <div className="board-title-area">
+                  <h2>{title} </h2>
+                  {'  '}
+                  <span className="board-button">
+                    <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
+                    <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
             {provided.placeholder}
             <div className="hide">
               <Lists boardId={id} />

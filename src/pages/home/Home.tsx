@@ -4,35 +4,55 @@ import { Link } from 'react-router-dom';
 import Boards from '../../components/board/Boards';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
-import { BoardState, Board } from '../../store/board/types';
+import { BoardState } from '../../store/board/types';
 import { FaCog } from 'react-icons/fa';
 import BoardButon from './components/board-button';
+import {
+  addBoard,
+  showAllBoard,
+  setCurrentBoard
+} from '../../store/board/actions';
 
 interface Props {
   boardState: BoardState;
+  addBoard: typeof addBoard;
+  showAllBoard: typeof showAllBoard;
+  setCurrentBoard: typeof setCurrentBoard;
 }
 
-const Home: React.FC<Props> = ({ boardState }) => {
+const Home: React.FC<Props> = ({ boardState, addBoard, showAllBoard }) => {
+  const { showAll } = boardState;
+
   const handleReset = () => {
     localStorage.clear();
     window.location.reload();
   };
 
+  const handleShowAllBoard = () => {
+    showAllBoard(!boardState.showAll);
+  };
+
   const boardMap = boardState.boards.map(board => ({ title: board.title }));
 
   return (
-    <Container>
+    <Container showAll={showAll}>
       <div className="navbar">
         <div className="boards-button">
           {boardMap.map(board => (
-            <BoardButon boardButton={board} />
+            <BoardButon key={board.title} boardButton={board} />
           ))}
+          <div className="add-board" onClick={() => addBoard('Untitled')}>
+            + Add Board
+          </div>
         </div>
 
         <nav className="menus">
           <ul>
             <li>
-              <div className="nav-button show-all-boards">
+              <div
+                className="nav-button show-all-boards"
+                onClick={handleShowAllBoard}
+              >
                 <Link to="#">Show All Boards</Link>
               </div>
             </li>
@@ -42,12 +62,10 @@ const Home: React.FC<Props> = ({ boardState }) => {
               </div>
             </li>
             <li>
-              <div className="nav-button options">
-                <div className="centeroo">
-                  <Link to="#" onClick={handleReset}>
-                    <FaCog />
-                  </Link>
-                </div>
+              <div className="nav-button options" onClick={handleReset}>
+                <Link to="#">
+                  <FaCog />
+                </Link>
               </div>
             </li>
           </ul>
@@ -61,7 +79,7 @@ const Home: React.FC<Props> = ({ boardState }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ showAll: boolean }>`
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -73,6 +91,17 @@ const Container = styled.div`
     .boards-button {
       display: flex;
       margin: 0 5px;
+
+      .add-board {
+        width: 100px;
+        height: 40px;
+        margin: 0 5px;
+        border: 1px solid darkgray;
+        border-radius: 3px;
+        box-shadow: 0 1px gray;
+        text-align: center;
+        line-height: 40px;
+      }
     }
 
     nav {
@@ -89,9 +118,10 @@ const Container = styled.div`
           }
 
           .nav-button {
-            position: relative;
-            text-align: center;
-            line-height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             width: 100px;
             height: 40px;
             margin: 0 5px;
@@ -108,11 +138,11 @@ const Container = styled.div`
           }
 
           .show-all-boards {
-            width: 180px;
+            width: 140px;
           }
 
           .sign-in {
-            width: 90px;
+            width: 75px;
             color: yellow;
           }
 
@@ -126,7 +156,7 @@ const Container = styled.div`
   }
 
   .board-container {
-    margin: var(--g-margin);
+    margin: 8px var(--g-margin);
   }
 `;
 
@@ -136,5 +166,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { addBoard, showAllBoard }
 )(Home);
