@@ -11,7 +11,8 @@ import { changeOrder, changeBoard } from '../../store/list/actions';
 import {
   reorderBoard,
   addBoard,
-  draggingBoard
+  draggingBoard,
+  showAllBoard
 } from '../../store/board/actions';
 import styled from 'styled-components';
 
@@ -27,6 +28,7 @@ interface Props {
   changeBoard: typeof changeBoard;
   addBoard: typeof addBoard;
   draggingBoard: typeof draggingBoard;
+  showAllBoard: typeof showAllBoard;
 }
 
 const Boards: React.FC<Props> = ({
@@ -39,9 +41,10 @@ const Boards: React.FC<Props> = ({
   reorderBoard,
   changeBoard,
   addBoard,
-  draggingBoard
+  draggingBoard,
+  showAllBoard
 }) => {
-  const { boards } = boardState;
+  const { boards, showAll, currentBoard } = boardState;
 
   const onDragEnd = (result: any) => {
     draggingBoard(false);
@@ -178,16 +181,19 @@ const Boards: React.FC<Props> = ({
         <Droppable droppableId={'lister'} type="board">
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {boards.map((board, index) => (
-                <Board key={board.id} board={board} index={index} />
-              ))}
+              {showAll ? (
+                boards.map((board, index) => (
+                  <Board key={board.id} board={board} index={index} />
+                ))
+              ) : (
+                <Board key={currentBoard.id} board={currentBoard} index={0} />
+              )}
               {provided.placeholder}
               <div className="touch-me">
                 <div className="button-div" onClick={handleNewBoard}>
                   <button>+ Add a new board</button>
                 </div>
               </div>
-              {/* <div style={{ height: '300px' }}></div> */}
             </div>
           )}
         </Droppable>
@@ -198,8 +204,6 @@ const Boards: React.FC<Props> = ({
 
 const Container = styled.div`
   .touch-me {
-    /* border: 1px pink solid; */
-
     height: 60px;
 
     .button-div {
@@ -246,6 +250,7 @@ export default connect(
     reorderBoard,
     changeBoard,
     addBoard,
-    draggingBoard
+    draggingBoard,
+    showAllBoard
   }
 )(Boards);

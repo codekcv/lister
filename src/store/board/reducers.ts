@@ -4,7 +4,9 @@ import {
   ADD_BOARD,
   DELETE_BOARD,
   REORDER_BOARD,
-  DRAGGING_BOARD
+  DRAGGING_BOARD,
+  SHOW_ALL_BOARD,
+  CURRENT_BOARD
 } from './types';
 
 const initialState: BoardState = {
@@ -13,7 +15,9 @@ const initialState: BoardState = {
     { id: 'board2', title: 'Board 2' },
     { id: 'board3', title: 'Board 3' }
   ],
-  dragging: false
+  dragging: false,
+  showAll: false,
+  currentBoard: { id: 'board1', title: 'Board 1' }
 };
 
 export const boardReducer = (
@@ -46,6 +50,22 @@ export const boardReducer = (
       return {
         ...state,
         dragging: action.payload.dragging
+      };
+    case SHOW_ALL_BOARD:
+      return {
+        ...state,
+        showAll: action.payload.showAll
+      };
+    case CURRENT_BOARD:
+      console.log(
+        state.boards.filter(board => board === action.payload.board)[0]
+      );
+
+      return {
+        ...state,
+        currentBoard: state.boards.filter(
+          board => board === action.payload.board
+        )[0]
       };
     default:
       return state;

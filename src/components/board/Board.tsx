@@ -40,21 +40,22 @@ const BoardLi: React.FC<Props> = ({
       <Draggable draggableId={id} index={index} type="board">
         {provided => (
           <div ref={provided.innerRef} {...provided.draggableProps}>
-            <div
-              className="board-title-background"
-              {...provided.dragHandleProps}
-            >
-              <div className="board-title-area">
-                <h2>{title} </h2>
-                {'  '}
-                <span className="board-button">
-                  <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
-                  <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
-                </span>
+            {boardState.showAll && (
+              <div
+                className="board-title-background"
+                {...provided.dragHandleProps}
+              >
+                <div className={`board-title-area ${board.id}`}>
+                  <h2>{title} </h2>
+                  <span className="board-button">
+                    <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
+                    <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
             {provided.placeholder}
-            <div className="hide">
+            <div className="hide" {...provided.dragHandleProps}>
               <Lists boardId={id} />
             </div>
           </div>
@@ -71,7 +72,6 @@ const Container = styled.div<{ dragging: boolean }>`
     padding: 4px 12px;
     border-radius: 3px;
     box-shadow: 0 2px lightgray;
-    border: 1px pink solid;
   }
 
   .board-title-area {
@@ -85,7 +85,6 @@ const Container = styled.div<{ dragging: boolean }>`
     .board-button {
       position: absolute;
       display: none;
-      /* margin-top: 60px; */
       top: 2px;
       right: -56px;
     }

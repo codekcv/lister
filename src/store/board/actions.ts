@@ -3,7 +3,9 @@ import {
   DELETE_BOARD,
   REORDER_BOARD,
   Board,
-  DRAGGING_BOARD
+  DRAGGING_BOARD,
+  SHOW_ALL_BOARD,
+  CURRENT_BOARD
 } from './types';
 
 export const addBoard = (title: string) => {
@@ -29,4 +31,12 @@ export const reorderBoard = (boards: Board[]) => {
 
 export const draggingBoard = (dragging: boolean) => {
   return { type: DRAGGING_BOARD, payload: { dragging } };
+};
+
+export const showAllBoard = (showAll: boolean) => {
+  return { type: SHOW_ALL_BOARD, payload: { showAll } };
+};
+
+export const setCurrentBoard = (board: Board) => {
+  return { type: CURRENT_BOARD, payload: { board } };
 };
