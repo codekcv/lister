@@ -57,20 +57,16 @@ export const boardReducer = (
         showAll: action.payload.showAll
       };
     case CURRENT_BOARD:
+      console.log(
+        state.boards.filter(board => board === action.payload.board)[0]
+      );
+
       return {
         ...state,
         currentBoard: state.boards.filter(
           board => board === action.payload.board
         )[0]
       };
-    // case CURRENT_BOARD:
-    //   return {
-    //     ...state
-    //     // currentBoard: state.boards.find(board => board === action.payload.board)
-    //     // currentBoard: state.boards.filter(
-    //     //   board => board === action.payload.currentBoard
-    //     // )[0]
-    //   };
     default:
       return state;
   }

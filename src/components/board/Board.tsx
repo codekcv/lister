@@ -45,9 +45,8 @@ const BoardLi: React.FC<Props> = ({
                 className="board-title-background"
                 {...provided.dragHandleProps}
               >
-                <div className="board-title-area">
+                <div className={`board-title-area ${board.id}`}>
                   <h2>{title} </h2>
-                  {'  '}
                   <span className="board-button">
                     <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
                     <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
@@ -56,7 +55,7 @@ const BoardLi: React.FC<Props> = ({
               </div>
             )}
             {provided.placeholder}
-            <div className="hide">
+            <div className="hide" {...provided.dragHandleProps}>
               <Lists boardId={id} />
             </div>
           </div>

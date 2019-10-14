@@ -37,6 +37,6 @@ export const showAllBoard = (showAll: boolean) => {
   return { type: SHOW_ALL_BOARD, payload: { showAll } };
 };
 
-export const setCurrentBoard = (board: string) => {
+export const setCurrentBoard = (board: Board) => {
   return { type: CURRENT_BOARD, payload: { board } };
 };

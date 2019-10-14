@@ -1,21 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
-
-export interface BoardButtonInt {
-  title: string;
-}
+import { Link } from 'react-router-dom';
+import { Draggable } from 'react-beautiful-dnd';
+import { connect } from 'react-redux';
+import { BoardState, Board } from '../../../store/board/types';
+import { setCurrentBoard } from '../../../store/board/actions';
+import { AppState } from '../../../store/store';
 
 interface Props {
-  boardButton: BoardButtonInt;
+  board: Board;
+  index: number;
+  boardState: BoardState;
+  setCurrentBoard: typeof setCurrentBoard;
 }
 
-const BoardButon: React.FC<Props> = ({ boardButton }) => {
-  const { title } = boardButton;
+const BoardButon: React.FC<Props> = ({
+  board,
+  index,
+  boardState,
+  setCurrentBoard
+}) => {
+  const { title, id } = board;
+
+  const handleClick = () => {
+    setCurrentBoard(board);
+  };
 
   return (
-    <Container>
-      <h4>{title}</h4>
-    </Container>
+    <Draggable draggableId={id} index={index} type="navbar-btton">
+      {provided => (
+        <Container
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Link to={`#${id}`} onClick={handleClick}>
+            <h4>{title}</h4>
+          </Link>
+        </Container>
+      )}
+    </Draggable>
   );
 };
 
@@ -40,4 +64,11 @@ const Container = styled.div`
   }
 `;
 
-export default BoardButon;
+const mapStateToProps = (state: AppState) => ({
+  boardState: state.board
+});
+
+export default connect(
+  mapStateToProps,
+  { setCurrentBoard }
+)(BoardButon);

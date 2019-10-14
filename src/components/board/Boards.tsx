@@ -186,7 +186,7 @@ const Boards: React.FC<Props> = ({
                   <Board key={board.id} board={board} index={index} />
                 ))
               ) : (
-                <Board key={currentBoard.id} board={currentBoard} index={90} />
+                <Board key={currentBoard.id} board={currentBoard} index={0} />
               )}
               {provided.placeholder}
               <div className="touch-me">
@@ -194,7 +194,6 @@ const Boards: React.FC<Props> = ({
                   <button>+ Add a new board</button>
                 </div>
               </div>
-              {/* <Board key={boards[0].id} board={boards[0]} index={90} /> */}
             </div>
           )}
         </Droppable>
@@ -205,8 +204,6 @@ const Boards: React.FC<Props> = ({
 
 const Container = styled.div`
   .touch-me {
-    /* border: 1px pink solid; */
-
     height: 60px;
 
     .button-div {

@@ -10,18 +10,26 @@ import BoardButon from './components/board-button';
 import {
   addBoard,
   showAllBoard,
-  setCurrentBoard
+  setCurrentBoard,
+  reorderBoard
 } from '../../store/board/actions';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   boardState: BoardState;
   addBoard: typeof addBoard;
   showAllBoard: typeof showAllBoard;
   setCurrentBoard: typeof setCurrentBoard;
+  reorderBoard: typeof reorderBoard;
 }
 
-const Home: React.FC<Props> = ({ boardState, addBoard, showAllBoard }) => {
-  const { showAll } = boardState;
+const Home: React.FC<Props> = ({
+  boardState,
+  addBoard,
+  showAllBoard,
+  reorderBoard
+}) => {
+  const { boards, showAll } = boardState;
 
   const handleReset = () => {
     localStorage.clear();
@@ -32,19 +40,55 @@ const Home: React.FC<Props> = ({ boardState, addBoard, showAllBoard }) => {
     showAllBoard(!boardState.showAll);
   };
 
-  const boardMap = boardState.boards.map(board => ({ title: board.title }));
+  const onDragEnd = (result: any) => {
+    const { destination, source, draggableId } = result;
+
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    const draggedBoard = boards.find(board => board.id === draggableId);
+
+    if (draggedBoard) {
+      const newOrder = boards.map(board => board);
+
+      newOrder.splice(source.index, 1);
+      newOrder.splice(destination.index, 0, draggedBoard);
+
+      reorderBoard(newOrder);
+    }
+  };
 
   return (
     <Container showAll={showAll}>
       <div className="navbar">
-        <div className="boards-button">
-          {boardMap.map(board => (
-            <BoardButon key={board.title} boardButton={board} />
-          ))}
-          <div className="add-board" onClick={() => addBoard('Untitled')}>
-            + Add Board
-          </div>
-        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId={'navbar-boards'}
+            direction="horizontal"
+            type="navbar-btton"
+          >
+            {provided => (
+              <div
+                className="boards-button"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {boards.map((board, index) => (
+                  <BoardButon key={board.id} board={board} index={index} />
+                ))}
+                {provided.placeholder}
+                <div className="add-board" onClick={() => addBoard('Untitled')}>
+                  + Add Board
+                </div>
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         <nav className="menus">
           <ul>
@@ -57,7 +101,10 @@ const Home: React.FC<Props> = ({ boardState, addBoard, showAllBoard }) => {
               </div>
             </li>
             <li>
-              <div className="nav-button sign-in">
+              <div
+                className="nav-button sign-in"
+                onClick={() => window.alert('Under construction.')}
+              >
                 <Link to="#">Sign In</Link>
               </div>
             </li>
@@ -139,6 +186,12 @@ const Container = styled.div<{ showAll: boolean }>`
 
           .show-all-boards {
             width: 140px;
+
+            ${props =>
+              props.showAll &&
+              `cursor: pointer;
+              box-shadow: none; 
+              background: darkgray;`}
           }
 
           .sign-in {
@@ -166,5 +219,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addBoard, showAllBoard }
+  { addBoard, showAllBoard, reorderBoard }
 )(Home);
