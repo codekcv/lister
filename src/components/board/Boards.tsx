@@ -12,7 +12,7 @@ import {
   reorderBoard,
   addBoard,
   draggingBoard,
-  showAllBoard
+  setCurrentBoard
 } from '../../store/board/actions';
 import styled from 'styled-components';
 
@@ -28,7 +28,7 @@ interface Props {
   changeBoard: typeof changeBoard;
   addBoard: typeof addBoard;
   draggingBoard: typeof draggingBoard;
-  showAllBoard: typeof showAllBoard;
+  setCurrentBoard: typeof setCurrentBoard;
 }
 
 const Boards: React.FC<Props> = ({
@@ -42,7 +42,7 @@ const Boards: React.FC<Props> = ({
   changeBoard,
   addBoard,
   draggingBoard,
-  showAllBoard
+  setCurrentBoard
 }) => {
   const { boards, showAll, currentBoard } = boardState;
 
@@ -169,10 +169,13 @@ const Boards: React.FC<Props> = ({
 
   const handleNewBoard = () => {
     addBoard('New Board');
+    console.log(boards[boards.length - 1]);
+    // setCurrentBoard(boards[boards.length - 1]);
   };
 
   const onDragStart = () => {
     draggingBoard(true);
+    console.log('just a click?');
   };
 
   return (
@@ -182,18 +185,20 @@ const Boards: React.FC<Props> = ({
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {showAll ? (
-                boards.map((board, index) => (
-                  <Board key={board.id} board={board} index={index} />
-                ))
+                <>
+                  {boards.map((board, index) => (
+                    <Board key={board.id} board={board} index={index} />
+                  ))}
+                  <div className="touch-me">
+                    <div className="button-div" onClick={handleNewBoard}>
+                      <button>+ Add a new board</button>
+                    </div>
+                  </div>
+                </>
               ) : (
                 <Board key={currentBoard.id} board={currentBoard} index={0} />
               )}
               {provided.placeholder}
-              <div className="touch-me">
-                <div className="button-div" onClick={handleNewBoard}>
-                  <button>+ Add a new board</button>
-                </div>
-              </div>
             </div>
           )}
         </Droppable>
@@ -207,7 +212,7 @@ const Container = styled.div`
     height: 60px;
 
     .button-div {
-      display: none;
+      /* display: none; */
       background: rgba(255, 255, 255, 0.25);
       height: 30px;
       text-align: center;
@@ -251,6 +256,6 @@ export default connect(
     changeBoard,
     addBoard,
     draggingBoard,
-    showAllBoard
+    setCurrentBoard
   }
 )(Boards);

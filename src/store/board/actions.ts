@@ -5,13 +5,22 @@ import {
   Board,
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
-  CURRENT_BOARD
+  CURRENT_BOARD,
+  EDIT_BOARD,
+  FOCUS_BOARD
 } from './types';
 
 export const addBoard = (title: string) => {
   return {
     type: ADD_BOARD,
     payload: { title }
+  };
+};
+
+export const editBoard = (id: string, title: string) => {
+  return {
+    type: EDIT_BOARD,
+    payload: { id, title }
   };
 };
 
@@ -39,4 +48,8 @@ export const showAllBoard = (showAll: boolean) => {
 
 export const setCurrentBoard = (board: Board) => {
   return { type: CURRENT_BOARD, payload: { board } };
+};
+
+export const setFocusBoard = (id: string, autofocus: boolean) => {
+  return { type: FOCUS_BOARD, payload: { id, autofocus } };
 };

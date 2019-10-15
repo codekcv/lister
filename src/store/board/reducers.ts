@@ -6,18 +6,22 @@ import {
   REORDER_BOARD,
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
-  CURRENT_BOARD
+  CURRENT_BOARD,
+  EDIT_BOARD,
+  FOCUS_BOARD
 } from './types';
 
 const initialState: BoardState = {
+  // boards: [{ id: 'board1', title: 'My Board', autofocus: true }],
+  // Develop Boards Test
   boards: [
-    { id: 'board1', title: 'Board 1' },
-    { id: 'board2', title: 'Board 2' },
-    { id: 'board3', title: 'Board 3' }
+    { id: 'board1', title: 'Work', autofocus: true },
+    { id: 'board2', title: 'Self Stuff', autofocus: true },
+    { id: 'board3', title: 'Family', autofocus: true }
   ],
   dragging: false,
   showAll: false,
-  currentBoard: { id: 'board1', title: 'Board 1' }
+  currentBoard: { id: 'board1', title: 'Board 1', autofocus: true }
 };
 
 export const boardReducer = (
@@ -26,20 +30,42 @@ export const boardReducer = (
 ) => {
   switch (action.type) {
     case ADD_BOARD:
+      const generatedId = require('short-uuid').generate();
+
       return {
         ...state,
         boards: [
           ...state.boards,
           {
-            id: require('short-uuid').generate(),
-            title: action.payload.title
+            id: generatedId,
+            title: action.payload.title,
+            autofocus: false
           }
-        ]
+        ],
+        currentBoard: {
+          id: generatedId,
+          title: action.payload.title,
+          autofocus: false
+        }
       };
-    case DELETE_BOARD:
+    case EDIT_BOARD:
       return {
         ...state,
-        boards: state.boards.filter(board => board.id !== action.payload.id)
+        boards: state.boards.map(board => {
+          board.id === action.payload.id &&
+            (board.title = action.payload.title);
+          return board;
+        })
+      };
+    case DELETE_BOARD:
+      const board = state.boards.find(board => board.id === action.payload.id);
+      let index = state.boards.findIndex(item => item === board) + 1;
+      index === state.boards.length && (index = 0);
+
+      return {
+        ...state,
+        boards: state.boards.filter(board => board.id !== action.payload.id),
+        currentBoard: state.boards[index]
       };
     case REORDER_BOARD:
       return {
@@ -57,15 +83,19 @@ export const boardReducer = (
         showAll: action.payload.showAll
       };
     case CURRENT_BOARD:
-      console.log(
-        state.boards.filter(board => board === action.payload.board)[0]
-      );
-
       return {
         ...state,
         currentBoard: state.boards.filter(
           board => board === action.payload.board
         )[0]
+      };
+    case FOCUS_BOARD:
+      return {
+        ...state,
+        boards: state.boards.map(board => {
+          board.id === action.payload.id && (board.autofocus = true);
+          return board;
+        })
       };
     default:
       return state;

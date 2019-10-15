@@ -21,7 +21,7 @@ const initialState: ListState = {
     },
     {
       id: 'doing',
-      boardId: 'board1',
+      boardId: 'board2',
       title: 'Things To Do',
       autofocus: true,
       adding: false

@@ -33,27 +33,50 @@ const BoardButon: React.FC<Props> = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={handleClick}
+          isActive={board.id === boardState.currentBoard.id}
         >
-          <Link to={`#${id}`} onClick={handleClick}>
-            <h4>{title}</h4>
-          </Link>
+          <div className="centeroo">
+            <Link to={`#${id}`}>
+              <p>{title}</p>
+            </Link>
+          </div>
         </Container>
       )}
     </Draggable>
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ isActive: boolean }>`
+  background: ${props => (props.isActive ? 'darkgray' : '#ebecf0')};
+
   width: 100px;
   height: 40px;
   margin: 0 5px;
+
   border: 1px solid darkgray;
   border-radius: 3px;
   box-shadow: 0 1px gray;
 
-  h4 {
-    text-align: center;
-    line-height: 40px;
+  .centeroo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    a {
+      text-decoration: none;
+    }
+
+    p {
+      padding: 4px;
+      width: 100px;
+      text-align: center;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   :hover {

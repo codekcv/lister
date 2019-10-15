@@ -1,6 +1,7 @@
 export interface Board {
   id: string;
   title: string;
+  autofocus: boolean;
 }
 
 export interface BoardState {
@@ -11,15 +12,22 @@ export interface BoardState {
 }
 
 export const ADD_BOARD = 'ADD_BOARD';
+export const EDIT_BOARD = 'EDIT_BOARD';
 export const DELETE_BOARD = 'DELETE_BOARD';
 export const REORDER_BOARD = 'REORDER_BOARD';
 export const DRAGGING_BOARD = 'DRAGGING_BOARD';
 export const SHOW_ALL_BOARD = 'SHOW_ALL_BOARD';
 export const CURRENT_BOARD = 'CURRENT_BOARD';
+export const FOCUS_BOARD = 'FOCUS_BOARD';
 
 interface AddBoardAction {
   type: typeof ADD_BOARD;
   payload: { title: string };
+}
+
+interface EditBoardAction {
+  type: typeof EDIT_BOARD;
+  payload: { id: string; title: string };
 }
 
 interface DeleteBoardAction {
@@ -42,15 +50,22 @@ interface ShowAllBoardAction {
   payload: { showAll: boolean };
 }
 
-interface SET_CURRENT_BOARD {
+interface SetCurrentBoardAction {
   type: typeof CURRENT_BOARD;
   payload: { board: Board };
 }
 
+interface SetFocusBoard {
+  type: typeof FOCUS_BOARD;
+  payload: { id: string; autofocus: boolean };
+}
+
 export type BoardActionTypes =
   | AddBoardAction
+  | EditBoardAction
   | DeleteBoardAction
   | ReorderBoardAction
   | DraggingBoardAction
   | ShowAllBoardAction
-  | SET_CURRENT_BOARD;
+  | SetCurrentBoardAction
+  | SetFocusBoard;
