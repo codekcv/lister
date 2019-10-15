@@ -6,7 +6,8 @@ import {
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
   CURRENT_BOARD,
-  EDIT_BOARD
+  EDIT_BOARD,
+  FOCUS_BOARD
 } from './types';
 
 export const addBoard = (title: string) => {
@@ -47,4 +48,8 @@ export const showAllBoard = (showAll: boolean) => {
 
 export const setCurrentBoard = (board: Board) => {
   return { type: CURRENT_BOARD, payload: { board } };
+};
+
+export const setFocusBoard = (id: string, autofocus: boolean) => {
+  return { type: FOCUS_BOARD, payload: { id, autofocus } };
 };

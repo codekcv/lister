@@ -5,7 +5,11 @@ import { AppState } from '../../store/store';
 import Lists from '../list/Lists';
 import { Draggable } from 'react-beautiful-dnd';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { deleteBoard, editBoard } from '../../store/board/actions';
+import {
+  deleteBoard,
+  editBoard,
+  setFocusBoard
+} from '../../store/board/actions';
 import styled from 'styled-components';
 
 interface Props {
@@ -15,6 +19,7 @@ interface Props {
 
   deleteBoard: typeof deleteBoard;
   editBoard: typeof editBoard;
+  setFocusBoard: typeof setFocusBoard;
 }
 
 const BoardLi: React.FC<Props> = ({
@@ -22,14 +27,25 @@ const BoardLi: React.FC<Props> = ({
   boardState,
   index,
   deleteBoard,
-  editBoard
+  editBoard,
+  setFocusBoard
 }) => {
-  const { id, title } = board;
+  const { id, title, autofocus } = boardState.boards.filter(
+    item => item.id === board.id
+  )[0];
+  // const { id, title, autofocus } = boardState.boards.find(
+  //   (item = item.id === board.id)
+  // );
   const [input, setInput] = useState('');
   const [editing, setEditing] = useState(false);
 
   const handleBoardEdit = () => {
-    setInput(title);
+    if (title === 'Untitled') {
+      setInput('');
+    } else {
+      setInput(title);
+    }
+
     setEditing(true);
   };
 
@@ -52,9 +68,20 @@ const BoardLi: React.FC<Props> = ({
   };
 
   const handleSubmit = () => {
-    editBoard(id, input);
     setEditing(false);
+
+    if (input.trim()) {
+      editBoard(id, input);
+    } else {
+      editBoard(id, 'Untitled');
+    }
   };
+
+  if (!autofocus) {
+    setFocusBoard(id, true);
+    handleBoardEdit();
+    setInput('');
+  }
 
   return (
     <Container dragging={boardState.dragging}>
@@ -86,6 +113,7 @@ const BoardLi: React.FC<Props> = ({
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
                     autoFocus
+                    placeholder="Untitled"
                   />
                 </form>
               )}
@@ -139,5 +167,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { editBoard, deleteBoard }
+  { editBoard, deleteBoard, setFocusBoard }
 )(BoardLi);

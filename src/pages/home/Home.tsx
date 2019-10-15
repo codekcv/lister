@@ -65,10 +65,7 @@ const Home: React.FC<Props> = ({
   };
 
   const handleNewBoard = () => {
-    console.log('action', addBoard('New Board'));
-    console.log('home', boards[boards.length]);
-
-    // setCurrentBoard(boards[boards.length - 1]);
+    addBoard('Untitled');
   };
 
   return (

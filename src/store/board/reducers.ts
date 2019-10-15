@@ -7,18 +7,19 @@ import {
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
   CURRENT_BOARD,
-  EDIT_BOARD
+  EDIT_BOARD,
+  FOCUS_BOARD
 } from './types';
 
 const initialState: BoardState = {
   boards: [
-    { id: 'board1', title: 'Board 1' },
-    { id: 'board2', title: 'Board 2' },
-    { id: 'board3', title: 'Board 3' }
+    { id: 'board1', title: 'Board 1', autofocus: true },
+    { id: 'board2', title: 'Board 2', autofocus: true },
+    { id: 'board3', title: 'Board 3', autofocus: true }
   ],
   dragging: false,
   showAll: false,
-  currentBoard: { id: 'board1', title: 'Board 1' }
+  currentBoard: { id: 'board1', title: 'Board 1', autofocus: true }
 };
 
 export const boardReducer = (
@@ -28,18 +29,21 @@ export const boardReducer = (
   switch (action.type) {
     case ADD_BOARD:
       const generatedId = require('short-uuid').generate();
+
       return {
         ...state,
         boards: [
           ...state.boards,
           {
             id: generatedId,
-            title: action.payload.title
+            title: action.payload.title,
+            autofocus: false
           }
         ],
         currentBoard: {
           id: generatedId,
-          title: action.payload.title
+          title: action.payload.title,
+          autofocus: false
         }
       };
     case EDIT_BOARD:
@@ -77,13 +81,19 @@ export const boardReducer = (
         showAll: action.payload.showAll
       };
     case CURRENT_BOARD:
-      console.log('red', action.payload.board);
-
       return {
         ...state,
         currentBoard: state.boards.filter(
           board => board === action.payload.board
         )[0]
+      };
+    case FOCUS_BOARD:
+      return {
+        ...state,
+        boards: state.boards.map(board => {
+          board.id === action.payload.id && (board.autofocus = true);
+          return board;
+        })
       };
     default:
       return state;
