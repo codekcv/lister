@@ -27,7 +27,8 @@ const Home: React.FC<Props> = ({
   boardState,
   addBoard,
   showAllBoard,
-  reorderBoard
+  reorderBoard,
+  setCurrentBoard
 }) => {
   const { boards, showAll } = boardState;
 
@@ -63,6 +64,13 @@ const Home: React.FC<Props> = ({
     }
   };
 
+  const handleNewBoard = () => {
+    console.log('action', addBoard('New Board'));
+    console.log('home', boards[boards.length]);
+
+    // setCurrentBoard(boards[boards.length - 1]);
+  };
+
   return (
     <Container showAll={showAll}>
       <div className="navbar">
@@ -82,7 +90,7 @@ const Home: React.FC<Props> = ({
                   <BoardButon key={board.id} board={board} index={index} />
                 ))}
                 {provided.placeholder}
-                <div className="add-board" onClick={() => addBoard('Untitled')}>
+                <div className="add-board" onClick={handleNewBoard}>
                   + Add Board
                 </div>
               </div>
@@ -219,5 +227,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addBoard, showAllBoard, reorderBoard }
+  { addBoard, showAllBoard, reorderBoard, setCurrentBoard }
 )(Home);

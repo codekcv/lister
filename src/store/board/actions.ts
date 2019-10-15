@@ -5,13 +5,21 @@ import {
   Board,
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
-  CURRENT_BOARD
+  CURRENT_BOARD,
+  EDIT_BOARD
 } from './types';
 
 export const addBoard = (title: string) => {
   return {
     type: ADD_BOARD,
     payload: { title }
+  };
+};
+
+export const editBoard = (id: string, title: string) => {
+  return {
+    type: EDIT_BOARD,
+    payload: { id, title }
   };
 };
 

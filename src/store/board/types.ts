@@ -11,6 +11,7 @@ export interface BoardState {
 }
 
 export const ADD_BOARD = 'ADD_BOARD';
+export const EDIT_BOARD = 'EDIT_BOARD';
 export const DELETE_BOARD = 'DELETE_BOARD';
 export const REORDER_BOARD = 'REORDER_BOARD';
 export const DRAGGING_BOARD = 'DRAGGING_BOARD';
@@ -20,6 +21,11 @@ export const CURRENT_BOARD = 'CURRENT_BOARD';
 interface AddBoardAction {
   type: typeof ADD_BOARD;
   payload: { title: string };
+}
+
+interface EditBoardAction {
+  type: typeof EDIT_BOARD;
+  payload: { id: string; title: string };
 }
 
 interface DeleteBoardAction {
@@ -49,6 +55,7 @@ interface SET_CURRENT_BOARD {
 
 export type BoardActionTypes =
   | AddBoardAction
+  | EditBoardAction
   | DeleteBoardAction
   | ReorderBoardAction
   | DraggingBoardAction

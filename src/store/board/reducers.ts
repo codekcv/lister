@@ -6,7 +6,8 @@ import {
   REORDER_BOARD,
   DRAGGING_BOARD,
   SHOW_ALL_BOARD,
-  CURRENT_BOARD
+  CURRENT_BOARD,
+  EDIT_BOARD
 } from './types';
 
 const initialState: BoardState = {
@@ -26,20 +27,39 @@ export const boardReducer = (
 ) => {
   switch (action.type) {
     case ADD_BOARD:
+      const generatedId = require('short-uuid').generate();
       return {
         ...state,
         boards: [
           ...state.boards,
           {
-            id: require('short-uuid').generate(),
+            id: generatedId,
             title: action.payload.title
           }
-        ]
+        ],
+        currentBoard: {
+          id: generatedId,
+          title: action.payload.title
+        }
       };
-    case DELETE_BOARD:
+    case EDIT_BOARD:
       return {
         ...state,
-        boards: state.boards.filter(board => board.id !== action.payload.id)
+        boards: state.boards.map(board => {
+          board.id === action.payload.id &&
+            (board.title = action.payload.title);
+          return board;
+        })
+      };
+    case DELETE_BOARD:
+      const board = state.boards.find(board => board.id === action.payload.id);
+      let index = state.boards.findIndex(item => item === board) + 1;
+      index === state.boards.length && (index = 0);
+
+      return {
+        ...state,
+        boards: state.boards.filter(board => board.id !== action.payload.id),
+        currentBoard: state.boards[index]
       };
     case REORDER_BOARD:
       return {
@@ -57,9 +77,7 @@ export const boardReducer = (
         showAll: action.payload.showAll
       };
     case CURRENT_BOARD:
-      console.log(
-        state.boards.filter(board => board === action.payload.board)[0]
-      );
+      console.log('red', action.payload.board);
 
       return {
         ...state,

@@ -5,7 +5,7 @@ import { AppState } from '../../store/store';
 import Lists from '../list/Lists';
 import { Draggable } from 'react-beautiful-dnd';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { deleteBoard } from '../../store/board/actions';
+import { deleteBoard, editBoard } from '../../store/board/actions';
 import styled from 'styled-components';
 
 interface Props {
@@ -14,13 +14,15 @@ interface Props {
   index: number;
 
   deleteBoard: typeof deleteBoard;
+  editBoard: typeof editBoard;
 }
 
 const BoardLi: React.FC<Props> = ({
   board,
   boardState,
   index,
-  deleteBoard
+  deleteBoard,
+  editBoard
 }) => {
   const { id, title } = board;
   const [input, setInput] = useState('');
@@ -35,25 +37,59 @@ const BoardLi: React.FC<Props> = ({
     deleteBoard(id);
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleOnBlur = () => {
+    handleSubmit();
+  };
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    handleSubmit();
+  };
+
+  const handleSubmit = () => {
+    editBoard(id, input);
+    setEditing(false);
+  };
+
   return (
     <Container dragging={boardState.dragging}>
-      <Draggable draggableId={id} index={index} type="board">
+      <Draggable
+        draggableId={id}
+        index={index}
+        type="board"
+        isDragDisabled={!boardState.showAll}
+      >
         {provided => (
           <div ref={provided.innerRef} {...provided.draggableProps}>
-            {boardState.showAll && (
-              <div
-                className="board-title-background"
-                {...provided.dragHandleProps}
-              >
+            <div
+              className="board-title-background"
+              {...provided.dragHandleProps}
+            >
+              {!editing ? (
                 <div className={`board-title-area ${board.id}`}>
-                  <h2>{title} </h2>
+                  <h2>{title}</h2>
                   <span className="board-button">
                     <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}
                     <FaTrashAlt onClick={handleBoardDelete} size="1.5rem" />
                   </span>
                 </div>
-              </div>
-            )}
+              ) : (
+                <form onSubmit={handleOnSubmit}>
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    autoFocus
+                  />
+                </form>
+              )}
+            </div>
             {provided.placeholder}
             <div className="hide" {...provided.dragHandleProps}>
               <Lists boardId={id} />
@@ -72,6 +108,12 @@ const Container = styled.div<{ dragging: boolean }>`
     padding: 4px 12px;
     border-radius: 3px;
     box-shadow: 0 2px lightgray;
+
+    :hover {
+      .board-button {
+        display: inline;
+      }
+    }
   }
 
   .board-title-area {
@@ -88,12 +130,6 @@ const Container = styled.div<{ dragging: boolean }>`
       top: 2px;
       right: -56px;
     }
-
-    :hover {
-      .board-button {
-        display: inline;
-      }
-    }
   }
 `;
 
@@ -103,5 +139,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { deleteBoard }
+  { editBoard, deleteBoard }
 )(BoardLi);
