@@ -108,6 +108,7 @@ const BoardLi: React.FC<Props> = ({
               ) : (
                 <form onSubmit={handleOnSubmit}>
                   <input
+                    className="board-title-input"
                     type="text"
                     value={input}
                     onChange={handleOnChange}
@@ -142,6 +143,12 @@ const Container = styled.div<{ dragging: boolean }>`
         display: inline;
       }
     }
+  }
+
+  .board-title-input {
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
   }
 
   .board-title-area {
