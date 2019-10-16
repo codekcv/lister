@@ -9,6 +9,7 @@ export interface BoardState {
   dragging: boolean;
   showAll: boolean;
   currentBoard: Board;
+  backgroundColor: string;
 }
 
 export const ADD_BOARD = 'ADD_BOARD';
@@ -19,6 +20,7 @@ export const DRAGGING_BOARD = 'DRAGGING_BOARD';
 export const SHOW_ALL_BOARD = 'SHOW_ALL_BOARD';
 export const CURRENT_BOARD = 'CURRENT_BOARD';
 export const FOCUS_BOARD = 'FOCUS_BOARD';
+export const CHANGE_COLOR = 'CHANGE_COLOR';
 
 interface AddBoardAction {
   type: typeof ADD_BOARD;
@@ -55,9 +57,14 @@ interface SetCurrentBoardAction {
   payload: { board: Board };
 }
 
-interface SetFocusBoard {
+interface SetFocusBoardAction {
   type: typeof FOCUS_BOARD;
   payload: { id: string; autofocus: boolean };
+}
+
+interface ChangeColorAction {
+  type: typeof CHANGE_COLOR;
+  payload: { color: string };
 }
 
 export type BoardActionTypes =
@@ -68,4 +75,5 @@ export type BoardActionTypes =
   | DraggingBoardAction
   | ShowAllBoardAction
   | SetCurrentBoardAction
-  | SetFocusBoard;
+  | SetFocusBoardAction
+  | ChangeColorAction;

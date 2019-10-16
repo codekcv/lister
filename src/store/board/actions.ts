@@ -7,7 +7,8 @@ import {
   SHOW_ALL_BOARD,
   CURRENT_BOARD,
   EDIT_BOARD,
-  FOCUS_BOARD
+  FOCUS_BOARD,
+  CHANGE_COLOR
 } from './types';
 
 export const addBoard = (title: string) => {
@@ -52,4 +53,8 @@ export const setCurrentBoard = (board: Board) => {
 
 export const setFocusBoard = (id: string, autofocus: boolean) => {
   return { type: FOCUS_BOARD, payload: { id, autofocus } };
+};
+
+export const changeBackgroundColor = (color: string) => {
+  return { type: CHANGE_COLOR, payload: { color } };
 };

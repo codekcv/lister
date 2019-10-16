@@ -8,7 +8,8 @@ import {
   SHOW_ALL_BOARD,
   CURRENT_BOARD,
   EDIT_BOARD,
-  FOCUS_BOARD
+  FOCUS_BOARD,
+  CHANGE_COLOR
 } from './types';
 
 const initialState: BoardState = {
@@ -21,7 +22,8 @@ const initialState: BoardState = {
   ],
   dragging: false,
   showAll: false,
-  currentBoard: { id: 'board1', title: 'Board 1', autofocus: true }
+  currentBoard: { id: 'board1', title: 'Board 1', autofocus: true },
+  backgroundColor: 'CornflowerBlue'
 };
 
 export const boardReducer = (
@@ -96,6 +98,11 @@ export const boardReducer = (
           board.id === action.payload.id && (board.autofocus = true);
           return board;
         })
+      };
+    case CHANGE_COLOR:
+      return {
+        ...state,
+        backgroundColor: action.payload.color
       };
     default:
       return state;

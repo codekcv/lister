@@ -19,10 +19,6 @@
   list-style: none;
 }
 
-html {
-  background-color: cornflowerblue;
-}
-
 textarea {
   overflow: hidden;
   resize: none;
