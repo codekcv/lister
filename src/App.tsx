@@ -115,7 +115,7 @@ const Home: React.FC<Props> = ({
       <div className="background-color" />
 
       <div className="board-container">
-        <Boards />
+        {boardState.boards.length ? <Boards /> : null}
       </div>
     </Container>
   );
