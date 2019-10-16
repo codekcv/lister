@@ -11,8 +11,7 @@ import { changeOrder, changeBoard } from '../../store/list/actions';
 import {
   reorderBoard,
   addBoard,
-  draggingBoard,
-  setCurrentBoard
+  draggingBoard
 } from '../../store/board/actions';
 import styled from 'styled-components';
 
@@ -28,7 +27,6 @@ interface Props {
   changeBoard: typeof changeBoard;
   addBoard: typeof addBoard;
   draggingBoard: typeof draggingBoard;
-  setCurrentBoard: typeof setCurrentBoard;
 }
 
 const Boards: React.FC<Props> = ({
@@ -41,8 +39,7 @@ const Boards: React.FC<Props> = ({
   reorderBoard,
   changeBoard,
   addBoard,
-  draggingBoard,
-  setCurrentBoard
+  draggingBoard
 }) => {
   const { boards, showAll, currentBoard } = boardState;
 
@@ -169,13 +166,10 @@ const Boards: React.FC<Props> = ({
 
   const handleNewBoard = () => {
     addBoard('New Board');
-    console.log(boards[boards.length - 1]);
-    // setCurrentBoard(boards[boards.length - 1]);
   };
 
   const onDragStart = () => {
     draggingBoard(true);
-    console.log('just a click?');
   };
 
   return (
@@ -255,7 +249,6 @@ export default connect(
     reorderBoard,
     changeBoard,
     addBoard,
-    draggingBoard,
-    setCurrentBoard
+    draggingBoard
   }
 )(Boards);

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { BoardState, Board } from '../../../store/board/types';
@@ -34,13 +33,9 @@ const BoardButon: React.FC<Props> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           onClick={handleClick}
-          isActive={true} //{board.id === boardState.currentBoard.id}
+          isActive={board.id === boardState.currentBoard.id}
         >
-          <div className="centeroo">
-            <Link to={`#${id}`}>
-              <p>{title}</p>
-            </Link>
-          </div>
+          <div className="centeroo">{title}</div>
         </Container>
       )}
     </Draggable>
