@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
-import { BoardState, Board } from '../../../store/board/types';
-import { setCurrentBoard } from '../../../store/board/actions';
-import { AppState } from '../../../store/store';
+import { BoardState, Board } from '../../store/board/types';
+import { setCurrentBoard } from '../../store/board/actions';
+import { AppState } from '../../store/store';
 
 interface Props {
   board: Board;

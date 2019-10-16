@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaCog } from 'react-icons/fa';
-import { changeBackgroundColor } from '../../../store/board/actions';
+import { changeBackgroundColor } from '../../store/board/actions';
 import { connect } from 'react-redux';
 
 interface Props {
@@ -34,15 +34,25 @@ const Options: React.FC<Props> = ({ changeBackgroundColor }) => {
         <>
           <div className="modal-background" onClick={handleOnClick} />
           <div className="modal-box">
-            <h1 className="title">listerNote</h1>
+            <h1 className="title">listerNote</h1>{' '}
+            <span>
+              <b>v1.0.0</b>
+            </span>
             <p>
               This is a React app for organizing notes. It is based on Trello.
             </p>
             <p>I am building this for practice. Will add back-end soon.</p>
-            <p>Version: 1.0.0</p>
             <br />
             <h2>Choose Your Background Color:</h2>
+            <br />
             <ul className="color-ul">
+              <li>
+                <ColorPicker
+                  className="color-pick"
+                  onClick={() => handleChangeColor('MediumSeaGreen')}
+                  color="MediumSeaGreen"
+                ></ColorPicker>
+              </li>
               <li>
                 <ColorPicker
                   className="color-pick"
@@ -57,13 +67,7 @@ const Options: React.FC<Props> = ({ changeBackgroundColor }) => {
                   color="Brown"
                 ></ColorPicker>
               </li>
-              <li>
-                <ColorPicker
-                  className="color-pick"
-                  onClick={() => handleChangeColor('MediumSeaGreen')}
-                  color="MediumSeaGreen"
-                ></ColorPicker>
-              </li>
+
               <li>
                 <ColorPicker
                   className="color-pick"
@@ -137,15 +141,12 @@ const Container = styled.div`
     border-radius: 3px;
     box-shadow: 0 0 5px gray;
 
+    .title {
+      display: inline-block;
+    }
+
     .color-ul {
       display: flex;
-
-      li {
-        /* width: 40px;
-        height: 40px;
-        border: 1px gray solid; */
-        /* margin: 0 5px; */
-      }
     }
 
     .last-options {
