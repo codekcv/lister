@@ -9,7 +9,6 @@ import BoardButon from './components/board-button';
 import {
   addBoard,
   showAllBoard,
-  setCurrentBoard,
   reorderBoard
 } from '../../store/board/actions';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -19,7 +18,6 @@ interface Props {
   boardState: BoardState;
   addBoard: typeof addBoard;
   showAllBoard: typeof showAllBoard;
-  setCurrentBoard: typeof setCurrentBoard;
   reorderBoard: typeof reorderBoard;
 }
 
@@ -27,10 +25,11 @@ const Home: React.FC<Props> = ({
   boardState,
   addBoard,
   showAllBoard,
-  reorderBoard,
-  setCurrentBoard
+  reorderBoard
 }) => {
-  const { boards, showAll, backgroundColor } = boardState;
+  const { boards, showAll, backgroundColor, currentBoard } = boardState;
+
+  console.log('CONSOLE', currentBoard);
 
   const handleShowAllBoard = () => {
     showAllBoard(!boardState.showAll);
@@ -70,7 +69,7 @@ const Home: React.FC<Props> = ({
           <Droppable
             droppableId={'navbar-boards'}
             direction="horizontal"
-            type="navbar-btton"
+            type="navbar-button"
           >
             {provided => (
               <div
@@ -247,7 +246,6 @@ export default connect(
   {
     addBoard,
     showAllBoard,
-    reorderBoard,
-    setCurrentBoard
+    reorderBoard
   }
 )(Home);

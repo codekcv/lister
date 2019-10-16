@@ -8,8 +8,7 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import {
   deleteBoard,
   editBoard,
-  setFocusBoard,
-  setCurrentBoard
+  setFocusBoard
 } from '../../store/board/actions';
 import styled from 'styled-components';
 
@@ -21,7 +20,6 @@ interface Props {
   deleteBoard: typeof deleteBoard;
   editBoard: typeof editBoard;
   setFocusBoard: typeof setFocusBoard;
-  setCurrentBoard: typeof setCurrentBoard;
 }
 
 const BoardLi: React.FC<Props> = ({
@@ -30,8 +28,7 @@ const BoardLi: React.FC<Props> = ({
   index,
   deleteBoard,
   editBoard,
-  setFocusBoard,
-  setCurrentBoard
+  setFocusBoard
 }) => {
   const { id, title, autofocus } = boardState.boards.filter(
     item => item.id === board.id
@@ -86,12 +83,8 @@ const BoardLi: React.FC<Props> = ({
     setInput('');
   }
 
-  const handleSetCurrentBoard = () => {
-    setCurrentBoard(board);
-  };
-
   return (
-    <Container dragging={boardState.dragging} onClick={handleSetCurrentBoard}>
+    <Container dragging={boardState.dragging}>
       <Draggable
         draggableId={id}
         index={index}
@@ -181,5 +174,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { editBoard, deleteBoard, setFocusBoard, setCurrentBoard }
+  { editBoard, deleteBoard, setFocusBoard }
 )(BoardLi);

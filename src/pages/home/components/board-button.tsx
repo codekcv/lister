@@ -26,16 +26,15 @@ const BoardButon: React.FC<Props> = ({
     setCurrentBoard(board);
   };
 
-  console.log('board', boardState.currentBoard.id);
   return (
-    <Draggable draggableId={id} index={index} type="navbar-btton">
+    <Draggable draggableId={id} index={index} type="navbar-button">
       {provided => (
         <Container
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           onClick={handleClick}
-          isActive={board.id === boardState.currentBoard.id}
+          isActive={true} //{board.id === boardState.currentBoard.id}
         >
           <div className="centeroo">
             <Link to={`#${id}`}>
