@@ -212,7 +212,7 @@ const Container = styled.div`
     height: 60px;
 
     .button-div {
-      /* display: none; */
+      display: none;
       background: rgba(255, 255, 255, 0.25);
       height: 30px;
       text-align: center;

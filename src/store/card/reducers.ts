@@ -79,6 +79,34 @@ const initialState: CardState = {
         'You can also re-arrange the LISTS itself. Just drag the title and move it where you want.',
       cross: false,
       init: true
+    },
+    {
+      listId: 'dev',
+      cardId: 'd1',
+      text: 'Options button modal',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'dev',
+      cardId: 'd2',
+      text: 'Be able to do change background',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'dev',
+      cardId: 'd3',
+      text: 'Add button diffent style',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'dev',
+      cardId: 'd4',
+      text: 'Fixed Navbar',
+      cross: false,
+      init: true
     }
   ]
 };

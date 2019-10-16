@@ -32,6 +32,13 @@ const initialState: ListState = {
       title: 'Random Facts',
       autofocus: true,
       adding: false
+    },
+    {
+      id: 'dev',
+      boardId: 'board2',
+      title: 'App Development',
+      autofocus: true,
+      adding: false
     }
   ]
 };
