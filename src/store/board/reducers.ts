@@ -17,7 +17,7 @@ const initialState: BoardState = {
   dragging: false,
   showAll: false,
   currentBoard: { id: 'board1', title: 'My Board', autofocus: true },
-  backgroundColor: 'CornflowerBlue'
+  backgroundColor: 'MediumSeaGreen'
 };
 
 export const boardReducer = (
