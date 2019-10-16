@@ -148,9 +148,7 @@ const Container = styled.div<{ showAll: boolean; backgroundColor: string }>`
         width: 100px;
         height: 40px;
         margin: 0 5px;
-        /* border: 1px solid darkgray; */
         border-radius: 3px;
-        /* box-shadow: 0 1px gray; */
         text-align: center;
         color: gray;
         cursor: pointer;

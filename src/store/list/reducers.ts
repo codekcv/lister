@@ -15,46 +15,69 @@ const initialState: ListState = {
     {
       id: 'do',
       boardId: 'board1',
-      title: 'Sample List',
+      title: 'To Do',
       autofocus: true,
       adding: false
     },
     {
       id: 'doing',
-      boardId: 'board2',
-      title: 'Things To Do',
+      boardId: 'board1',
+      title: 'Doing',
       autofocus: true,
       adding: false
     },
     {
       id: 'done',
       boardId: 'board1',
-      title: 'Random Facts',
-      autofocus: true,
-      adding: false
-    },
-    {
-      id: 'done2',
-      boardId: 'board1',
-      title: 'Everyday Stuff.',
-      autofocus: true,
-      adding: false
-    },
-    {
-      id: 'dev',
-      boardId: 'board2',
-      title: 'App Development',
-      autofocus: true,
-      adding: false
-    },
-    {
-      id: 'fam',
-      boardId: 'board3',
-      title: 'Things To Do',
+      title: 'Done',
       autofocus: true,
       adding: false
     }
   ]
+  // lists: [
+  //   {
+  //     id: 'do',
+  //     boardId: 'board1',
+  //     title: 'Sample List',
+  //     autofocus: true,
+  //     adding: false
+  //   },
+  //   {
+  //     id: 'doing',
+  //     boardId: 'board2',
+  //     title: 'Things To Do',
+  //     autofocus: true,
+  //     adding: false
+  //   },
+  //   {
+  //     id: 'done',
+  //     boardId: 'board1',
+  //     title: 'Random Facts',
+  //     autofocus: true,
+  //     adding: false
+  //   },
+  //   {
+  //     id: 'done2',
+  //     boardId: 'board1',
+  //     title: 'Everyday Stuff.',
+  //     autofocus: true,
+  //     adding: false
+  //   },
+  //   {
+  //     id: 'dev',
+  //     boardId: 'board2',
+  //     title: 'App Development',
+  //     autofocus: true,
+  //     adding: false
+  //   },
+  //   {
+  //     id: 'fam',
+  //     boardId: 'board3',
+  //     title: 'Things To Do',
+  //     autofocus: true,
+  //     adding: false
+  //   }
+  // ]
 };
 
 export const listReducer = (state = initialState, action: ListActionTypes) => {

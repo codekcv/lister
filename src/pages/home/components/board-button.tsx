@@ -26,6 +26,7 @@ const BoardButon: React.FC<Props> = ({
     setCurrentBoard(board);
   };
 
+  console.log('board', boardState.currentBoard.id);
   return (
     <Draggable draggableId={id} index={index} type="navbar-btton">
       {provided => (

@@ -13,16 +13,16 @@ import {
 } from './types';
 
 const initialState: BoardState = {
-  // boards: [{ id: 'board1', title: 'My Board', autofocus: true }],
+  boards: [{ id: 'board1', title: 'My Board', autofocus: true }],
   // Develop Boards Test
-  boards: [
-    { id: 'board1', title: 'Work', autofocus: true },
-    { id: 'board2', title: 'Self Stuff', autofocus: true },
-    { id: 'board3', title: 'Family', autofocus: true }
-  ],
+  // boards: [
+  //   { id: 'board1', title: 'Work', autofocus: true },
+  //   { id: 'board2', title: 'Self Stuff', autofocus: true },
+  //   { id: 'board3', title: 'Family', autofocus: true }
+  // ],
   dragging: false,
   showAll: false,
-  currentBoard: { id: 'board1', title: 'Board 1', autofocus: true },
+  currentBoard: { id: 'board1', title: 'My Board', autofocus: true },
   backgroundColor: 'CornflowerBlue'
 };
 
