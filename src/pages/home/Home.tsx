@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Boards from '../../components/board/Boards';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
@@ -27,9 +26,7 @@ const Home: React.FC<Props> = ({
   showAllBoard,
   reorderBoard
 }) => {
-  const { boards, showAll, backgroundColor, currentBoard } = boardState;
-
-  console.log('CONSOLE', currentBoard);
+  const { boards, showAll, backgroundColor } = boardState;
 
   const handleShowAllBoard = () => {
     showAllBoard(!boardState.showAll);
@@ -96,7 +93,7 @@ const Home: React.FC<Props> = ({
                 className="nav-button show-all-boards"
                 onClick={handleShowAllBoard}
               >
-                <Link to="#">Show All Boards</Link>
+                Show All Boards
               </div>
             </li>
             <li className="home-li">
@@ -104,7 +101,7 @@ const Home: React.FC<Props> = ({
                 className="nav-button sign-in"
                 onClick={() => window.alert('Under construction.')}
               >
-                <Link to="#">Sign In</Link>
+                Sign In
               </div>
             </li>
             <li className="home-li">
@@ -205,7 +202,6 @@ const Container = styled.div<{ showAll: boolean; backgroundColor: string }>`
 
           .sign-in {
             width: 75px;
-            color: yellow;
           }
 
           .options {

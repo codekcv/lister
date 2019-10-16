@@ -33,9 +33,6 @@ const BoardLi: React.FC<Props> = ({
   const { id, title, autofocus } = boardState.boards.filter(
     item => item.id === board.id
   )[0];
-  // const { id, title, autofocus } = boardState.boards.find(
-  //   (item = item.id === board.id)
-  // );
   const [input, setInput] = useState('');
   const [editing, setEditing] = useState(false);
 
