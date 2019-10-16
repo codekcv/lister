@@ -81,6 +81,34 @@ const initialState: CardState = {
       init: true
     },
     {
+      listId: 'done2',
+      cardId: 'g8',
+      text: 'Do laundry.',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'done2',
+      cardId: 'g1',
+      text: 'Walk the dog.',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'done2',
+      cardId: 'g2',
+      text: 'Read book.',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'done2',
+      cardId: 'g3',
+      text: 'Program stuff.',
+      cross: false,
+      init: true
+    },
+    {
       listId: 'dev',
       cardId: 'd1',
       text: 'Options button modal',
@@ -105,6 +133,20 @@ const initialState: CardState = {
       listId: 'dev',
       cardId: 'd4',
       text: 'Fixed Navbar',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'fam',
+      cardId: 'f1',
+      text: 'Keep it lovely',
+      cross: false,
+      init: true
+    },
+    {
+      listId: 'fam',
+      cardId: 'f2',
+      text: 'Stay awesome',
       cross: false,
       init: true
     }

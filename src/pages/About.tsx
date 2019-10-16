@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -11,31 +10,6 @@ export const About: React.FC<Props> = () => {
       <p>This is a React app for organizing notes. It is based on Trello.</p>
       <p>I am building this for practice. Will add back-end soon.</p>
       <p>Version: 1.0.0</p>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Go Back</Link>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://twitter.com/villamin_c"
-            >
-              @villamin_c
-            </a>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/ChristianVillamin/lister"
-            >
-              GitHub Source Code
-            </a>
-          </li>
-        </ul>
-      </div>
     </Container>
   );
 };

@@ -5,7 +5,6 @@ import Boards from '../../components/board/Boards';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/store';
 import { BoardState } from '../../store/board/types';
-import { FaCog } from 'react-icons/fa';
 import BoardButon from './components/board-button';
 import {
   addBoard,
@@ -14,6 +13,7 @@ import {
   reorderBoard
 } from '../../store/board/actions';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Options from './components/options';
 
 interface Props {
   boardState: BoardState;
@@ -30,12 +30,7 @@ const Home: React.FC<Props> = ({
   reorderBoard,
   setCurrentBoard
 }) => {
-  const { boards, showAll } = boardState;
-
-  const handleReset = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
+  const { boards, showAll, backgroundColor } = boardState;
 
   const handleShowAllBoard = () => {
     showAllBoard(!boardState.showAll);
@@ -69,7 +64,7 @@ const Home: React.FC<Props> = ({
   };
 
   return (
-    <Container showAll={showAll}>
+    <Container showAll={showAll} backgroundColor={backgroundColor}>
       <div className="navbar">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
@@ -96,8 +91,8 @@ const Home: React.FC<Props> = ({
         </DragDropContext>
 
         <nav className="menus">
-          <ul>
-            <li>
+          <ul className="home-ul">
+            <li className="home-li">
               <div
                 className="nav-button show-all-boards"
                 onClick={handleShowAllBoard}
@@ -105,7 +100,7 @@ const Home: React.FC<Props> = ({
                 <Link to="#">Show All Boards</Link>
               </div>
             </li>
-            <li>
+            <li className="home-li">
               <div
                 className="nav-button sign-in"
                 onClick={() => window.alert('Under construction.')}
@@ -113,16 +108,14 @@ const Home: React.FC<Props> = ({
                 <Link to="#">Sign In</Link>
               </div>
             </li>
-            <li>
-              <div className="nav-button options" onClick={handleReset}>
-                <Link to="#">
-                  <FaCog />
-                </Link>
-              </div>
+            <li className="home-li">
+              <Options />
             </li>
           </ul>
         </nav>
       </div>
+
+      <div className="background-color" />
 
       <div className="board-container">
         <Boards />
@@ -131,14 +124,21 @@ const Home: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div<{ showAll: boolean }>`
+const Container = styled.div<{ showAll: boolean; backgroundColor: string }>`
+  height: 100vh;
+
   .navbar {
+    position: fixed;
+    background: #ebecf0;
     display: flex;
     justify-content: space-between;
-    background: #ebecf0;
-    width: 100vw;
+    z-index: 1;
+    width: 100%;
     height: 60px;
+    top: 0;
+    left: 0;
     padding-top: 10px;
+    box-shadow: 0 0 3px gray;
 
     .boards-button {
       display: flex;
@@ -148,21 +148,28 @@ const Container = styled.div<{ showAll: boolean }>`
         width: 100px;
         height: 40px;
         margin: 0 5px;
-        border: 1px solid darkgray;
+        /* border: 1px solid darkgray; */
         border-radius: 3px;
-        box-shadow: 0 1px gray;
+        /* box-shadow: 0 1px gray; */
         text-align: center;
+        color: gray;
+        cursor: pointer;
         line-height: 40px;
+
+        :hover {
+          background: lightgray;
+          text-decoration: underline;
+        }
       }
     }
 
     nav {
       margin-right: 5px;
 
-      ul {
+      .home-ul {
         display: flex;
         justify-content: center;
-        li {
+        .home-li {
           position: relative;
 
           a {
@@ -206,7 +213,11 @@ const Container = styled.div<{ showAll: boolean }>`
 
           .options {
             width: 45px;
-            padding-top: 2px;
+          }
+
+          .reset-button {
+            width: 100%;
+            margin: 8px 0 0 0;
           }
         }
       }
@@ -214,7 +225,18 @@ const Container = styled.div<{ showAll: boolean }>`
   }
 
   .board-container {
-    margin: 8px var(--g-margin);
+    margin-top: 60px;
+    padding: 8px;
+  }
+
+  .background-color {
+    background-color: ${props => props.backgroundColor};
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 `;
 
@@ -224,5 +246,10 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { addBoard, showAllBoard, reorderBoard, setCurrentBoard }
+  {
+    addBoard,
+    showAllBoard,
+    reorderBoard,
+    setCurrentBoard
+  }
 )(Home);

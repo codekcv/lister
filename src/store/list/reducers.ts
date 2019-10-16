@@ -34,9 +34,23 @@ const initialState: ListState = {
       adding: false
     },
     {
+      id: 'done2',
+      boardId: 'board1',
+      title: 'Everyday Stuff.',
+      autofocus: true,
+      adding: false
+    },
+    {
       id: 'dev',
       boardId: 'board2',
       title: 'App Development',
+      autofocus: true,
+      adding: false
+    },
+    {
+      id: 'fam',
+      boardId: 'board3',
+      title: 'Things To Do',
       autofocus: true,
       adding: false
     }
