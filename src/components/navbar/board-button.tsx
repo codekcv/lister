@@ -19,7 +19,7 @@ const BoardButon: React.FC<Props> = ({
   boardState,
   setCurrentBoard
 }) => {
-  const { title, id } = board;
+  const { title, boardId: id } = board;
 
   const handleClick = () => {
     setCurrentBoard(board);
@@ -33,9 +33,11 @@ const BoardButon: React.FC<Props> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           onClick={handleClick}
-          isActive={board.id === boardState.currentBoard.id}
+          isActive={board.boardId === boardState.currentBoard.boardId}
         >
-          <div className="centeroo">{title}</div>
+          <div className="centeroo">
+            <h2>{title}</h2>
+          </div>
         </Container>
       )}
     </Draggable>
@@ -59,11 +61,8 @@ const Container = styled.div<{ isActive: boolean }>`
     align-items: center;
     height: 100%;
 
-    a {
-      text-decoration: none;
-    }
-
-    p {
+    h2 {
+      font-size: 1rem;
       padding: 4px;
       width: 100px;
       text-align: center;

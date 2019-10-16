@@ -110,7 +110,9 @@ const Boards: React.FC<Props> = ({
 
   const onDragList = (destination: any, source: any, draggableId: any) => {
     const { lists } = listState;
-    const draggedList = listState.lists.find(list => list.id === draggableId);
+    const draggedList = listState.lists.find(
+      list => list.listId === draggableId
+    );
 
     if (draggedList) {
       if (destination.droppableId === draggedList.boardId) {
@@ -144,7 +146,7 @@ const Boards: React.FC<Props> = ({
           (list, index, self) => self.indexOf(list) === index
         );
 
-        changeBoard(draggedList.id, destination.droppableId);
+        changeBoard(draggedList.listId, destination.droppableId);
         changeOrder(newOrderedLists);
       }
     }
@@ -152,7 +154,7 @@ const Boards: React.FC<Props> = ({
 
   const onDragBoard = (destination: any, source: any, draggableId: any) => {
     const draggedBoard = boardState.boards.find(
-      board => board.id === draggableId
+      board => board.boardId === draggableId
     );
 
     if (draggedBoard) {
@@ -181,7 +183,7 @@ const Boards: React.FC<Props> = ({
               {showAll ? (
                 <>
                   {boards.map((board, index) => (
-                    <Board key={board.id} board={board} index={index} />
+                    <Board key={board.boardId} board={board} index={index} />
                   ))}
                   <div className="touch-me">
                     <div className="button-div" onClick={handleNewBoard}>
@@ -190,7 +192,11 @@ const Boards: React.FC<Props> = ({
                   </div>
                 </>
               ) : (
-                <Board key={currentBoard.id} board={currentBoard} index={0} />
+                <Board
+                  key={currentBoard.boardId}
+                  board={currentBoard}
+                  index={0}
+                />
               )}
               {provided.placeholder}
             </div>

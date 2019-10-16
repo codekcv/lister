@@ -30,8 +30,8 @@ const BoardLi: React.FC<Props> = ({
   editBoard,
   setFocusBoard
 }) => {
-  const { id, title, autofocus } = boardState.boards.filter(
-    item => item.id === board.id
+  const { boardId: id, title, autofocus } = boardState.boards.filter(
+    item => item.boardId === board.boardId
   )[0];
   const [input, setInput] = useState('');
   const [editing, setEditing] = useState(false);
@@ -95,7 +95,7 @@ const BoardLi: React.FC<Props> = ({
               {...provided.dragHandleProps}
             >
               {!editing ? (
-                <div className={`board-title-area ${board.id}`}>
+                <div className={`board-title-area ${board.boardId}`}>
                   <h2>{title}</h2>
                   <span className="board-button">
                     <FaPencilAlt onClick={handleBoardEdit} size="1.5rem" />{' '}

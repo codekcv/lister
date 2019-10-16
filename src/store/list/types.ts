@@ -1,5 +1,5 @@
 export interface List {
-  id: string;
+  listId: string;
   boardId: string;
   title: string;
   autofocus: boolean;
@@ -25,22 +25,22 @@ interface AddListAction {
 
 interface EditListAction {
   type: typeof EDIT_LIST;
-  payload: { id: string; title: string };
+  payload: { listId: string; title: string };
 }
 
 interface DeleteListAction {
   type: typeof DELETE_LIST;
-  payload: { id: string };
+  payload: { listId: string };
 }
 
 interface FocusListAction {
   type: typeof FOCUS_LIST;
-  payload: { id: string; autofocus: boolean };
+  payload: { listId: string; autofocus: boolean };
 }
 
 interface CurrentlyAddingAction {
   type: typeof ADDING;
-  payload: { id: string; adding: boolean };
+  payload: { listId: string; adding: boolean };
 }
 
 interface ChangeOrderAction {
@@ -50,7 +50,7 @@ interface ChangeOrderAction {
 
 interface ChangeBoardAction {
   type: typeof CHANGE_BOARD;
-  payload: { id: string; boardId: string };
+  payload: { listId: string; boardId: string };
 }
 
 export type ListActionTypes =

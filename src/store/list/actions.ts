@@ -16,31 +16,31 @@ export const addList = (boardId: string, title: string) => {
   };
 };
 
-export const editList = (id: string, title: string) => {
+export const editList = (listId: string, title: string) => {
   return {
     type: EDIT_LIST,
-    payload: { id, title }
+    payload: { listId, title }
   };
 };
 
-export const deleteList = (id: string) => {
+export const deleteList = (listId: string) => {
   return {
     type: DELETE_LIST,
-    payload: { id }
+    payload: { listId }
   };
 };
 
-export const focusList = (id: string, autofocus: boolean) => {
+export const focusList = (listId: string, autofocus: boolean) => {
   return {
     type: FOCUS_LIST,
-    payload: { id, autofocus }
+    payload: { listId, autofocus }
   };
 };
 
-export const currentlyAdding = (id: string, adding: boolean) => {
+export const currentlyAdding = (listId: string, adding: boolean) => {
   return {
     type: ADDING,
-    payload: { id, adding }
+    payload: { listId, adding }
   };
 };
 
@@ -51,9 +51,9 @@ export const changeOrder = (lists: List[]) => {
   };
 };
 
-export const changeBoard = (id: string, boardId: string) => {
+export const changeBoard = (listId: string, boardId: string) => {
   return {
     type: CHANGE_BOARD,
-    payload: { id, boardId }
+    payload: { listId, boardId }
   };
 };

@@ -18,17 +18,17 @@ export const addBoard = (title: string) => {
   };
 };
 
-export const editBoard = (id: string, title: string) => {
+export const editBoard = (boardId: string, title: string) => {
   return {
     type: EDIT_BOARD,
-    payload: { id, title }
+    payload: { boardId, title }
   };
 };
 
-export const deleteBoard = (id: string) => {
+export const deleteBoard = (boardId: string) => {
   return {
     type: DELETE_BOARD,
-    payload: { id }
+    payload: { boardId }
   };
 };
 
@@ -51,8 +51,8 @@ export const setCurrentBoard = (board: Board) => {
   return { type: CURRENT_BOARD, payload: { board } };
 };
 
-export const setFocusBoard = (id: string, autofocus: boolean) => {
-  return { type: FOCUS_BOARD, payload: { id, autofocus } };
+export const setFocusBoard = (boardId: string, autofocus: boolean) => {
+  return { type: FOCUS_BOARD, payload: { boardId, autofocus } };
 };
 
 export const changeBackgroundColor = (color: string) => {

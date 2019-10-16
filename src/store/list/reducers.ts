@@ -13,22 +13,22 @@ import {
 const initialState: ListState = {
   lists: [
     {
-      id: 'do',
-      boardId: 'board1',
+      listId: 'do',
+      boardId: 'personal',
       title: 'Things To Do',
       autofocus: true,
       adding: false
     },
     {
-      id: 'doing',
-      boardId: 'board1',
+      listId: 'doing',
+      boardId: 'personal',
       title: 'Currently Doing',
       autofocus: true,
       adding: false
     },
     {
-      id: 'done',
-      boardId: 'board1',
+      listId: 'done',
+      boardId: 'personal',
       title: 'Done With It',
       autofocus: true,
       adding: false
@@ -43,7 +43,7 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
         lists: [
           ...state.lists,
           {
-            id: require('short-uuid').generate(),
+            listId: require('short-uuid').generate(),
             boardId: action.payload.boardId,
             title: action.payload.title,
             cardsID: [],
@@ -55,25 +55,27 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
     case EDIT_LIST:
       return {
         lists: state.lists.map(list => {
-          list.id === action.payload.id && (list.title = action.payload.title);
+          list.listId === action.payload.listId &&
+            (list.title = action.payload.title);
           return list;
         })
       };
     case DELETE_LIST:
       return {
-        lists: state.lists.filter(list => list.id !== action.payload.id)
+        lists: state.lists.filter(list => list.listId !== action.payload.listId)
       };
     case FOCUS_LIST:
       return {
         lists: state.lists.map(list => {
-          list.id === action.payload.id && (list.autofocus = !list.autofocus);
+          list.listId === action.payload.listId &&
+            (list.autofocus = !list.autofocus);
           return list;
         })
       };
     case ADDING:
       return {
         lists: state.lists.map(list => {
-          list.id === action.payload.id &&
+          list.listId === action.payload.listId &&
             (list.adding = action.payload.adding);
           return list;
         })
@@ -85,7 +87,7 @@ export const listReducer = (state = initialState, action: ListActionTypes) => {
     case CHANGE_BOARD:
       return {
         lists: state.lists.map(list => {
-          list.id === action.payload.id &&
+          list.listId === action.payload.listId &&
             (list.boardId = action.payload.boardId);
           return list;
         })

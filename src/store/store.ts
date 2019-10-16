@@ -14,9 +14,8 @@ export const configureStore = () => {
   const persistedStore = loadState();
   const store = createStore(rootReducer, persistedStore);
 
-  store.subscribe(() => {
-    saveState(store.getState());
-  });
+  store.subscribe(() => saveState(store.getState()));
+
   return store;
 };
 

@@ -13,10 +13,13 @@ import {
 } from './types';
 
 const initialState: BoardState = {
-  boards: [{ id: 'board1', title: 'My Board', autofocus: true }],
+  boards: [
+    { boardId: 'personal', title: 'Personal', autofocus: true },
+    { boardId: 'work', title: 'Work', autofocus: true }
+  ],
   dragging: false,
   showAll: false,
-  currentBoard: { id: 'board1', title: 'My Board', autofocus: true },
+  currentBoard: { boardId: 'personal', title: 'Personal', autofocus: true },
   backgroundColor: 'MediumSeaGreen'
 };
 
@@ -33,13 +36,13 @@ export const boardReducer = (
         boards: [
           ...state.boards,
           {
-            id: generatedId,
+            boardId: generatedId,
             title: action.payload.title,
             autofocus: false
           }
         ],
         currentBoard: {
-          id: generatedId,
+          boardId: generatedId,
           title: action.payload.title,
           autofocus: false
         }
@@ -48,19 +51,23 @@ export const boardReducer = (
       return {
         ...state,
         boards: state.boards.map(board => {
-          board.id === action.payload.id &&
+          board.boardId === action.payload.boardId &&
             (board.title = action.payload.title);
           return board;
         })
       };
     case DELETE_BOARD:
-      const board = state.boards.find(board => board.id === action.payload.id);
+      const board = state.boards.find(
+        board => board.boardId === action.payload.boardId
+      );
       let index = state.boards.findIndex(item => item === board) + 1;
       index === state.boards.length && (index = 0);
 
       return {
         ...state,
-        boards: state.boards.filter(board => board.id !== action.payload.id),
+        boards: state.boards.filter(
+          board => board.boardId !== action.payload.boardId
+        ),
         currentBoard: state.boards[index]
       };
     case REORDER_BOARD:
@@ -89,7 +96,7 @@ export const boardReducer = (
       return {
         ...state,
         boards: state.boards.map(board => {
-          board.id === action.payload.id && (board.autofocus = true);
+          board.boardId === action.payload.boardId && (board.autofocus = true);
           return board;
         })
       };

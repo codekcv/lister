@@ -32,7 +32,7 @@ const Lists: React.FC<Props> = ({ boardId, listState, addList }) => {
             {...provided.droppableProps}
           >
             {boardLists.map((list, index) => (
-              <div key={`${list.id}${index}`}>
+              <div key={`${list.listId}`}>
                 <ListLi list={list} index={index} />
               </div>
             ))}

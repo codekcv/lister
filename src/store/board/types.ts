@@ -1,5 +1,5 @@
 export interface Board {
-  id: string;
+  boardId: string;
   title: string;
   autofocus: boolean;
 }
@@ -29,12 +29,12 @@ interface AddBoardAction {
 
 interface EditBoardAction {
   type: typeof EDIT_BOARD;
-  payload: { id: string; title: string };
+  payload: { boardId: string; title: string };
 }
 
 interface DeleteBoardAction {
   type: typeof DELETE_BOARD;
-  payload: { id: string };
+  payload: { boardId: string };
 }
 
 interface ReorderBoardAction {
@@ -59,7 +59,7 @@ interface SetCurrentBoardAction {
 
 interface SetFocusBoardAction {
   type: typeof FOCUS_BOARD;
-  payload: { id: string; autofocus: boolean };
+  payload: { boardId: string; autofocus: boolean };
 }
 
 interface ChangeColorAction {

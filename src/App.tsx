@@ -40,7 +40,7 @@ const Home: React.FC<Props> = ({
       return;
     }
 
-    const draggedBoard = boards.find(board => board.id === draggableId);
+    const draggedBoard = boards.find(board => board.boardId === draggableId);
 
     if (draggedBoard) {
       const newOrder = boards.map(board => board);
@@ -72,7 +72,11 @@ const Home: React.FC<Props> = ({
                 {...provided.droppableProps}
               >
                 {boards.map((board, index) => (
-                  <BoardButton key={board.id} board={board} index={index} />
+                  <BoardButton
+                    key={board.boardId}
+                    board={board}
+                    index={index}
+                  />
                 ))}
                 {provided.placeholder}
                 <div className="add-board" onClick={handleNewBoard}>

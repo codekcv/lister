@@ -23,7 +23,7 @@ const ListLi: React.FC<Props> = ({
   focusList,
   index
 }) => {
-  const { id, title, autofocus, adding } = list;
+  const { listId: id, title, autofocus, adding } = list;
 
   //=== Text Area ===\\
   const [input, setInput] = useState('');
