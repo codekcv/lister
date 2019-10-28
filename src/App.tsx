@@ -121,7 +121,12 @@ const Home: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div<{ showAll: boolean; backgroundColor: string }>`
+interface Style {
+  showAll: boolean;
+  backgroundColor: string;
+}
+
+const Container = styled.div<Style>`
   height: 100vh;
 
   .navbar {
@@ -220,7 +225,7 @@ const Container = styled.div<{ showAll: boolean; backgroundColor: string }>`
 
   .board-container {
     margin-top: 60px;
-    padding: 8px;
+    padding: 4px;
   }
 
   .background-color {
