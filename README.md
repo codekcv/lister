@@ -1,9 +1,9 @@
 # lister
 
-An application focused on organizing notes. Made with ReactJS. It is still a work in progress.
+An application focused on organizing notes. Made with ReactJS and Redux. It is still a work in progress, I will add a back-end and use MongoDB as database. At the moment, MongoDB Atlas has issues.
 
 ## Demo
-Live Demo: [listerNote](http://listernote.netlify.com "listerNote")
+http://listernote.netlify.com
 
 ## Run Locally
 ```
