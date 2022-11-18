@@ -9,7 +9,7 @@
     "react-dom": "^16.10.1",
     "react-icons": "^3.7.0",
     "react-redux": "^7.1.1",
-    "react-scripts": "3.1.2",
+    "react-scripts": "5.0.1",
     "react-textarea-autosize": "^7.1.0",
     "short-uuid": "^3.1.1",
     "styled-components": "^4.4.0",
